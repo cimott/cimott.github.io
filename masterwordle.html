@@ -23,6 +23,8 @@
 <p id="g8"></p>
 <p id="g9"></p>
 
+<p id="challenge_url"></p>
+
 <script>
 
 const word_list = [
@@ -749,12 +751,25 @@ const word_list = [
 ];
 
 const word_cnt = 8636;
-
+var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
 
-function random_word() {
-	var idx = parseInt(Date.now()) % word_cnt;
+const magic_idx = 5461;
+
+function encode_idx(idx) {
+	let swapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
+	return swapped_idx ^ magic_idx;
+}
+
+function decode_idx(idx) {
+	idx = idx ^ magic_idx;
+	let unswapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
+	return unswapped_idx;
+}
+
+function set_hidden_word(idx) {
+	word_idx = idx;
 	word = word_list[idx].toUpperCase();
 	guess_cnt = 1;
 	guessword.setAttribute('type', 'text');
@@ -763,6 +778,26 @@ function random_word() {
 		var gk = "g" + i.toString();
 		document.getElementById(gk).innerHTML = "";
 	}
+	challenge_url.innerHTML = "";
+}
+
+window.onload = function() {
+	let idx = document.URL.indexOf('?');
+	if (idx != -1) {
+		let pairs = document.URL.substring(idx+1, document.URL.length).split('&');
+		let nv0 = pairs[0].split('=');
+		let nv1 = pairs[1].split('=');
+		let v0 = nv0[1], v1 = nv1[1];
+		if (nv0[0] != "idx")
+			[v0, v1] = [v1, v0];
+		set_hidden_word(decode_idx(v0));
+		guessword.value = v1;
+		guess_word();
+	}
+};
+
+function random_word() {
+	set_hidden_word(parseInt(Date.now()) % word_cnt);
 }
 
 function chk_word(w) {
@@ -823,16 +858,24 @@ function guess_word() {
 		document.getElementById(gk).innerHTML = s + "   " + m[0].toString() + " " + m[1].toString();
 		if (m[0] == 5) {
 			window.alert(guess_cnt.toString() + " tries to guess, well done!");
+			challenge_url.innerHTML = compose_challenge_url();
 		}
 		else {
 			if (++guess_cnt == 10) {
 				window.alert("You lose, correct word is " + word);
 				guessword.setAttribute('type', 'hidden');
 				btn_guess.setAttribute('type', 'hidden');
+				challenge_url.innerHTML = compose_challenge_url();
 			}
 		}
 	}
 	document.getElementById("guessword").value = "";
+}
+
+function compose_challenge_url() {
+	let guess_1 = g1.innerHTML.substring(0, 5);
+	let ret = "https://cimott/cimott.github.io/masterworldle.html?idx=" + encode_idx(word_idx).toString() + "&guess1=" + guess_1;
+	return ret;
 }
 
 </script>
