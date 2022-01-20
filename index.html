@@ -874,7 +874,7 @@ function guess_word() {
 
 function compose_challenge_url() {
 	let guess_1 = g1.innerHTML.substring(0, 5);
-	let ret = "https://cimott/cimott.github.io/masterworldle.html?idx=" + encode_idx(word_idx).toString() + "&guess1=" + guess_1;
+	let ret = "https://cimott.github.io/masterworldle.html?idx=" + encode_idx(word_idx).toString() + "&guess1=" + guess_1;
 	return ret;
 }
 
