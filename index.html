@@ -1,7 +1,52 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+	body {
+		font-family: "Roboto Light", "Arial", sans-serif;
+	}
+
+	#container {
+		width: 30em;
+		background: #fff;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+
+
+	table {
+		border-spacing: 4px;
+	}
+
+	td {
+		background-color: #ccc;
+		border-radius: 2px;
+		padding: 8px;
+		width: 1em;
+		text-align: center;
+		vertical-align: middle;
+	}
+
+
+	table#guesses td:nth-child(1) {
+		background-color: #000;
+		color: #fff;
+	}
+	table#guesses td:nth-child(7) {
+		background-color: #98d092;
+	}
+	table#guesses td:nth-child(8) {
+		background-color: #d9cb8b;
+	}
+</style>
+
+</head>
+<body>
+<div id="container">
 <h1>Mastermind Wordle</h1>
 
 <select id="language">
@@ -9,26 +54,48 @@
 	<option value = "eng">English</option>
 </select>
 
-<p>start new game:
-<button type="button" onclick="random_word()">Go!</button>
+<button type="button" onclick="random_word()">Start New Game</button>
+
+<p/>
+
+<input type="hidden" id="guessword" onkeydown="guess_word_on_key_down(event.keyCode);"
+/>
+<input type="hidden" id="btn_guess" value="Guess" onclick="guess_word();" />
+
+<p id="wrong_guess">
 </p>
 
-<input type="hidden" id="guessword"
-		onkeydown = "if (event.keyCode == 13) document.getElementById('btn_guess').click()" 
-/>
-<input type="hidden" id="btn_guess" value="Try" onclick="guess_word();" />
+<div id="game_end">
+</div>
 
-<p id="g1"></p>
-<p id="g2"></p>
-<p id="g3"></p>
-<p id="g4"></p>
-<p id="g5"></p>
-<p id="g6"></p>
-<p id="g7"></p>
-<p id="g8"></p>
-<p id="g9"></p>
+<div style="float: left;margin-right:10px">
+<table id="guesses">
+<tr id="g1"></tr>
+<tr id="g2"></tr>
+<tr id="g3"></tr>
+<tr id="g4"></tr>
+<tr id="g5"></tr>
+<tr id="g6"></tr>
+<tr id="g7"></tr>
+<tr id="g8"></tr>
+<tr id="g9"></tr>
+</table>
+</div>
 
-<p id="challenge_url"></p>
+<div style="float: left;">
+<table>
+<tr id="abc1"></tr>
+<tr id="abc2"></tr>
+<tr id="abc3"></tr>
+<tr id="abc4"></tr>
+<tr id="abc5"></tr>
+<tr id="abc6"></tr>
+<tr id="abc7"></tr>
+<tr id="abc8"></tr>
+<tr id="abc9"></tr>
+<tr id="abc10"></tr>
+</table>
+</div>
 
 <script>
 
@@ -954,6 +1021,10 @@ function word_list() {
 	return lang() == "cro" ? word_list_cro : word_list_eng;
 }
 
+function alphabet() {
+	return lang() == "cro" ? alphabet_cro : alphabet_eng;
+}
+
 function get_word(idx) {
 	return word_list()[idx];
 }
@@ -999,9 +1070,13 @@ function to_char_list(w) {
 	return ret;
 }
 
+const alphabet_eng = [ "", "a,b,c", "d,e,f", "g,h,i", "j,k,l", "m,n,o", "p,q,r", "s,t,u", "v,w,q", "w,z" ];
+const alphabet_cro = [ "", "a,b,c", "č,ć,d", "dž,đ,e", "f,g,h", "i,j,k", "l,lj,m", "n,nj,o", "p,r,s", "š,t,u", "v,z,ž" ];
+
 var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
+var guesses = [];
 
 const magic_idx = 5461;
 
@@ -1020,13 +1095,30 @@ function set_hidden_word(idx) {
 	word_idx = idx;
 	word = get_word(idx).toUpperCase();
 	guess_cnt = 1;
+	guesses = [];
 	guessword.setAttribute('type', 'text');
 	btn_guess.setAttribute('type', 'button');
 	for (var i = 1; i < 10; ++i) {
 		var gk = "g" + i.toString();
-		document.getElementById(gk).innerHTML = "";
+
+		var cells = []
+			.concat(i, "?????".split(""), [ "-", "-" ])
+			.map(function(ch) { return "<td>" + ch + "</td>"} )
+			.join("");;
+
+		document.getElementById(gk).innerHTML = cells;
 	}
-	challenge_url.innerHTML = "";
+
+	var alph = alphabet();
+	for (var i = 1; i <= 10; ++i) {
+		var abck = "abc" + i.toString();
+
+		var cells = alph[i].toUpperCase().split(",")
+			.map(function(ch) { return "<td id='letter_" + ch + "'>" + ch + "</td>"} )
+			.join("")		
+		document.getElementById(abck).innerHTML = cells;
+	}
+	game_end.innerHTML = "";
 }
 
 window.onload = function() {
@@ -1042,6 +1134,9 @@ window.onload = function() {
 		guessword.value = v1;
 		guess_word();
 	}
+	else {
+		random_word();
+	}
 };
 
 function random_word() {
@@ -1049,8 +1144,10 @@ function random_word() {
 }
 
 function chk_word(w) {
+	document.getElementById("wrong_guess").innerHTML = "";
+
 	if (word_len(w) != 5) {
-		window.alert(w + " is not 5 letter word");
+		document.getElementById("wrong_guess").innerHTML = w + " is not 5 letter word";
 		return false;
 	}
 	w = w.toLowerCase();
@@ -1066,8 +1163,8 @@ function chk_word(w) {
 			lb = mid + 1;
 	}
 	while (lb <= ub);
-	
-	window.alert(w + " is not in dictionary");
+
+	document.getElementById("wrong_guess").innerHTML = w + " is not in dictionary";
 	return false;
 }
 
@@ -1102,33 +1199,47 @@ function match_word(w) {
 function guess_word() {
 	var s = guessword.value;
 	if (chk_word(s)) {
+		guesses.push(s);
 		s = s.toUpperCase();
 		var m = match_word(s);
 		var gk = "g" + guess_cnt.toString();
-		document.getElementById(gk).innerHTML = s + "   " + m[0].toString() + " " + m[1].toString();
+		var cells = []
+			.concat(guess_cnt, s.split(""), m)
+			.map(function(ch) { return '<td>' + ch + '</td>'} )
+			.join('');
+		document.getElementById(gk).innerHTML = cells;
 		if (m[0] == 5) {
-			window.alert(guess_cnt.toString() + " tries to guess, well done!");
-			challenge_url.innerHTML = compose_challenge_url();
+			game_end.innerHTML = compose_game_end();
 		}
-		else {
-			if (++guess_cnt == 10) {
-				window.alert("You lose, correct word is " + word);
+		else if (++guess_cnt == 10) {
 				guessword.setAttribute('type', 'hidden');
 				btn_guess.setAttribute('type', 'hidden');
-				challenge_url.innerHTML = compose_challenge_url();
-			}
+			game_end.innerHTML = compose_game_end();
 		}
 	}
 	document.getElementById("guessword").value = "";
 }
 
-function compose_challenge_url() {
-	let guess_1 = g1.innerHTML.split(" ")[0];
-	let ret = "https://cimott.github.io?idx=" + encode_idx(word_idx).toString() + "&guess1=" + encodeURIComponent(guess_1);
+function guess_word_on_key_down(keyCode) {
+	document.getElementById('wrong_guess').innerHTML = '';
+	if (keyCode == 13) guess_word();
+}
+
+function compose_game_end() {
+	let win = guess_cnt < 10;
+	let guess_1 = encodeURIComponent(guesses[0]);
+	let ret = "<h3>Game End</h3>";
+	ret += "<p>";
+	if (win) ret += + guess_cnt + " tries to guess, well done!";
+	else ret += "You lose, correct word is " + word;
+	ret += "</p>";
+	ret += "<h3>Challenge a Friend</h3>";
+	ret += "<p>https://cimott.github.io?idx=" + encode_idx(word_idx).toString() + "&guess1=" + guess_1 + "</p>";
 	return ret;
 }
 
 </script>
 
+</div>
 </body>
 </html>
