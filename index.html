@@ -159,6 +159,11 @@ function to_char_list(w) {
 	return ret;
 }
 
+function set_language_based_on_guess(w) {
+	var select = document.getElementById('language');
+	select.value = word_list_eng.includes(w) ? "eng" : "cro";
+}
+
 const alphabet_eng = [ "", "a,b,c", "d,e,f", "g,h,i", "j,k,l", "m,n,o", "p,q,r", "s,t,u", "v,w,x", "w,z" ];
 const alphabet_cro = [ "", "a,b,c", "č,ć,d", "dž,đ,e", "f,g,h", "i,j,k", "l,lj,m", "n,nj,o", "p,r,s", "š,t,u", "v,z,ž" ];
 
@@ -220,6 +225,7 @@ window.onload = function() {
 		let v0 = nv0[1], v1 = nv1[1];
 		if (nv0[0] != "idx")
 			[v0, v1] = [v1, v0];
+		set_language_based_on_guess(v1);
 		set_hidden_word(decode_idx(v0));
 		guessword.value = v1;
 		guess_word();
