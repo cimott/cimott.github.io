@@ -300,7 +300,7 @@ function guess_word() {
 		var m = match_word(s);
 		var gk = "g" + guess_cnt.toString();
 		var cells = []
-			.concat(guess_cnt, s.split(""), m)
+			.concat(guess_cnt, to_char_list(s), m)
 			.map(function(ch) { return '<td>' + ch + '</td>'} )
 			.join('');
 		document.getElementById(gk).innerHTML = cells;
