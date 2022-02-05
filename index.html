@@ -8,6 +8,10 @@
 		font-family: "Roboto Light", "Arial", sans-serif;
 	}
 
+	input, button, select {
+		font-size: 16px;
+	}
+
 	#container {
 		width: 30em;
 		background: #fff;
@@ -26,8 +30,7 @@
 	}
 
 	td {
-		background-color: #ccc;
-		border-radius: 2px;
+		border: 1px solid #ccc;
 		padding: 8px;
 		width: 1em;
 		text-align: center;
@@ -36,7 +39,7 @@
 
 
 	table#guesses td:nth-child(1) {
-		background-color: #222;
+		background-color: #444;
 		color: #fff;
 	}
 	table#guesses td:nth-child(7) {
@@ -49,7 +52,7 @@
 		background-color: #ff4d4d;
 	}
 
-	table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6) {
+	table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
 		cursor: pointer;
 		-webkit-touch-callout: none; /* iOS Safari */
 		-webkit-user-select: none; /* Safari */
@@ -59,28 +62,27 @@
 		user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 	}
 
-	table#guesses tr {
-		opacity: 33%;
-	}
-
-	table#guesses tr.relevant {
-		opacity: 100%;
-	}
-
 	td.impossible {
+		color: #ccc;
+	}
+
+	table#alphabet td.impossible {
 		opacity: 0%;
 	}
 
+
 	td.unprobable {
-		opacity: 33%;
+		color: #ccc;
 	}
 	
 	td.probable {
-		background-color: #98d092;
+		font-weight: bold;
+		border-color: #000;
+		background-color: #eee;
 	}
 	
 	td.selected {
-		background-color: #99ccff;
+		border-color: #000;
 	}
 </style>
 
@@ -266,12 +268,16 @@ function set_hidden_word(idx) {
 		var abck = "abc" + (i / 3).toString();
 		var alph3 = [ alph[i], alph[i + 1], alph[i + 2] ].filter(function(x) { return Boolean(x); });
 		var cells = alph3
-			.map(function(ch) { return "<td id='letter_" + ch + "' onclick='on_letter_clicked(this);'>" + ch + "</td>"} )
+			.map(create_letter)
 			.join("")		
 		document.getElementById(abck).innerHTML = cells;
 	}
 	document.getElementById("abc9").style.display = lang() == "cro" ? "" : "none";
 	game_end.innerHTML = "";
+}
+
+function create_letter(ch) {
+	return "<td class='letter_" + ch + "' onclick='on_letter_clicked(this);'>" + ch + "</td>";
 }
 
 window.onload = function() {
@@ -337,8 +343,10 @@ function on_letter_clicked(el) {
 
 function update_keyboard() {
 	alphabet().forEach(function(ltr) {
-		var el = document.getElementById("letter_" + ltr);
-		el.className  = letter_class[ltr] || '';
+		var elems = document.getElementsByClassName ("letter_" + ltr);
+		for (var i = 0; i < elems.length; ++i) {
+			elems[i].className = "letter_" + ltr + " " + (letter_class[ltr] || '');
+		}
 	});
 }
 
@@ -418,7 +426,7 @@ function guess_word() {
 		var letters = to_char_list(s);
 		var cells = []
 			.concat(guess_cnt, letters, m)
-			.map(function(ch) { return '<td>' + ch + '</td>'} )
+			.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
 			.join('');
 		document.getElementById(gk).innerHTML = cells;
 		if (m[0] == 5) {
