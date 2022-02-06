@@ -431,7 +431,7 @@ function clear_assumptions() {
 }
 
 function guess_word() {
-	var s = guessword.value;
+	var s = guessword.value.trim();
 	if (chk_word(s)) {
 		guesses.push(s);
 		s = s.toUpperCase();
