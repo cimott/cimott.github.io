@@ -454,11 +454,11 @@ function guess_word() {
 		if (m[0] == 0 && m[1] == 0) {
 			letters.forEach(function(ltr) {
 				letter_class[ltr] = 'impossible';
-				reset_unprobables();
-				update_keyboard();
 			})
 		}
 	}
+	reset_unprobables();
+	update_keyboard();
 	document.getElementById("guessword").value = "";
 	document.getElementById("g" + guess_cnt).classList.add("relevant");
 }
