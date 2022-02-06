@@ -1,0 +1,118 @@
+body {
+	font-family: "Roboto Light", "Arial", sans-serif;
+	background-color: #e9e9e9;
+	line-height: 1.25;
+}
+
+
+.topnav .guess-container {
+  float: left;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  width: 100px;
+  text-transform: uppercase;
+}
+
+.topnav button {
+  padding: 6px 10px;
+  margin: 8px 10px 8px 0px;
+  background: #ddd;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.topnav button[disabled] {
+  cursor: not-allowed;
+  opacity: 50%;
+}
+
+.topnav .guess-container button {
+	float: right;
+}
+
+#container {
+	background-color: #fff;
+	margin: 0 auto;
+	width: 420px;
+	padding: 0px 20px 10px 20px;
+}
+
+table {
+	border-spacing: 5px;
+	margin-left: -5px;
+}
+
+#wrong_guess {
+	color: #f00;
+	margin: 8px 0px;
+}
+
+#guessword {
+	width: 100px;
+}
+
+td {
+	border: 1px solid #ccc;
+	padding: 5px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+table#guesses {
+	float: left;
+	padding-right: 10px;
+}
+
+
+table#guesses td:nth-child(1) {
+	background-color: #333;
+	color: #fff;
+}
+table#guesses td:nth-child(7) {
+	background-color: #98d092;
+}
+table#guesses td:nth-child(8) {
+	background-color: #d9cb8b;
+}
+table#guesses tr.target td:nth-child(1) {
+	background-color: #ff4d4d;
+}
+
+table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
+	cursor: pointer;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+td.impossible {
+	color: #ccc;
+}
+
+table#alphabet td.impossible {
+	opacity: 0%;
+}
+
+
+td.unprobable {
+	color: #ccc;
+}
+
+td.probable {
+	font-weight: bold;
+	border-color: #000;
+	background-color: #eee;
+}
+
+td.selected {
+	border-color: #000;
+}

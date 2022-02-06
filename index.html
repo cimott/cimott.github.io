@@ -1,493 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-	body {
-		font-family: "Roboto Light", "Arial", sans-serif;
-	}
-
-	input, button, select {
-		font-size: 16px;
-	}
-
-	#container {
-		width: 30em;
-		background: #fff;
-		margin-left: auto;
-		margin-right: auto;
-		padding-left: 1em;
-		padding-right: 1em;
-	}
-
-	table {
-		border-spacing: 4px;
-	}
-
-	#wrong_guess {
-		color: #f00;
-	}
-
-	td {
-		border: 1px solid #ccc;
-		padding: 8px;
-		width: 1em;
-		text-align: center;
-		vertical-align: middle;
-	}
-
-
-	table#guesses td:nth-child(1) {
-		background-color: #444;
-		color: #fff;
-	}
-	table#guesses td:nth-child(7) {
-		background-color: #98d092;
-	}
-	table#guesses td:nth-child(8) {
-		background-color: #d9cb8b;
-	}
-	table#guesses tr.target td:nth-child(1) {
-		background-color: #ff4d4d;
-	}
-
-	table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
-		cursor: pointer;
-		-webkit-touch-callout: none; /* iOS Safari */
-		-webkit-user-select: none; /* Safari */
-		-khtml-user-select: none; /* Konqueror HTML */
-		-moz-user-select: none; /* Old versions of Firefox */
-		-ms-user-select: none; /* Internet Explorer/Edge */
-		user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-	}
-
-	td.impossible {
-		color: #ccc;
-	}
-
-	table#alphabet td.impossible {
-		opacity: 0%;
-	}
-
-
-	td.unprobable {
-		color: #ccc;
-	}
-	
-	td.probable {
-		font-weight: bold;
-		border-color: #000;
-		background-color: #eee;
-	}
-	
-	td.selected {
-		border-color: #000;
-	}
-</style>
-
+	<meta charset="utf-8">
+	<title>Mastermind Wordle</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<script type="text/javascript" src="js/dictionary.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-<div id="container">
-<h1>Mastermind Wordle</h1>
+	<div id="container">
+		 <div class="topnav">
+			  <div class="guess-container">
+			      <input type="text" id="guessword"
+			      	onkeydown="guess_word_on_key_down(event.keyCode);"
+			      	onkeyup="guess_word_on_key_up();"
+			      	placeholder="Word">
+			      <button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
+			  </div>
+			  <button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
+			  <button type="submit" onclick="random_word()"><i class="fa fa-file-text"></i></button>
+			  <button type="submit" id="language" onclick="change_language()"><i class="fa fa-flag"></i> <b>HR</b></button>
+		</div> 
 
-<select id="language">
-	<option value = "cro">Croatian</option>
-	<option value = "eng">English</option>
-</select>
+		<p id="wrong_guess"/></p>
 
-<button type="button" onclick="random_word()">Start New Game</button>
+		<div id="game_end"></div>
 
-<p/>
+		<table id="guesses">
+			<tbody>
+				<tr id="g1"></tr>
+				<tr id="g2"></tr>
+				<tr id="g3"></tr>
+				<tr id="g4"></tr>
+				<tr id="g5"></tr>
+				<tr id="g6"></tr>
+				<tr id="g7"></tr>
+				<tr id="g8"></tr>
+				<tr id="g9"></tr>
+			</tbody>
+		</table>
 
-<input type="hidden" id="guessword" onkeydown="guess_word_on_key_down(event.keyCode);"/>
-<input type="hidden" id="btn_guess" value="Guess" onclick="guess_word();" />
-<input type="hidden" id="btn_clear" value="Clear Assumptions" onclick="clear_assumptions();" />
-
-<p id="wrong_guess">
-</p>
-
-<div id="game_end">
-</div>
-
-<div style="float: left;margin-right:10px">
-<table id="guesses">
-<tr id="g1"></tr>
-<tr id="g2"></tr>
-<tr id="g3"></tr>
-<tr id="g4"></tr>
-<tr id="g5"></tr>
-<tr id="g6"></tr>
-<tr id="g7"></tr>
-<tr id="g8"></tr>
-<tr id="g9"></tr>
-</table>
-</div>
-
-<div style="float: left;">
-<table id="alphabet">
-<tr id="abc0"></tr>
-<tr id="abc1"></tr>
-<tr id="abc2"></tr>
-<tr id="abc3"></tr>
-<tr id="abc4"></tr>
-<tr id="abc5"></tr>
-<tr id="abc6"></tr>
-<tr id="abc7"></tr>
-<tr id="abc8"></tr>
-<tr id="abc9"></tr>
-</table>
-</div>
-
-<script type="text/javascript" src="dictionary.js"></script>
-
-<script>
-
-function lang() {
-	var select = document.getElementById('language');
-	return select.options[select.selectedIndex].value;
-}
-
-function word_list() {
-	return lang() == "cro" ? word_list_cro : word_list_eng;
-}
-
-function alphabet() {
-	return (lang() == "cro" ? alphabet_cro : alphabet_eng).split(",");
-}
-
-function get_word(idx) {
-	return word_list()[idx];
-}
-
-function word_cnt() {
-	return word_list().length;
-}
-
-function word_len(w) {
-	if (lang() != "cro")
-		return w.length;
-
-	return to_char_list(w).length;
-}
-
-function to_char_list(w) {
-	is_cro = lang() == "cro";
-	w = w.toUpperCase();
-	ret = [];
-	for (i = 0; i < w.length; ++i) {
-		if (is_cro && i < w.length - 1 && (
-		    (w[i] == 'L' && w[i + 1] == 'J') ||
-		    (w[i] == 'N' && w[i + 1] == 'J') ||
-			(w[i] == 'D' && w[i + 1] == 'Ž')))
-		{
-			ret.push(w.substring(i, i + 2));
-			++i;
-		}
-		else {
-			ret.push(w.substring(i, i + 1));
-		}
-	}
-	return ret;
-}
-
-const alphabet_eng = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Q,Z";
-const alphabet_cro = "A,B,C,Č,Ć,D,DŽ,Đ,E,F,G,H,I,J,K,L,LJ,M,N,NJ,O,P,R,S,Š,T,U,V,Z,Ž";
-
-var word_idx = 0;
-var word = "";
-var guess_cnt = 0;
-var guesses = [];
-var letter_class = { };
-var selected_placeholder = null;
-
-function clear_state() {
-	word_idx = 0;
-	word = "";
-	guess_cnt = 0;
-	guesses = [];
-	letter_class = { };
-	selected_placeholder = null;
-	for (var i = 1; i <= 9; ++i)
-		document.getElementById("g" + i).className = '';
-}
-
-const magic_idx = 5461;
-
-function encode_idx(idx) {
-	let swapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
-	return swapped_idx ^ magic_idx;
-}
-
-function decode_idx(idx) {
-	idx = idx ^ magic_idx;
-	let unswapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
-	return unswapped_idx;
-}
-
-function set_hidden_word(idx) {
-	clear_state();
-	word_idx = idx;
-	word = get_word(idx).toUpperCase();
-	guess_cnt = 1;
-	guessword.setAttribute('type', 'text');
-	btn_guess.setAttribute('type', 'button');
-	btn_clear.setAttribute('type', 'button');
-	for (var i = 1; i < 10; ++i) {
-		var gk = "g" + i.toString();
-
-		var cells = []
-			.concat(i, "       ".split(""))
-			.map(function(ch, i) {
-				if (i >= 1 && i <= 6)
-					return "<td onclick='on_placeholder_clicked(this);'></td>";
-				return "<td>" + ch + "</td>";
-			})
-			.join("");;
-
-		var el = document.getElementById(gk);
-		el.innerHTML = cells;
-		el.classList[i == 1 ? 'add' : 'remove']('relevant');
-	}
-
-	var alph = alphabet();
-	for (var i = 0;; i += 3) {
-		if (i >= alph.length)
-			break;
-
-		var abck = "abc" + (i / 3).toString();
-		var alph3 = [ alph[i], alph[i + 1], alph[i + 2] ].filter(function(x) { return Boolean(x); });
-		var cells = alph3
-			.map(create_letter)
-			.join("")		
-		document.getElementById(abck).innerHTML = cells;
-	}
-	document.getElementById("abc9").style.display = lang() == "cro" ? "" : "none";
-	game_end.innerHTML = "";
-}
-
-function create_letter(ch) {
-	return "<td class='letter_" + ch + "' onclick='on_letter_clicked(this);'>" + ch + "</td>";
-}
-
-window.onload = function() {
-	let idx = document.URL.indexOf('?');
-	if (idx != -1) {
-		let pairs = decodeURIComponent(document.URL.substring(idx+1, document.URL.length)).split('&');
-		let map = { };
-		pairs.forEach(function(pair) {
-			var kv = pair.split("=");
-			map[kv[0]] = kv[1];
-		})
-		if (map["lang"]) {
-			document.getElementById('language').value = map["lang"];
-		}
-		set_hidden_word(decode_idx(map["idx"]));
-		guessword.value = map["guess1"];
-		guess_word();
-		if (map["guess_cnt"]) {
-			document.getElementById("g" + map["guess_cnt"]).classList.add('target');
-		}
-	}
-	else {
-		random_word();
-	}
-};
-
-function on_placeholder_clicked(el) {
-	if (selected_placeholder)
-		selected_placeholder.className = '';
-
-	if (selected_placeholder == el) {
-		selected_placeholder = null; // clear selection
-	}
-	else if (el && el.innerHTML.length > 0) {
-		el.innerHTML = ''; // clear guess
-	}
-	else {
-		selected_placeholder = el; // set selection
-		if (el) selected_placeholder.className = 'selected';
-	}
-}
-
-function on_letter_clicked(el) {
-	var ltr = el.innerHTML;
-	if (letter_class[ltr] == 'impossible')
-		return;
-
-	if (selected_placeholder) {
-		selected_placeholder.innerHTML = ltr;
-		on_placeholder_clicked(null);
-		return;
-	}
-
-	if (letter_class[ltr] == 'probable')
-		letter_class[ltr] = '';
-	else
-		letter_class[ltr] = 'probable';
-
-	sync_letter_classes();
-	update_keyboard();
-}
-
-function reset_unprobables() {
-	for (ltr of alphabet()) {
-		if (letter_class[ltr] == 'unprobable') letter_class[ltr] = '';
-	}
-}
-
-function sync_letter_classes() {
-	reset_unprobables();
-	let sel = Object.keys(letter_class).filter(function(ltr) {
-		return letter_class[ltr] == 'probable';
-	});
-	for (const guess of guesses) {
-		let m = match_word(guess);
-		let cnt = m[0] + m[1];
-		if (cnt == 0) continue;
-		let unsel = to_char_list(guess).filter(function(l) { return !sel.includes(l); });
-		let sel_cnt = 5 - unsel.length;
-		if (sel_cnt >= cnt) for(ltr of unsel) {
-			if (letter_class[ltr] != 'impossible')
-				letter_class[ltr] = 'unprobable';
-		}
-	}
-}
-
-function update_keyboard() {
-	alphabet().forEach(function(ltr) {
-		var elems = document.getElementsByClassName ("letter_" + ltr);
-		for (var i = 0; i < elems.length; ++i) {
-			elems[i].className = "letter_" + ltr + " " + (letter_class[ltr] || '');
-		}
-	});
-}
-
-function random_word() {
-	set_hidden_word(parseInt(Date.now()) % word_cnt());
-}
-
-function chk_word(w) {
-	document.getElementById("wrong_guess").innerHTML = "";
-
-	if (word_len(w) != 5) {
-		document.getElementById("wrong_guess").innerHTML = "<b>" + w + "</b> is not 5 letter word!";
-		return false;
-	}
-	w = w.toLowerCase();
-	var lb = 0, ub = word_cnt() - 1;
-	do {
-		var mid = parseInt((lb + ub) / 2);
-		var s = get_word(mid);
-		if (s == w)
-			return true;
-		if (w < s)
-			ub = mid - 1;
-		else
-			lb = mid + 1;
-	}
-	while (lb <= ub);
-
-	document.getElementById("wrong_guess").innerHTML = "<b>" + w + "</b> is not in dictionary!";
-	return false;
-}
-
-function match_word(w) {
-	wl = to_char_list(w);
-	wordl = to_char_list(word);
-	const sk = [], sw = [];
-	var sz = 0, g = 0;
-	for (let i = 0; i < wl.length; ++i) {
-		if (wl[i] == wordl[i])
-			++g;
-		else {
-			sk[sz] = wordl[i];
-			sw[sz] = wl[i];
-			++sz;
-		}
-	}
-	if (g == 5)
-		return [5, 0];
-	sk.sort();
-	sw.sort();
-	var y = 0;
-	var ki = 0, wi = 0;
-	while (ki < sz && wi < sz) {
-		if (sk[ki] < sw[wi]) ++ki;
-		else if (sk[ki] > sw[wi]) ++wi;
-		else ++y, ++ki, ++wi;
-	}
-	return [g, y];
-}
-
-function clear_assumptions() {
-	for (var ltr in letter_class) {
-		if (letter_class[ltr] != 'impossible')
-			delete letter_class[ltr];
-	}
-	on_placeholder_clicked(null);
-	reset_unprobables();
-	update_keyboard();
-}
-
-function guess_word() {
-	var s = guessword.value.trim();
-	if (chk_word(s)) {
-		guesses.push(s);
-		s = s.toUpperCase();
-		var m = match_word(s);
-		var gk = "g" + guess_cnt.toString();
-		var letters = to_char_list(s);
-		var cells = []
-			.concat(guess_cnt, letters, m)
-			.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
-			.join('');
-		document.getElementById(gk).innerHTML = cells;
-		if (m[0] == 5) {
-			game_end.innerHTML = compose_game_end();
-		}
-		else if (++guess_cnt == 10) {
-				guessword.setAttribute('type', 'hidden');
-				btn_guess.setAttribute('type', 'hidden');
-			game_end.innerHTML = compose_game_end();
-		}
-		if (m[0] == 0 && m[1] == 0) {
-			letters.forEach(function(ltr) {
-				letter_class[ltr] = 'impossible';
-			})
-		}
-	}
-	reset_unprobables();
-	update_keyboard();
-	document.getElementById("guessword").value = "";
-	document.getElementById("g" + guess_cnt).classList.add("relevant");
-}
-
-function guess_word_on_key_down(keyCode) {
-	document.getElementById('wrong_guess').innerHTML = '';
-	if (keyCode == 13) guess_word();
-}
-
-function compose_game_end() {
-	let win = guess_cnt < 10;
-	let guess_1 = encodeURIComponent(guesses[0]);
-	let link = "https://cimott.github.io?idx=" + encode_idx(word_idx).toString()
-		+ "&lang=" + lang()
-		+ "&guess1=" + guess_1;
-	if (win) link += "&guess_cnt=" + guess_cnt;
-
-	let ret = "<h3>Game End</h3>";
-	ret += "<p>";
-	if (win) ret += + guess_cnt + " tries to guess, well done!";
-	else ret += "You lose, correct word is " + word;
-	ret += "</p>";
-	ret += "<h3>Challenge a Friend</h3>";
-	ret += "<p>" + link + "</p>";
-	return ret;
-}
-
-</script>
-
-</div>
+		<table id="alphabet">
+			<tr id="abc0"></tr>
+			<tr id="abc1"></tr>
+			<tr id="abc2"></tr>
+			<tr id="abc3"></tr>
+			<tr id="abc4"></tr>
+			<tr id="abc5"></tr>
+			<tr id="abc6"></tr>
+			<tr id="abc7"></tr>
+			<tr id="abc8"></tr>
+			<tr id="abc9"></tr>
+		</table>
+	</div>
 </body>
 </html>
