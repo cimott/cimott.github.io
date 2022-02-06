@@ -167,18 +167,8 @@ function word_cnt() {
 function word_len(w) {
 	if (lang() != "cro")
 		return w.length;
-		
-	w = w.toLowerCase();
-	ret = 0;
-	for (i = 0; i < w.length - 1; ++i, ++ret) {
-		if ((w[i] == 'l' && w[i + 1] == 'j') ||
-		    (w[i] == 'n' && w[i + 1] == 'j') ||
-			(w[i] == 'd' && w[i + 1] == 'ž'))
-		{
-			++i;
-		}
-	}
-	return ret + 1;
+
+	return to_char_list(w).length;
 }
 
 function to_char_list(w) {
@@ -332,13 +322,36 @@ function on_letter_clicked(el) {
 	}
 
 	if (letter_class[ltr] == 'probable')
-		letter_class[ltr] = 'unprobable';
-	else if (letter_class[ltr] == 'unprobable')
 		letter_class[ltr] = '';
 	else
 		letter_class[ltr] = 'probable';
 
+	sync_letter_classes();
 	update_keyboard();
+}
+
+function reset_unprobables() {
+	for (ltr of alphabet()) {
+		if (letter_class[ltr] == 'unprobable') letter_class[ltr] = '';
+	}
+}
+
+function sync_letter_classes() {
+	reset_unprobables();
+	let sel = Object.keys(letter_class).filter(function(ltr) {
+		return letter_class[ltr] == 'probable';
+	});
+	for (const guess of guesses) {
+		let m = match_word(guess);
+		let cnt = m[0] + m[1];
+		if (cnt == 0) continue;
+		let unsel = to_char_list(guess).filter(function(l) { return !sel.includes(l); });
+		let sel_cnt = 5 - unsel.length;
+		if (sel_cnt >= cnt) for(ltr of unsel) {
+			if (letter_class[ltr] != 'impossible')
+				letter_class[ltr] = 'unprobable';
+		}
+	}
 }
 
 function update_keyboard() {
@@ -413,6 +426,7 @@ function clear_assumptions() {
 			delete letter_class[ltr];
 	}
 	on_placeholder_clicked(null);
+	reset_unprobables();
 	update_keyboard();
 }
 
@@ -440,6 +454,7 @@ function guess_word() {
 		if (m[0] == 0 && m[1] == 0) {
 			letters.forEach(function(ltr) {
 				letter_class[ltr] = 'impossible';
+				reset_unprobables();
 				update_keyboard();
 			})
 		}
