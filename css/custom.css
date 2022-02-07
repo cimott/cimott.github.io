@@ -2,31 +2,29 @@ body {
 	font-family: "Roboto Light", "Arial", sans-serif;
 	background-color: #e9e9e9;
 	line-height: 1.25;
+	font-size: 4vh;
 }
 
-
-.topnav .guess-container {
-  float: left;
+.topnav {
+	font-size: 3vh;
 }
 
 .topnav input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  font-size: 17px;
-  width: 100px;
-  text-transform: uppercase;
-  border: none;
-  border-bottom: 2px solid #e9e9e9;
+	padding: 6px;
+	margin-top: 8px;
+	width: 6ch;
+	text-transform: uppercase;
+	border: none;
+	border-bottom: 2px solid #e9e9e9;
 }
 
 .topnav button {
-  padding: 6px 10px;
-  margin: 8px 10px 8px 0px;
-  background-color: #e9e9e9;
-  color: black;
-  border: none;
-  font-size: 17px;
-  cursor: pointer;
+	padding: 6px 10px;
+	margin: 8px 0px;
+	background-color: #e9e9e9;
+	color: black;
+	border: none;
+	cursor: pointer;
 }
 
 .topnav button[disabled] {
@@ -40,9 +38,7 @@ body {
 
 #container {
 	background-color: #fff;
-	margin: 0 auto;
-	width: 420px;
-	padding: 0px 20px 10px 20px;
+	padding: 0px 2vw 10px 2vw;
 }
 
 table {
@@ -55,31 +51,18 @@ table {
 	margin: 8px 0px;
 }
 
-#guessword {
-	width: 100px;
-}
-
 td {
 	border: 1px solid #ccc;
-	padding: 5px;
-	width: 20px;
-	height: 20px;
+	height: 8vh;
+	width: 8vh;
 	text-align: center;
 	vertical-align: middle;
 }
-
-table#guesses {
-	float: left;
-	padding-right: 10px;
-}
-
-table#alphabet {
-	float: left;
-}
-
 table#guesses td:nth-child(1) {
 	background-color: #333;
 	color: #fff;
+	width: 4vh;
+	font-size: 2vh;
 }
 table#guesses td:nth-child(7) {
 	background-color: #98d092;
@@ -89,6 +72,13 @@ table#guesses td:nth-child(8) {
 }
 table#guesses tr.target td:nth-child(1) {
 	background-color: #ff4d4d;
+}
+
+
+table#alphabet td {
+	border: 1px solid #ccc;
+	height: 0.5vh;
+	font-size: 2vh;
 }
 
 table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
@@ -101,17 +91,16 @@ table#alphabet td, table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossib
 	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-td.impossible {
-	color: #ccc;
-}
-
 table#alphabet td.impossible {
 	opacity: 0%;
 }
 
+td.impossible {
+	color: #ccc;
+}
 
 td.unprobable {
-	color: #ccc;
+	color: #ddd;
 }
 
 td.probable {

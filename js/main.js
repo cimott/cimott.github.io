@@ -39,7 +39,7 @@ function word_cnt() {
 function word_len(w) {
 	if (lang() != "cro")
 		return w.length;
-		
+
 	return to_char_list(w).length;
 }
 
@@ -122,18 +122,22 @@ function set_hidden_word(idx) {
 	}
 
 	var alph = alphabet();
-	for (var i = 0;; i += 3) {
+	for (var i = 0;; i += 10) {
+		console.log(i, alph.length);
 		if (i >= alph.length)
 			break;
 
-		var abck = "abc" + (i / 3).toString();
-		var alph3 = [ alph[i], alph[i + 1], alph[i + 2] ].filter(function(x) { return Boolean(x); });
-		var cells = alph3
+		var abck = "abc" + (i / 10).toString();
+		var alph10 = [ ];
+		for (var j = 0; j < 10; ++j) {
+			alph10.push(alph[i + j]);
+		}
+		var cells = alph10
+			.filter(function(x) { return Boolean(x); })
 			.map(create_letter)
-			.join("")		
+			.join("")
 		document.getElementById(abck).innerHTML = cells;
 	}
-	document.getElementById("abc9").style.display = lang() == "cro" ? "" : "none";
 	game_end.innerHTML = "";
 }
 

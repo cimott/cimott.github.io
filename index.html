@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Mastermind Wordle</title>
-	<meta name="viewport" content="width=420">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/custom.css">
@@ -13,21 +13,25 @@
 <body>
 	<div id="container">
 		 <div class="topnav">
-			  <div class="guess-container">
-			      <input type="text" id="guessword"
-			      	onkeydown="guess_word_on_key_down(event.keyCode);"
-			      	onkeyup="guess_word_on_key_up();"
-			      	placeholder="Word">
-			      <button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
-			  </div>
-			  <button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
-			  <button type="submit" onclick="random_word()"><i class="fa fa-file-text"></i></button>
-			  <button type="submit" id="language" onclick="change_language()"><i class="fa fa-flag"></i> <b>HR</b></button>
+			<input type="text" id="guessword"
+				onkeydown="guess_word_on_key_down(event.keyCode);"
+				onkeyup="guess_word_on_key_up();"
+				placeholder="Word">
+			<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
+			<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
+			<button type="submit" onclick="random_word()"><i class="fa fa-file-text"></i></button>
+			<button type="submit" id="language" onclick="change_language()"><b>HR</b></button>
 		</div> 
 
 		<p id="wrong_guess"/></p>
 
 		<div id="game_end"></div>
+
+		<table id="alphabet">
+			<tr id="abc0"></tr>
+			<tr id="abc1"></tr>
+			<tr id="abc2"></tr>
+		</table>
 
 		<table id="guesses">
 			<tbody>
@@ -41,19 +45,6 @@
 				<tr id="g8"></tr>
 				<tr id="g9"></tr>
 			</tbody>
-		</table>
-
-		<table id="alphabet">
-			<tr id="abc0"></tr>
-			<tr id="abc1"></tr>
-			<tr id="abc2"></tr>
-			<tr id="abc3"></tr>
-			<tr id="abc4"></tr>
-			<tr id="abc5"></tr>
-			<tr id="abc6"></tr>
-			<tr id="abc7"></tr>
-			<tr id="abc8"></tr>
-			<tr id="abc9"></tr>
 		</table>
 
 		<div style="clear: both" />
