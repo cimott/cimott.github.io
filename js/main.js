@@ -217,11 +217,14 @@ function sync_letter_classes() {
 		let m = match_word(guess);
 		let cnt = m[0] + m[1];
 		if (cnt == 0) continue;
-		let unsel = to_char_list(guess).filter(function(l) { return !sel.includes(l); });
-		let sel_cnt = 5 - unsel.length;
-		if (sel_cnt >= cnt) for(ltr of unsel) {
-			if (letter_class[ltr] != 'impossible')
-				letter_class[ltr] = 'unprobable';
+		let cl = to_char_list(guess);
+		let sel_cnt = 0;
+		for (ltr of sel) { if (cl.includes(ltr)) ++sel_cnt; }
+		if (sel_cnt >= cnt) {
+			for (ltr of cl) {
+				if (letter_class[ltr] != 'impossible' && !sel.includes(ltr))
+					letter_class[ltr] = 'unprobable';
+			}
 		}
 	}
 }
