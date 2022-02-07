@@ -517,7 +517,7 @@ const word_list_cro = [
 "žitni", "živac", "živad", "živalj", "živca", "živež", "živin", "živio", "življi", "život", "žičan", "žičar", 
 "žični", "žišak", "žižak", "žlica", "žljebi", "žmara", "žnora", "žohar", "žrtva", "žrvanj", "žrvnja", "žubor", 
 "žudan", "žudni", "žudnja", "žudno", "žuhak", "žumor", "župan", "župni", "žuran", "žurba", "žurni", "žurno", 
-"žućak", "žučan", "žučni", "žuđen", "žvaka", "žvala", "žvale", "žvati", "žȓvanj"
+"žućak", "žučan", "žučni", "žuđen", "žvaka", "žvala", "žvale", "žvati"
 ];
 
 const word_list_eng = [
