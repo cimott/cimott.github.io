@@ -72,10 +72,6 @@ table#alphabet td {
 	font-size: 2vh;
 }
 
-table#alphabet .letter_A, table#alphabet .letter_E, table#alphabet .letter_I, table#alphabet .letter_O, table#alphabet .letter_U {
-	color: blue;
-}
-
 table#alphabet {
 	margin: 1vh -5px;
 }
