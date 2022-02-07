@@ -109,15 +109,13 @@ function set_hidden_word(idx) {
 		var cells = []
 			.concat(i, "       ".split(""))
 			.map(function(ch, i) {
-				if (i >= 1 && i <= 6)
+				if (i >= 1 && i <= 5)
 					return "<td onclick='on_placeholder_clicked(this);'></td>";
 				return "<td>" + ch + "</td>";
 			})
-			.join("");;
+			.join("");
 
-		var el = document.getElementById(gk);
-		el.innerHTML = cells;
-		el.classList[i == 1 ? 'add' : 'remove']('relevant');
+		document.getElementById(gk).innerHTML = cells;
 	}
 
 	var alph = alphabet();
@@ -336,7 +334,6 @@ function guess_word() {
 	reset_unprobables();
 	update_keyboard();
 	document.getElementById("guessword").value = "";
-	document.getElementById("g" + guess_cnt).classList.add("relevant");
 }
 
 function guess_word_on_key_down(keyCode) {
