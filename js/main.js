@@ -83,7 +83,6 @@ function clear_state() {
 	for (var i = 1; i <= 9; ++i)
 		document.getElementById("g" + i).className = '';
 	guessword.value = '';
-	set_wrong_guess('');
 }
 
 const magic_idx = 5461;
@@ -243,6 +242,16 @@ function random_word() {
 }
 
 function chk_word(w) {
+	if (word_len(w) != 5)
+		return false;
+
+	if (is_in_dict(w))
+		return true;
+
+	return false;
+}
+
+function is_in_dict(w) {
 	w = w.toLowerCase();
 	var lb = 0, ub = word_cnt() - 1;
 	do {
@@ -256,15 +265,7 @@ function chk_word(w) {
 			lb = mid + 1;
 	}
 	while (lb <= ub);
-
-	set_wrong_guess("<b>" + w + "</b> is not in dictionary!");
 	return false;
-}
-
-function set_wrong_guess(msg) {
-	var el = document.getElementById('wrong_guess');
-	el.innerHTML = msg;
-	el.style.display = msg ? 'block' : 'none';
 }
 
 function match_word(w) {
@@ -307,32 +308,31 @@ function clear_assumptions() {
 
 function guess_word() {
 	var s = guessword.value.trim();
-	if (word_len(s) != 5)
-		return false;
+	if (!chk_word(s))
+		return;
 
-	if (chk_word(s)) {
-		guesses.push(s);
-		s = s.toUpperCase();
-		var m = match_word(s);
-		var gk = "g" + guess_cnt.toString();
-		var letters = to_char_list(s);
-		var cells = []
-			.concat(guess_cnt, letters, m)
-			.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
-			.join('');
-		document.getElementById(gk).innerHTML = cells;
-		if (m[0] == 5) {
-			game_end.innerHTML = compose_game_end();
-		}
-		else if (++guess_cnt == 10) {
-			game_end.innerHTML = compose_game_end();
-		}
-		if (m[0] == 0 && m[1] == 0) {
-			letters.forEach(function(ltr) {
-				letter_class[ltr] = 'impossible';
-			})
-		}
+	guesses.push(s);
+	s = s.toUpperCase();
+	var m = match_word(s);
+	var gk = "g" + guess_cnt.toString();
+	var letters = to_char_list(s);
+	var cells = []
+		.concat(guess_cnt, letters, m)
+		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
+		.join('');
+	document.getElementById(gk).innerHTML = cells;
+	if (m[0] == 5) {
+		game_end.innerHTML = compose_game_end();
 	}
+	else if (++guess_cnt == 10) {
+		game_end.innerHTML = compose_game_end();
+	}
+	if (m[0] == 0 && m[1] == 0) {
+		letters.forEach(function(ltr) {
+			letter_class[ltr] = 'impossible';
+		})
+	}
+
 	reset_unprobables();
 	update_keyboard();
 	document.getElementById("guessword").value = "";
@@ -340,13 +340,17 @@ function guess_word() {
 }
 
 function guess_word_on_key_down(keyCode) {
-	set_wrong_guess('');
 	if (keyCode == 13) guess_word();
 }
 
 function guess_word_on_key_up() {
-	var cnt = document.getElementById("guessword").value.length;
-	document.getElementById("guess_btn").disabled = cnt != 5;
+	var guess_color = 'black';
+	var s = guessword.value.trim();
+	var len = word_len(s);
+	if (len > 5 || len == 5 && !is_in_dict(s))
+		guess_color = 'red';
+
+	guessword.style.color = guess_color;
 }
 
 function compose_game_end() {

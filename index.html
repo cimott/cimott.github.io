@@ -13,17 +13,15 @@
 <body>
 	<div id="container">
 		 <div class="topnav">
-			<input type="text" id="guessword"
+			<input type="text" id="guessword" autofocus
 				onkeydown="guess_word_on_key_down(event.keyCode);"
 				onkeyup="guess_word_on_key_up();"
-				placeholder="Word">
+				placeholder="WORD...">
 			<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
 			<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
-			<button type="submit" onclick="random_word()"><i class="fa fa-file-text"></i></button>
+			<button type="submit" id="new_game_btn" onclick="random_word()"><i class="fa fa-file-text"></i></button>
 			<button type="submit" id="language" onclick="change_language()"><b>HR</b></button>
 		</div> 
-
-		<p id="wrong_guess"/></p>
 
 		<div id="game_end"></div>
 
