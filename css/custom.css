@@ -1,5 +1,5 @@
 body {
-	font-family: "Roboto Light", "Arial", sans-serif;
+	font-family: "Roboto", "Arial", sans-serif;
 	background-color: #e9e9e9;
 	line-height: 1.25;
 	font-size: 4vh;
@@ -39,14 +39,14 @@ body {
 }
 
 table {
-	width: calc(100% + 10px);
-	border-spacing: 5px;
-	margin-left: -5px;
+	width: calc(100% + 1vh);
+	border-spacing: 0.5vh;
+	margin-left: -0.5vh;
 }
 
 td {
 	border: 1px solid #ccc;
-	height: 8vh;
+	height: 7.5vh;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -72,8 +72,12 @@ table#alphabet td {
 	font-size: 2vh;
 }
 
+table#alphabet .letter_A, table#alphabet .letter_E, table#alphabet .letter_I, table#alphabet .letter_O, table#alphabet .letter_U {
+	border-color: #666;
+}
+
 table#alphabet {
-	margin: 1vh -5px;
+	margin: 1vh -0.5vh;
 }
 
 table#alphabet td:not(.impossible), table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
@@ -92,10 +96,12 @@ table#alphabet td.impossible {
 
 td.impossible {
 	color: #ccc;
+	border-color: #ccc !important;
 }
 
 td.unprobable {
 	color: #ddd;
+	border-color: #ccc !important;
 }
 
 td.probable {
@@ -106,4 +112,66 @@ td.probable {
 
 td.selected {
 	border-color: #000;
+}
+
+#game_end {
+	position: fixed; /* Sit on top of the page content */
+	display: none; /* Hidden by default */
+	width: 100%; /* Full width (cover the whole page) */
+	height: 100%; /* Full height (cover the whole page) */
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#game_end_content {
+	position: absolute;
+	max-width: 80vw;
+	top: 50%;
+	left: 50%;
+	font-size: 4vmin;
+	color: #333;
+	transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	background-color: #fff;
+	padding: 1em;
+	border-radius: 1em;
+}
+
+.game_end_button {
+	color: #3e8ed0;
+	padding: 0.5em 1.5em;
+	border: 1px solid #3e8ed0;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 0.25em;
+	cursor: pointer;
+	border-radius: 0.5em;
+}
+
+.game_end_button:hover {
+	background-color: #3e8ed0;
+	color: white;
+}
+
+#game_end_challenge_sharing {
+	color: #f14668;
+	border: 1px solid #f14668;
+}
+
+#game_end_challenge_sharing:hover {
+	background-color: #f14668;
+	color: white;
+}
+
+#game_end_challenge_no_sharing {
+	display: none;
+}
+
+#game_end_challenge_link {
+	overflow-wrap: break-word;
 }

@@ -25,8 +25,6 @@
 			</div>
 		</div> 
 
-		<div id="game_end"></div>
-
 		<table id="alphabet">
 			<colgroup>
 				<col style="width:10%">
@@ -73,6 +71,19 @@
 		</table>
 
 		<div style="clear: both" />
+
+		<div id="game_end" onclick="hide_game_end()">
+			<div id="game_end_content" onclick="eat_click();">
+				<h3 id="game_end_title">Game Over!</h3>
+				<p id="game_end_result"></p>
+				<div id="game_end_challenge_no_sharing"/>
+					<h3 id="game_end_challenge_title">Challenge a Friend</h3>
+					<p id="game_end_challenge_link"></p>
+				</div>
+				<a id="game_end_challenge_sharing" class="game_end_button" onclick="send_challenge()">Challenge a Friend</a>
+				<a id="game_end_new" class="game_end_button" onclick="restart_game()">Start New Game</a>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

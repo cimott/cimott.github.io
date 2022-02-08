@@ -102,6 +102,7 @@ function set_hidden_word(idx) {
 	clear_state();
 	word_idx = idx;
 	word = get_word(idx).toUpperCase();
+	// console.log(word);
 	guess_cnt = 1;
 	for (var i = 1; i < 10; ++i) {
 		var gk = "g" + i.toString();
@@ -120,7 +121,6 @@ function set_hidden_word(idx) {
 
 	var alph = alphabet();
 	for (var i = 0;; i += 10) {
-		console.log(i, alph.length);
 		if (i >= alph.length)
 			break;
 
@@ -135,7 +135,6 @@ function set_hidden_word(idx) {
 			.join("")
 		document.getElementById(abck).innerHTML = cells;
 	}
-	game_end.innerHTML = "";
 }
 
 function create_letter(ch) {
@@ -143,28 +142,54 @@ function create_letter(ch) {
 }
 
 window.onload = function() {
-	let idx = document.URL.indexOf('?');
-	if (idx != -1) {
-		let pairs = decodeURIComponent(document.URL.substring(idx+1, document.URL.length)).split('&');
-		let map = { };
-		pairs.forEach(function(pair) {
-			var kv = pair.split("=");
-			map[kv[0]] = kv[1];
-		})
-		if (map["lang"]) {
-			set_language(map["lang"]);
-		}
-		set_hidden_word(decode_idx(map["idx"]));
-		guessword.value = map["guess1"];
-		guess_word();
-		if (map["guess_cnt"]) {
-			document.getElementById("g" + map["guess_cnt"]).classList.add('target');
-		}
-	}
-	else {
+	check_url_old() || check_url_new();
+
+	if (word_idx == 0)
 		random_word();
-	}
 };
+
+function check_url_old() {
+	let idx = document.URL.indexOf('?');
+	if (idx == -1)
+		return false;
+	
+	let pairs = decodeURIComponent(document.URL.substring(idx+1, document.URL.length)).split('&');
+	let map = { };
+	pairs.forEach(function(pair) {
+		var kv = pair.split("=");
+		map[kv[0]] = kv[1];
+	})
+	if (!map["idx"] || !map["guess1"] || !map["lang"])
+		return false;
+
+	start_game_from_url(map);
+	return true;
+}
+
+function check_url_new() {
+	let idx = document.URL.indexOf('?');
+	if (idx == -1)
+		return false;
+	
+	try {
+		let game = decodeURIComponent(atob(document.URL.substring(idx + 1))).split('|');
+		if (game.length < 3)
+			return false;
+
+		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3] });	
+		return true;
+	}
+	catch(e) { }
+	return false;
+}
+
+function start_game_from_url(game) {
+	set_language(game.lang);
+	set_hidden_word(game.idx);
+	guessword.value = game.guess1;
+	guess_word();
+	if (game.guess_cnt) document.getElementById("g" + game.guess_cnt).classList.add('target');
+}
 
 function on_placeholder_clicked(el) {
 	if (selected_placeholder)
@@ -240,6 +265,7 @@ function update_keyboard() {
 
 function random_word() {
 	set_hidden_word(parseInt(Date.now()) % word_cnt());
+	guessword.focus();
 }
 
 function chk_word(w) {
@@ -322,12 +348,9 @@ function guess_word() {
 		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
 		.join('');
 	document.getElementById(gk).innerHTML = cells;
-	if (m[0] == 5) {
-		game_end.innerHTML = compose_game_end();
-	}
-	else if (++guess_cnt == 10) {
-		game_end.innerHTML = compose_game_end();
-	}
+	if (m[0] == 5 || (++guess_cnt == 10))
+		show_game_end();
+
 	if (m[0] == 0 && m[1] == 0) {
 		letters.forEach(function(ltr) {
 			letter_class[ltr] = 'impossible';
@@ -353,20 +376,47 @@ function guess_word_on_key_up() {
 	guessword.style.color = guess_color;
 }
 
-function compose_game_end() {
+function get_game_link() {
 	let win = guess_cnt < 10;
-	let guess_1 = encodeURIComponent(guesses[0]);
-	let link = "https://cimott.github.io?idx=" + encode_idx(word_idx).toString()
-		+ "&lang=" + lang()
-		+ "&guess1=" + guess_1;
-	if (win) link += "&guess_cnt=" + guess_cnt;
+	let game = btoa(encodeURIComponent([ lang(), word_idx, guesses[0], win ? guess_cnt : '' ].join('|')));
+	return "https://cimott.github.io?" + game;
+}
 
-	let ret = "<h3>Game End</h3>";
-	ret += "<p>";
-	if (win) ret += + guess_cnt + " tries to guess, well done!";
-	else ret += "You lose, correct word is " + word;
-	ret += "</p>";
-	ret += "<h3>Challenge a Friend</h3>";
-	ret += "<p>" + link + "</p>";
-	return ret;
+function show_game_end() {
+	game_end.style.display = "block";
+	let win = guess_cnt < 10;
+	game_end_result.innerHTML = win
+		? "You win in " + guess_cnt + " tries."
+		: "You lose! Correct word is <b>" + word + "</b>.";
+
+	if (!navigator.share) {
+		game_end_challenge_no_sharing.style.display = "block";
+		game_end_challenge_sharing.style.display = "none";
+		game_end_challenge_link.innerHTML = get_game_link();
+	}
+	else {
+		game_end_challenge_no_sharing.style.display = "none";
+		game_end_challenge_sharing.style.display = "block";		
+	}
+}
+
+function hide_game_end() {
+	game_end.style.display = "none";	
+}
+
+function eat_click(e) {
+	e = e || window.event;
+	e.stopPropagation();
+}
+
+function restart_game() {
+	hide_game_end();
+	random_word();
+}
+
+function send_challenge() {
+	navigator.share({
+		title: "Mastermind Wordle",
+		url: get_game_link(),
+	});
 }
