@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 function lang() {
 	var el = document.getElementById('language');
@@ -185,11 +185,13 @@ function check_url_new() {
 		if (game.length < 3)
 			return false;
 
-
-		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: game[4].split(',') });	
+		let guesses = game[4] ? game[4].split(',') : null;
+		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });	
 		return true;
 	}
-	catch(e) { }
+	catch(e) {
+		console.log('wrong url', e);
+	}
 	return false;
 }
 
@@ -220,6 +222,9 @@ function on_placeholder_clicked(el) {
 }
 
 function on_letter_clicked(el) {
+	if (challenge && challenge.results_shown)
+		return;
+	
 	var ltr = el.innerHTML;
 	if (letter_class[ltr] == 'impossible')
 		return;
@@ -256,7 +261,7 @@ function sync_letter_classes() {
 		if (cnt == 0) continue;
 		let cl = to_char_list(guess);
 		let sel_cnt = 0;
-		for (ltr of sel) { if (cl.includes(ltr)) ++sel_cnt; }
+		for (var ltr of sel) { if (cl.includes(ltr)) ++sel_cnt; }
 		if (sel_cnt >= cnt) {
 			for (ltr of cl) {
 				if (letter_class[ltr] != 'impossible' && !sel.includes(ltr))
@@ -352,7 +357,11 @@ function guess_word() {
 		return;
 
 	guesses.push(s);
-	var m = fill_guesses_table(s, guess_cnt);
+	
+	var m = match_word(s);
+	var letters = to_char_list(s);
+	fill_guesses_table(s, guess_cnt, m, letters);
+	
 	if (m[0] == 5 || (++guess_cnt) == 10)
 		show_game_end();
 
@@ -367,11 +376,11 @@ function guess_word() {
 	document.getElementById("guessword").value = "";
 }
 
-function fill_guesses_table(s, guess_cnt) {
+function fill_guesses_table(s, guess_cnt, m, letters) {
 	s = s.toUpperCase();
-	var m = match_word(s);
+	m = m || match_word(s);
 	var gk = "g" + guess_cnt.toString();
-	var letters = to_char_list(s);
+	letters = letters || to_char_list(s);
 	var cells = []
 		.concat(guess_cnt, letters, m)
 		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
@@ -428,7 +437,8 @@ function show_game_end() {
 		challenge_link.innerHTML = get_game_link();
 	}
 
-	compare_results_btn.style.display = challenge ? "inline-block" : "none";
+	compare_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
+	toggle_results_btn.style.display = compare_results_btn.style.display;
 	
 	topnav_guess.style.display = "none";
 	topnav_game_end.style.display = "block";
@@ -472,6 +482,7 @@ function toggle_results() {
 
 function show_guesses(gs) {
 	challenge.results_shown = gs == challenge.guesses;
+	clear_assumptions();
 	clear_tables();
 	gs.forEach(function(g, idx) {
 		fill_guesses_table(g, idx + 1);
