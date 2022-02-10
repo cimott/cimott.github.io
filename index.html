@@ -13,13 +13,19 @@
 <body>
 	<div id="container">
 		 <div id="topnav">
-			<input type="text" id="guessword" autofocus
-				onkeydown="guess_word_on_key_down(event.keyCode);"
-				onkeyup="guess_word_on_key_up();"
-				placeholder="WORD...">
-			<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
-			<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
-			<div id="topnav-config">
+		 	<div id="topnav_guess">
+				<input type="text" id="guessword" autofocus
+					onkeydown="guess_word_on_key_down(event.keyCode);"
+					onkeyup="guess_word_on_key_up();"
+					placeholder="WORD...">
+				<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
+				<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
+			</div>
+		 	<div id="topnav_game_end">
+				<button type="submit" onclick="show_game_end();"><i class="fa fa-send"></i></button>
+				<button id="toggle_results_btn" type="submit" onclick="toggle_results();"><i class="fa fa-balance-scale"></i></button>
+			</div>
+			<div id="topnav_config">
 				<button type="submit" id="new_game_btn" onclick="random_word()"><i class="fa fa-file-text"></i></button>
 				<button type="submit" id="language" onclick="change_language()"><b>HR</b></button>
 			</div>
@@ -76,12 +82,14 @@
 			<div id="game_end_content" onclick="eat_click();">
 				<h3 id="game_end_title">Game Over!</h3>
 				<p id="game_end_result"></p>
-				<div id="game_end_challenge_no_sharing"/>
-					<h3 id="game_end_challenge_title">Challenge a Friend</h3>
-					<p id="game_end_challenge_link"></p>
+				<a id="send_challenge_btn" class="game_end_button" onclick="send_challenge()">Send Challenge</a>
+				<a id="copy_challenge_btn" class="game_end_button" onclick="copy_challenge()">Copy Challenge</a>
+				<div id="manually_copy_challenge"/>
+					<h3>Challenge a Friend</h3>
+					<p id="challenge_link"></p>
 				</div>
-				<a id="game_end_challenge_sharing" class="game_end_button" onclick="send_challenge()">Challenge a Friend</a>
-				<a id="game_end_new" class="game_end_button" onclick="restart_game()">Start New Game</a>
+				<a id="compare_results_btn" class="game_end_button" onclick="compare_results()">Compare Results</a>
+				<a class="game_end_button" onclick="restart_game()">Start New Game</a>
 			</div>
 		</div>
 	</div>

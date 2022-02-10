@@ -1,4 +1,4 @@
-
+'use strict';
 
 function lang() {
 	var el = document.getElementById('language');
@@ -44,10 +44,10 @@ function word_len(w) {
 }
 
 function to_char_list(w) {
-	is_cro = lang() == "cro";
+	let is_cro = lang() == "cro";
 	w = w.toUpperCase();
-	ret = [];
-	for (i = 0; i < w.length; ++i) {
+	let ret = [];
+	for (let i = 0; i < w.length; ++i) {
 		if (is_cro && i < w.length - 1 && (
 		    (w[i] == 'L' && w[i + 1] == 'J') ||
 		    (w[i] == 'N' && w[i + 1] == 'J') ||
@@ -66,6 +66,7 @@ function to_char_list(w) {
 const alphabet_eng = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Q,Z";
 const alphabet_cro = "A,B,C,Č,Ć,D,DŽ,Đ,E,F,G,H,I,J,K,L,LJ,M,N,NJ,O,P,R,S,Š,T,U,V,Z,Ž";
 
+var challenge = null;
 var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
@@ -74,6 +75,7 @@ var letter_class = { };
 var selected_placeholder = null;
 
 function clear_state() {
+	challenge = null;
 	word_idx = 0;
 	word = "";
 	guess_cnt = 0;
@@ -83,6 +85,9 @@ function clear_state() {
 	for (var i = 1; i <= 9; ++i)
 		document.getElementById("g" + i).className = '';
 	guessword.value = '';
+
+	topnav_guess.style.display = "block";
+	topnav_game_end.style.display = "none";
 }
 
 const magic_idx = 5461;
@@ -99,11 +104,14 @@ function decode_idx(idx) {
 }
 
 function set_hidden_word(idx) {
-	clear_state();
 	word_idx = idx;
 	word = get_word(idx).toUpperCase();
 	// console.log(word);
 	guess_cnt = 1;
+	clear_tables();
+}
+
+function clear_tables() {
 	for (var i = 1; i < 10; ++i) {
 		var gk = "g" + i.toString();
 
@@ -136,6 +144,7 @@ function set_hidden_word(idx) {
 		document.getElementById(abck).innerHTML = cells;
 	}
 }
+
 
 function create_letter(ch) {
 	return "<td class='letter_" + ch + "' onclick='on_letter_clicked(this);'>" + ch + "</td>";
@@ -176,7 +185,8 @@ function check_url_new() {
 		if (game.length < 3)
 			return false;
 
-		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3] });	
+
+		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: game[4].split(',') });	
 		return true;
 	}
 	catch(e) { }
@@ -184,6 +194,8 @@ function check_url_new() {
 }
 
 function start_game_from_url(game) {
+	clear_state();
+	challenge = game;
 	set_language(game.lang);
 	set_hidden_word(game.idx);
 	guessword.value = game.guess1;
@@ -228,7 +240,7 @@ function on_letter_clicked(el) {
 }
 
 function reset_unprobables() {
-	for (ltr of alphabet()) {
+	for (var ltr of alphabet()) {
 		if (letter_class[ltr] == 'unprobable') letter_class[ltr] = '';
 	}
 }
@@ -264,6 +276,7 @@ function update_keyboard() {
 }
 
 function random_word() {
+	clear_state();
 	set_hidden_word(parseInt(Date.now()) % word_cnt());
 	guessword.focus();
 }
@@ -296,8 +309,8 @@ function is_in_dict(w) {
 }
 
 function match_word(w) {
-	wl = to_char_list(w);
-	wordl = to_char_list(word);
+	let wl = to_char_list(w);
+	let wordl = to_char_list(word);
 	const sk = [], sw = [];
 	var sz = 0, g = 0;
 	for (let i = 0; i < wl.length; ++i) {
@@ -339,16 +352,8 @@ function guess_word() {
 		return;
 
 	guesses.push(s);
-	s = s.toUpperCase();
-	var m = match_word(s);
-	var gk = "g" + guess_cnt.toString();
-	var letters = to_char_list(s);
-	var cells = []
-		.concat(guess_cnt, letters, m)
-		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
-		.join('');
-	document.getElementById(gk).innerHTML = cells;
-	if (m[0] == 5 || (++guess_cnt == 10))
+	var m = fill_guesses_table(s, guess_cnt);
+	if (m[0] == 5 || (++guess_cnt) == 10)
 		show_game_end();
 
 	if (m[0] == 0 && m[1] == 0) {
@@ -360,6 +365,19 @@ function guess_word() {
 	reset_unprobables();
 	update_keyboard();
 	document.getElementById("guessword").value = "";
+}
+
+function fill_guesses_table(s, guess_cnt) {
+	s = s.toUpperCase();
+	var m = match_word(s);
+	var gk = "g" + guess_cnt.toString();
+	var letters = to_char_list(s);
+	var cells = []
+		.concat(guess_cnt, letters, m)
+		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
+		.join('');
+	document.getElementById(gk).innerHTML = cells;
+	return m;
 }
 
 function guess_word_on_key_down(keyCode) {
@@ -378,7 +396,7 @@ function guess_word_on_key_up() {
 
 function get_game_link() {
 	let win = guess_cnt < 10;
-	let game = btoa(encodeURIComponent([ lang(), word_idx, guesses[0], win ? guess_cnt : '' ].join('|')));
+	let game = btoa(encodeURIComponent([ lang(), word_idx, guesses[0], win ? guess_cnt : '', guesses.join(',') ].join('|')));
 	return "https://cimott.github.io?" + game;
 }
 
@@ -389,15 +407,31 @@ function show_game_end() {
 		? "You win in " + guess_cnt + " tries."
 		: "You lose! Correct word is <b>" + word + "</b>.";
 
-	if (!navigator.share) {
-		game_end_challenge_no_sharing.style.display = "block";
-		game_end_challenge_sharing.style.display = "none";
-		game_end_challenge_link.innerHTML = get_game_link();
+	if (navigator.share) {
+		send_challenge_btn.style.display = "inline-block";
+		copy_challenge_btn.style.display = "none";
+		manually_copy_challenge.style.display = "none";
+	}
+	else if (navigator.clipboard) {
+		send_challenge_btn.style.display = "none";
+		copy_challenge_btn.style.display = "block";
+		manually_copy_challenge.style.display = "none";
+
+		copy_challenge_btn.innerHTML = "Copy Challenge";
+		copy_challenge_btn.classList.remove('copied');
 	}
 	else {
-		game_end_challenge_no_sharing.style.display = "none";
-		game_end_challenge_sharing.style.display = "block";		
+		send_challenge_btn.style.display = "none";
+		copy_challenge_btn.style.display = "none";
+		manually_copy_challenge.style.display = "block";
+
+		challenge_link.innerHTML = get_game_link();
 	}
+
+	compare_results_btn.style.display = challenge ? "inline-block" : "none";
+	
+	topnav_guess.style.display = "none";
+	topnav_game_end.style.display = "block";
 }
 
 function hide_game_end() {
@@ -418,5 +452,28 @@ function send_challenge() {
 	navigator.share({
 		title: "Mastermind Wordle",
 		url: get_game_link(),
+	});
+}
+
+function copy_challenge() {
+	navigator.clipboard.writeText(get_game_link());
+	copy_challenge_btn.innerHTML = "Link Copied!";
+	copy_challenge_btn.classList.add('copied');
+}
+
+function compare_results() {
+	hide_game_end();
+	show_guesses(challenge.guesses);
+}
+
+function toggle_results() {
+	show_guesses(challenge.results_shown ? guesses : challenge.guesses);
+}
+
+function show_guesses(gs) {
+	challenge.results_shown = gs == challenge.guesses;
+	clear_tables();
+	gs.forEach(function(g, idx) {
+		fill_guesses_table(g, idx + 1);
 	});
 }

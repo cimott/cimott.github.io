@@ -27,7 +27,12 @@ body {
 	cursor: pointer;
 }
 
-#topnav-config {
+
+#topnav_guess, #topnav_game_end {
+	float: left;
+}
+
+#topnav_config {
 	float: right;
 }
 
@@ -139,6 +144,7 @@ td.selected {
 	background-color: #fff;
 	padding: 1em;
 	border-radius: 1em;
+	text-align: center;
 }
 
 .game_end_button {
@@ -151,6 +157,7 @@ td.selected {
 	margin: 0.25em;
 	cursor: pointer;
 	border-radius: 0.5em;
+	min-width: 14ch;
 }
 
 .game_end_button:hover {
@@ -158,20 +165,15 @@ td.selected {
 	color: white;
 }
 
-#game_end_challenge_sharing {
-	color: #f14668;
-	border: 1px solid #f14668;
+#copy_challenge_btn.copied {
+	border: none;
 }
 
-#game_end_challenge_sharing:hover {
-	background-color: #f14668;
-	color: white;
+#copy_challenge_btn.copied:hover {
+	background-color: white;
+	color: #3e8ed0;
 }
 
-#game_end_challenge_no_sharing {
-	display: none;
-}
-
-#game_end_challenge_link {
+#challenge_link {
 	overflow-wrap: break-word;
 }
