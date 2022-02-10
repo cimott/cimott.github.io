@@ -36,6 +36,13 @@ body {
 	float: right;
 }
 
+#daily_challenge_title {
+	font-weight: bold;
+	text-align: center;
+	font-size: 2vh;
+	margin: 0 0 6px 0;
+}
+
 #container {
 	background-color: #fff;
 	padding: 1vmin 2vmin;
@@ -153,7 +160,7 @@ td.selected {
 	border: 1px solid #3e8ed0;
 	text-align: center;
 	text-decoration: none;
-	display: inline-block;
+	display: block;
 	margin: 0.25em;
 	cursor: pointer;
 	border-radius: 0.5em;

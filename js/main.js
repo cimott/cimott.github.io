@@ -49,8 +49,8 @@ function to_char_list(w) {
 	let ret = [];
 	for (let i = 0; i < w.length; ++i) {
 		if (is_cro && i < w.length - 1 && (
-		    (w[i] == 'L' && w[i + 1] == 'J') ||
-		    (w[i] == 'N' && w[i + 1] == 'J') ||
+			(w[i] == 'L' && w[i + 1] == 'J') ||
+			(w[i] == 'N' && w[i + 1] == 'J') ||
 			(w[i] == 'D' && w[i + 1] == 'Ž')))
 		{
 			ret.push(w.substring(i, i + 2));
@@ -71,6 +71,7 @@ var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
 var guesses = [];
+var is_daily_challenge = false;
 var letter_class = { };
 var selected_placeholder = null;
 
@@ -80,6 +81,7 @@ function clear_state() {
 	word = "";
 	guess_cnt = 0;
 	guesses = [];
+	set_daily_challenge(false);
 	letter_class = { };
 	selected_placeholder = null;
 	for (var i = 1; i <= 9; ++i)
@@ -109,6 +111,7 @@ function set_hidden_word(idx) {
 	// console.log(word);
 	guess_cnt = 1;
 	clear_tables();
+	save_game();
 }
 
 function clear_tables() {
@@ -154,7 +157,7 @@ window.onload = function() {
 	check_url_old() || check_url_new();
 
 	if (word_idx == 0)
-		random_word();
+		load_game() || daily_challenge() || random_word();
 };
 
 function check_url_old() {
@@ -171,7 +174,7 @@ function check_url_old() {
 	if (!map["idx"] || !map["guess1"] || !map["lang"])
 		return false;
 
-	start_game_from_url(map);
+	start_challenge(map);
 	return true;
 }
 
@@ -186,7 +189,7 @@ function check_url_new() {
 			return false;
 
 		let guesses = game[4] ? game[4].split(',') : null;
-		start_game_from_url({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });	
+		start_challenge({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });	
 		return true;
 	}
 	catch(e) {
@@ -195,8 +198,9 @@ function check_url_new() {
 	return false;
 }
 
-function start_game_from_url(game) {
+function start_challenge(game) {
 	clear_state();
+	set_daily_challenge(game.daily_challenge);
 	challenge = game;
 	set_language(game.lang);
 	set_hidden_word(game.idx);
@@ -357,6 +361,7 @@ function guess_word() {
 		return;
 
 	guesses.push(s);
+	save_game();
 	
 	var m = match_word(s);
 	var letters = to_char_list(s);
@@ -417,7 +422,7 @@ function show_game_end() {
 		: "You lose! Correct word is <b>" + word + "</b>.";
 
 	if (navigator.share) {
-		send_challenge_btn.style.display = "inline-block";
+		send_challenge_btn.style.display = "block";
 		copy_challenge_btn.style.display = "none";
 		manually_copy_challenge.style.display = "none";
 	}
@@ -437,11 +442,16 @@ function show_game_end() {
 		challenge_link.innerHTML = get_game_link();
 	}
 
-	compare_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
+	compare_results_btn.style.display = challenge && challenge.guesses ? "block" : "none";
 	toggle_results_btn.style.display = compare_results_btn.style.display;
-	
+
 	topnav_guess.style.display = "none";
 	topnav_game_end.style.display = "block";
+
+	if (is_daily_challenge)
+		set_cookie(daily_challenge_key(), 'solved', 2);
+
+	erase_cookie('current_game');
 }
 
 function hide_game_end() {
@@ -487,4 +497,92 @@ function show_guesses(gs) {
 	gs.forEach(function(g, idx) {
 		fill_guesses_table(g, idx + 1);
 	});
+}
+
+function save_game() {
+	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word_idx, guesses.join(','), Boolean(is_daily_challenge).toString() ].join('|'))));
+}
+
+function load_game() {
+	var game = get_cookie('current_game');
+	if (!game)
+		return false;
+
+	game = decodeURIComponent(atob(game)).split('|');
+	if (game.length < 4)
+		return false;
+
+	clear_state();
+	set_language(game[0]);
+	set_hidden_word(game[1]);
+	set_daily_challenge(game[3] == 'true');
+	game[2].split(',').forEach(function(guess) {
+		guessword.value = guess;
+		guess_word();
+	})
+	return true;
+}
+
+function daily_challenge() {
+	if (get_cookie(daily_challenge_key()))
+		return false;
+
+	var seed = days_since_epoch();
+	var iter = 99;
+	var word_idx = rand_idx(seed, 49);
+	var guess_idx = rand_idx(seed, iter);
+	while (word_idx == guess_idx)
+		guess_idx = rand_idx(seed, ++iter);
+
+	start_challenge({
+		lang: lang(),
+		idx: word_idx,
+		guess1: get_word(guess_idx),
+		daily_challenge: true,
+	});
+	return true;
+}
+
+function set_daily_challenge(val) {
+	is_daily_challenge = Boolean(val);
+	daily_challenge_title.style.display = is_daily_challenge ? "block" : "none";	
+}
+
+function rand_idx(x, iterations){
+	for (var i = 0; i < iterations; ++i)
+		x = (x ^ (x << 1) ^ (x >> 1)) % 10000;
+	return x % word_cnt();
+}
+
+function days_since_epoch() {
+	var now = new Date();
+	return Math.floor(now / 8.64e7);
+}
+
+function daily_challenge_key() {
+	return 'daily_challenge_' + days_since_epoch() + '_' + lang();
+}
+
+function set_cookie(name, value, days) {
+	var expires = "";
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		expires = "; expires=" + date.toUTCString();
+	}
+	document.cookie = name + "=" + (value || "")  + expires + "; path=/; Secure";
+}
+function get_cookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i = 0; i < ca.length; ++i) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	}
+	return null;
+}
+
+function erase_cookie(name) {   
+	document.cookie = name +'=; Path=/; Secure; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
