@@ -5,11 +5,11 @@
 	<title>Mastermind Wordle</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:bold,regular' rel='stylesheet'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<script type="text/javascript" src="js/dictionary.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
+	<script src="https://kit.fontawesome.com/971e0aea25.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div id="container">
@@ -19,15 +19,15 @@
 					onkeydown="guess_word_on_key_down(event.keyCode);"
 					onkeyup="guess_word_on_key_up();"
 					placeholder="WORD...">
-				<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa fa-search"></i></button>
+				<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
 			</div>
 		 	<div id="topnav_game_end">
-				<button type="submit" onclick="show_game_end();"><i class="fa fa-send"></i></button>
-				<button id="toggle_results_btn" type="submit" onclick="toggle_results();"><i class="fa fa-balance-scale"></i></button>
+				<button type="submit" onclick="show_game_end();"><i class="fa-solid fa-medal"></i></button>
+				<button id="toggle_results_btn" type="submit" onclick="toggle_results();"><i class="fa-solid fa-code-compare"></i></button>
 			</div>
 			<div id="topnav_config">
-				<button type="submit" id="new_game_btn" onclick="random_word()"><i class="fa fa-file-text"></i></button>
+				<button type="submit" id="new_game_btn" onclick="random_word()"><i class="fa-solid fa-file-lines"></i></button>
 				<button type="submit" id="language" onclick="change_language()"><b>HR</b></button>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 			<tr id="abc2"></tr>
 		</table>
 
-		<p id="daily_challenge_title">DAILY CHALLENGE</p>
+		<p id="game_title"></p>
 
 		<table id="guesses">
 			<colgroup>
