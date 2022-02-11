@@ -84,8 +84,6 @@ function clear_state() {
 	set_daily_challenge(false);
 	letter_class = { };
 	selected_placeholder = null;
-	for (var i = 1; i <= 9; ++i)
-		document.getElementById("g" + i).className = '';
 	guessword.value = '';
 
 	topnav_guess.style.display = "block";
@@ -128,6 +126,11 @@ function clear_tables() {
 			.join("");
 
 		document.getElementById(gk).innerHTML = cells;
+
+		if (!challenge || challenge.results_shown || i != challenge.guess_cnt)
+			document.getElementById(gk).className = '';
+		else
+			document.getElementById(gk).className = 'target';
 	}
 
 	var alph = alphabet();
@@ -164,7 +167,7 @@ function check_url_old() {
 	let idx = document.URL.indexOf('?');
 	if (idx == -1)
 		return false;
-	
+
 	let pairs = decodeURIComponent(document.URL.substring(idx+1, document.URL.length)).split('&');
 	let map = { };
 	pairs.forEach(function(pair) {
@@ -182,14 +185,14 @@ function check_url_new() {
 	let idx = document.URL.indexOf('?');
 	if (idx == -1)
 		return false;
-	
+
 	try {
 		let game = decodeURIComponent(atob(document.URL.substring(idx + 1))).split('|');
 		if (game.length < 3)
 			return false;
 
 		let guesses = game[4] ? game[4].split(',') : null;
-		start_challenge({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });	
+		start_challenge({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });
 		return true;
 	}
 	catch(e) {
@@ -206,7 +209,6 @@ function start_challenge(game) {
 	set_hidden_word(game.idx);
 	guessword.value = game.guess1;
 	guess_word();
-	if (game.guess_cnt) document.getElementById("g" + game.guess_cnt).classList.add('target');
 }
 
 function on_placeholder_clicked(el) {
@@ -228,7 +230,7 @@ function on_placeholder_clicked(el) {
 function on_letter_clicked(el) {
 	if (challenge && challenge.results_shown)
 		return;
-	
+
 	var ltr = el.innerHTML;
 	if (letter_class[ltr] == 'impossible')
 		return;
@@ -245,7 +247,6 @@ function on_letter_clicked(el) {
 		letter_class[ltr] = 'probable';
 
 	sync_letter_classes();
-	update_keyboard();
 }
 
 function reset_unprobables() {
@@ -273,6 +274,7 @@ function sync_letter_classes() {
 			}
 		}
 	}
+	update_keyboard();
 }
 
 function update_keyboard() {
@@ -362,11 +364,11 @@ function guess_word() {
 
 	guesses.push(s);
 	save_game();
-	
+
 	var m = match_word(s);
 	var letters = to_char_list(s);
 	fill_guesses_table(s, guess_cnt, m, letters);
-	
+
 	if (m[0] == 5 || (++guess_cnt) == 10)
 		show_game_end();
 
@@ -376,8 +378,7 @@ function guess_word() {
 		})
 	}
 
-	reset_unprobables();
-	update_keyboard();
+	sync_letter_classes();
 	document.getElementById("guessword").value = "";
 }
 
@@ -391,6 +392,11 @@ function fill_guesses_table(s, guess_cnt, m, letters) {
 		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
 		.join('');
 	document.getElementById(gk).innerHTML = cells;
+	if (m[0] == 5)
+		document.getElementById("g" + guess_cnt).classList.add('correct-answer');
+	else if (guess_cnt == 9)
+		document.getElementById("g9").classList.add('wrong-answer');
+
 	return m;
 }
 
@@ -443,7 +449,7 @@ function show_game_end() {
 	}
 
 	compare_results_btn.style.display = challenge && challenge.guesses ? "block" : "none";
-	toggle_results_btn.style.display = compare_results_btn.style.display;
+	toggle_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
 
 	topnav_guess.style.display = "none";
 	topnav_game_end.style.display = "block";
@@ -455,7 +461,7 @@ function show_game_end() {
 }
 
 function hide_game_end() {
-	game_end.style.display = "none";	
+	game_end.style.display = "none";
 }
 
 function eat_click(e) {
@@ -545,7 +551,7 @@ function daily_challenge() {
 
 function set_daily_challenge(val) {
 	is_daily_challenge = Boolean(val);
-	daily_challenge_title.style.display = is_daily_challenge ? "block" : "none";	
+	daily_challenge_title.style.display = is_daily_challenge ? "block" : "none";
 }
 
 function rand_idx(x, iterations){
@@ -583,6 +589,6 @@ function get_cookie(name) {
 	return null;
 }
 
-function erase_cookie(name) {   
+function erase_cookie(name) {
 	document.cookie = name +'=; Path=/; Secure; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
