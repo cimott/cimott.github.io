@@ -67,7 +67,6 @@ const alphabet_eng = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
 const alphabet_cro = "A,B,C,Č,Ć,D,DŽ,Đ,E,F,G,H,I,J,K,L,LJ,M,N,NJ,O,P,R,S,Š,T,U,V,Z,Ž";
 
 var challenge = null;
-var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
 var guesses = [];
@@ -78,7 +77,6 @@ var selected_placeholder = null;
 
 function clear_state() {
 	challenge = null;
-	word_idx = 0;
 	word = "";
 	guess_cnt = 0;
 	guesses = [];
@@ -93,10 +91,9 @@ function clear_state() {
 	hide_choose_game();
 }
 
-function set_hidden_word(idx) {
-	word_idx = idx;
-	word = get_word(idx).toUpperCase();
 	// console.log(word);
+function set_hidden_word(w) {
+	word = w.toUpperCase();
 	guess_cnt = 1;
 	clear_tables();
 	save_game();
@@ -147,13 +144,14 @@ function create_letter(ch) {
 window.onload = function() {
 	if (check_url()) {
 		if (game_already_played() && challenge.guesses) {
+			challenge.already_played = true;
 			restore_my_guesses();
 			show_guesses(challenge.guesses)
 		}
 		return;
 	}
 
-	if (word_idx == 0)
+	if (!word)
 		load_game() || start_daily_challenge() || random_word();
 };
 
@@ -171,13 +169,12 @@ function check_url() {
 		let hidden_word = game[2];
 		let guesses = game[3].split(',');
 
-		let idx = get_word_idx(hidden_word);
-		if (idx == -1)
+		if (!is_in_dict(hidden_word))
 			return false;
 
 		let guess_cnt = guesses[guesses.length - 1] == hidden_word ? guesses.length : null;
 
-		start_challenge({ lang: lang, idx: idx, guess1: guesses[0], guess_cnt: guess_cnt, guesses: guesses });
+		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
 		return true;
 	}
 	catch(e) {
@@ -189,10 +186,12 @@ function check_url() {
 function start_challenge(game) {
 	clear_state();
 	daily_challenge = game.daily_challenge || 0;
+	if (!game.guess1) game.guess1 = game.guesses[0];
 	challenge = game;
+
 	refresh_game_title();
 	set_language(game.lang);
-	set_hidden_word(game.idx);
+	set_hidden_word(game.hidden_word);
 	guessword.value = game.guess1;
 	guess_word();
 }
@@ -278,7 +277,7 @@ function update_keyboard() {
 function random_word() {
 	clear_state();
 	refresh_game_title();
-	set_hidden_word(parseInt(Date.now()) % word_cnt());
+	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()));
 	guessword.focus();
 }
 
@@ -286,27 +285,27 @@ function chk_word(w) {
 	if (word_len(w) != 5)
 		return false;
 
-	if (get_word_idx(w) != -1)
+	if (is_in_dict(w))
 		return true;
 
 	return false;
 }
 
-function get_word_idx(w) {
+function is_in_dict(w) {
 	w = w.toLowerCase();
 	var lb = 0, ub = word_cnt() - 1;
 	do {
 		var mid = parseInt((lb + ub) / 2);
 		var s = get_word(mid);
 		if (s == w)
-			return mid;
+			return true;
 		if (w < s)
 			ub = mid - 1;
 		else
 			lb = mid + 1;
 	}
 	while (lb <= ub);
-	return -1;
+	return false;
 }
 
 function match_word(w) {
@@ -410,7 +409,7 @@ function guess_word_on_key_up() {
 	var guess_color = 'black';
 	var s = guessword.value.trim();
 	var len = word_len(s);
-	if (len > 5 || len == 5 && get_word_idx(s) == -1)
+	if (len > 5 || len == 5 && !is_in_dict(s))
 		guess_color = 'red';
 
 	guessword.style.color = guess_color;
@@ -529,13 +528,12 @@ function load_game() {
 	if (game.length < 4)
 		return false;
 
-	let idx = get_word_idx(game[1]);
-	if (idx == -1)
+	if (!is_in_dict(game[1]))
 		return false;
 
 	clear_state();
 	set_language(game[0]);
-	set_hidden_word(idx);
+	set_hidden_word(game[1]);
 	daily_challenge = parseInt(game[3]);
 	refresh_game_title();
 	game[2].split(',').forEach(function(guess) {
@@ -566,7 +564,7 @@ function start_daily_challenge() {
 	daily_challenge_ck(day, 'started', true);
 	start_challenge({
 		lang: lang(),
-		idx: to_guess_today,
+		hidden_word: get_word(to_guess_today),
 		guess1: get_word(guess1_today),
 		daily_challenge: day,
 	});
@@ -584,8 +582,12 @@ function refresh_game_title() {
 	let title = '';
 	if (daily_challenge)
 		title = "DAILY CHALLENGE";
-	else if (challenge)
-		title = challenge.results_shown ? "CHALLENGER'S GUESSES" : "CHALLENGE";
+	else if (challenge) {
+		if (challenge.already_played)
+			title = challenge.results_shown ? "FRIEND'S GUESSES" : "MY GUESSES";
+		else
+			title = challenge.results_shown ? "CHALLENGER'S GUESSES" : "CHALLENGE";
+	}
 	game_title.innerHTML = title;
 }
 
@@ -605,7 +607,7 @@ function daily_challenge_cookie_key(day) {
 }
 
 function game_cookie_key() {
-	return [ 'game', lang(), word_idx, encodeURIComponent(guesses[0]) ].join('_')
+	return [ 'game', lang(), word, encodeURIComponent(guesses[0]) ].join('_')
 }
 
 function game_already_played() {
