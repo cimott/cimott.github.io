@@ -555,20 +555,22 @@ function daily_challenge() {
 		return false;
 
 	var seed = days_since_epoch();
-	var word_idx = rand_idx(seed, 49);
-	var guess_idx = rand_idx(seed, 99);
-	var retry = 0;
-	while (word_idx == guess_idx && retry < 100)
-		guess_idx = rand_idx(seed + (++retry), 99);
+	let to_guess_yesterday = rand_idx(seed - 1);
+	let to_guess_today = rand_idx(seed);
+	
+	let retry = 0;
+	while (to_guess_today == to_guess_yesterday)
+		to_guess_today = rand_idx(seed + (++retry))
 
-	if (retry == 100)
-		return false; // jbg, danas nema challenga :)
-
+	let guess1_today = to_guess_yesterday;
+	retry = 0;
+	while (guess1_today == to_guess_today)
+		guess1_today = rand_idx(seed + (++retry));
 
 	start_challenge({
 		lang: lang(),
-		idx: word_idx,
-		guess1: get_word(guess_idx),
+		idx: to_guess_today,
+		guess1: get_word(guess1_today),
 		daily_challenge: true,
 	});
 	return true;
@@ -583,8 +585,8 @@ function refresh_game_title() {
 	game_title.innerHTML = title;
 }
 
-function rand_idx(x, iterations){
-	for (var i = 0; i < iterations; ++i)
+function rand_idx(x){
+	for (var i = 0; i < 49; ++i)
 		x = (x ^ (x << 1) ^ (x >> 1)) % 10000;
 	return x % word_cnt();
 }
