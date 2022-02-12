@@ -219,6 +219,9 @@ function start_challenge(game) {
 }
 
 function on_placeholder_clicked(el) {
+	if (el && game_ended)
+		return;
+
 	if (selected_placeholder)
 		selected_placeholder.className = '';
 
@@ -417,6 +420,7 @@ function check_game_ended(m, guess_cnt) {
 	toggle_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
 	topnav_guess.style.display = "none";
 	topnav_game_end.style.display = "block";
+	on_placeholder_clicked(null);
 }
 
 function guess_word_on_key_down(keyCode) {
