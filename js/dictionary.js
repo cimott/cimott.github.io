@@ -1,518 +1,344 @@
 
 const word_list_cro = [
-"abaka", "abces", "aceni", "adapa", "adend", "adion", "adukt", "adult", "aerob", "afekt", "afera", "afeza", 
-"afiks", "afini", "agama", "agami", "agava", "agens", "agent", "agnat", "agona", "agora", "agrar", "agrum", 
-"aguti", "ahanje", "ahati", "aikia", "ajuga", "ajvar", "akant", "akcij", "akciz", "akono", "akord", "akrap", 
-"akril", "akson", "aktea", "akter", "aktin", "aktiv", "alarm", "alaun", "alban", "albin", "album", "aleja", 
-"aleni", "aleut", "alhadž", "alias", "alibi", "aljkav", "alkan", "alkar", "alken", "alkid", "alkil", "alkin", 
-"aloja", "alonž", "alpin", "altai", "alter", "alupa", "ambar", "ambis", "ambon", "ambra", "ameba", "amidi", 
-"amino", "amper", "amvonj", "anala", "anali", "aneks", "angin", "anion", "anker", "anoda", "anons", "antej", 
-"antik", "anusa", "anđel", "anđeo", "aorta", "apeks", "aphel", "aplet", "apoen", "april", "arabe", "arbun", 
-"areal", "areat", "areja", "arena", "argol", "argon", "argun", "argus", "arhea", "arhiv", "arija", "arina", 
-"arkus", "armen", "aroma", "arsen", "aršin", "asket", "askus", "aspen", "aspik", "astat", "aster", "astma", 
-"astra", "ataše", "atelje", "atena", "atest", "atilo", "atiti", "atlas", "atlet", "atona", "atrij", "atula", 
-"audio", "audit", "augur", "autić", "autor", "avans", "avers", "aveta", "avion", "avizo", "avnoj", "azani", 
-"azidi", "azini", "azola", "babak", "babin", "babit", "babić", "bablji", "babun", "bacan", "bacač", "bacil", 
-"badalj", "badanj", "badem", "baden", "badić", "badnji", "bafer", "bagav", "bager", "bagra", "bahat", "bajam", 
-"bajan", "bajat", "bajka", "bajni", "bajta", "bajti", "bajto", "bakan", "bakar", "bakin", "baklja", "baklje", 
-"bakri", "bakći", "balav", "balet", "balin", "balon", "balti", "balun", "banda", "baner", "banka", "banov", 
-"barak", "barač", "baraž", "barba", "barel", "barem", "barij", "barit", "barka", "barok", "baron", "barov", 
-"barun", "barut", "barža", "basak", "baset", "basma", "basna", "basov", "batac", "batak", "batat", "batik", 
-"batin", "batić", "bavar", "bazar", "bazen", "bazga", "bazni", "bačen", "bački", "bačva", "bašan", "baški", 
-"bašča", "bdija", "bdiji", "bditi", "beans", "bedak", "bedem", "bedro", "begov", "begum", "behar", "belot", 
-"benav", "bendžo", "bepov", "beram", "berač", "berba", "beril", "beriv", "berma", "besan", "betel", "betin", 
-"beton", "bezan", "bezub", "bezuh", "bećar", "bečej", "bečen", "bečki", "bešen", "biber", "bijeg", "bijel", 
-"bijen", "bijes", "bikov", "bileć", "bilin", "biljar", "biljeg", "biljka", "biljni", "bingo", "binom", "biota", 
-"bipod", "biran", "birač", "birsa", "bisag", "bisau", "biser", "biski", "bista", "bitak", "bitan", "biter", 
-"bitka", "bitni", "bitolj", "bitov", "bitva", "bivak", "bivol", "bivši", "bizam", "bizon", "bićin", "bičaš", 
-"bičić", "bičji", "bjeha", "bjelji", "bjeti", "blagi", "blago", "blanja", "blanje", "blati", "blato", "blaži", 
-"blind", "blizu", "bliže", "bliži", "bljeđi", "blješt", "bljušt", "blues", "bluna", "bluza", "bobac", "bobin", 
-"bobić", "bocun", "bodac", "bodar", "bodač", "boden", "bodež", "bodlja", "bodri", "bodul", "boema", "bofor", 
-"bogac", "bogalj", "bogat", "bogav", "bogme", "bohem", "bohinj", "bojan", "bojen", "bojna", "bojni", "bokal", 
-"bokor", "bokun", "bolan", "bolid", "boljar", "boljka", "bolni", "bolno", "bolta", "bomba", "bongo", "bonus", 
-"borac", "borak", "boran", "borat", "borač", "borba", "bordo", "borer", "borid", "borik", "borić", "borje", 
-"borni", "boron", "borov", "boršč", "bosan", "bosti", "bosut", "botun", "bovin", "bozon", "boćar", "boćat", 
-"bočan", "bočat", "bočni", "bočno", "božan", "božić", "božji", "božur", "braca", "braco", "brada", "braga", 
-"brama", "brana", "brand", "branje", "brati", "brava", "bravo", "braća", "brbot", "breit", "breka", "breme", 
-"brend", "brent", "brest", "breve", "breza", "breča", "breče", "bređi", "brica", "brico", "bridža", "briga", 
-"brioš", "briti", "brkan", "brkat", "brklja", "brljan", "brljav", "brljiv", "brlog", "brnjaš", "bronh", "brtva", 
-"bruka", "bruto", "brvak", "brvno", "brzac", "brzak", "brzan", "brčić", "brđan", "bubanj", "bubin", "bucanj", 
-"budak", "budan", "budim", "budni", "budno", "budžak", "budžet", "bugar", "buhar", "buhav", "buhač", "bujad", 
-"bujan", "bujni", "bujol", "bujon", "bukač", "buket", "bukov", "bukoč", "bukva", "bukve", "bulin", "buljav", 
-"buljon", "buljuk", "bulov", "bunar", "bunda", "bunge", "burad", "burag", "buran", "burač", "burek", "burin", 
-"burle", "burma", "burni", "burno", "burza", "busen", "busov", "butan", "butik", "butil", "buvlji", "buzin", 
-"bućin", "bučan", "bučje", "bučji", "bučni", "bučno", "buđav", "bušan", "bušač", "bušel", "bušen", "bušik", 
-"bušin", "bušji", "bužim", "bužir", "cache", "cagan", "cajka", "cakin", "cakći", "canjak", "capin", "carda", 
-"carev", "carin", "carić", "cazin", "cedar", "ceker", "cekin", "cekum", "celer", "celom", "cener", "centa", 
-"cepin", "cerek", "cerij", "cerje", "cerov", "ceski", "cesta", "cetin", "cezij", "cibet", "cibos", "cican", 
-"cifra", "cigan", "cigar", "cigin", "cigla", "cigli", "cijan", "cijel", "cijep", "cijev", "cijeđ", "cijuk", 
-"cikas", "cikla", "cikot", "cikći", "cilik", "ciljan", "ciljni", "ciman", "cimer", "cimet", "cinik", "cinka", 
-"cipal", "cipalj", "cipus", "cirka", "cirku", "cirus", "cista", "citat", "citra", "civil", "cjeti", "cobol", 
-"cokac", "coper", "cosac", "cotav", "crkva", "crnac", "crnjak", "crnjaš", "crnjelj", "crnjen", "crnka", "crnom", 
-"crpac", "crpen", "crpka", "crpni", "crtan", "crtač", "crtež", "crtić", "crtnja", "crvac", "crvak", "crvaš", 
-"crven", "crvić", "cubar", "cucak", "cucla", "cukar", "cukor", "curij", "curin", "curka", "curry", "cuvik", 
-"cvati", "dabar", "dacit", "dadoš", "dagnja", "daidža", "daire", "dakle", "dalek", "daljaš", "daljnji", "dalma", 
-"damin", "danak", "danas", "danik", "danil", "danka", "dante", "darga", "dargo", "darij", "darka", "daska", 
-"daske", "dativ", "datum", "davan", "davač", "davež", "david", "davni", "davno", "davor", "davši", "dački", 
-"dašak", "dašto", "dašće", "debeo", "debil", "deblji", "deblo", "dedić", "deiks", "deist", "dekan", "dekor", 
-"delen", "delta", "demon", "demos", "denar", "dendi", "denes", "denga", "denjak", "deoks", "deran", "derač", 
-"derbi", "derma", "desen", "deset", "deska", "deski", "desni", "desno", "detalj", "devet", "devin", "devon", 
-"dezen", "dečko", "dibar", "digan", "digao", "dijan", "dijel", "dijon", "dikin", "dildi", "dildo", "dilem", 
-"diler", "diljem", "diljka", "dimer", "dimni", "dinam", "dinar", "dingo", "dioba", "dioda", "dioni", "diple", 
-"dipol", "diran", "dirka", "disaj", "diski", "disko", "divalj", "divan", "divin", "divlje", "divlji", "divno", 
-"divov", "dizan", "dizač", "dizel", "dizna", "dičan", "dišni", "djeca", "djedo", "djelo", "djena", "djeva", 
-"dlaka", "dobar", "dobit", "dobni", "doboj", "dobol", "doboš", "dobri", "dobro", "dodan", "dodat", "dodir", 
-"dogma", "dogon", "dojam", "dojen", "dojka", "dojni", "dojti", "dokad", "dokaz", "doker", "dokle", "dokon", 
-"doksa", "dokud", "dokup", "dolac", "dolap", "dolar", "dolet", "dolit", "doljan", "dolus", "domar", "domet", 
-"donat", "donjak", "donle", "donor", "donos", "dopao", "dopis", "dopra", "dopun", "dorad", "dorat", "dosad", 
-"doseg", "dosiž", "dosje", "dosta", "dosut", "dotad", "dotle", "dotok", "dovde", "dovik", "dovle", "dovod", 
-"dovoz", "dozer", "doziv", "dozni", "doček", "dočet", "dočim", "dočinj", "došao", "došli", "doživ", "draga", 
-"dragi", "drago", "drama", "drapa", "drati", "drača", "draže", "draži", "dredža", "dreka", "drhav", "drift", 
-"driti", "drljan", "drmeš", "droca", "droga", "drolja", "dronjk", "dronjo", "drota", "drozd", "drpan", "drski", 
-"drsko", "druga", "drugi", "drugo", "drugs", "druid", "drvan", "drvar", "drvca", "drvce", "drven", "drvlje", 
-"drvlji", "drvni", "drzak", "drzan", "drzni", "drška", "drški", "dršći", "držak", "držan", "držač", "dubak", 
-"dubač", "duben", "dubin", "dublje", "dublji", "dubok", "dubov", "dudan", "dudaš", "dudov", "duduk", "dugin", 
-"dugme", "dugom", "duhan", "duhač", "dukat", "dulek", "duljen", "dulum", "dundo", "dupin", "dupke", "dupli", 
-"duplja", "duplje", "duplo", "durov", "durum", "dutch", "dućan", "dućni", "dušak", "dušan", "dušek", "dušik", 
-"dušin", "dušni", "dužan", "dužda", "dužni", "dveri", "dvica", "dvije", "dvojb", "dvoje", "dvoji", "dvoum", 
-"džanki", "dželat", "džepar", "džepić", "džepni", "džepov", "džezva", "džihad", "džilit", "džingl", "džinov", "džoger", 
-"džoint", "džokej", "džoker", "džudaš", "džunka", "edikt", "efekt", "efrit", "egida", "eglon", "egzem", "egzil", 
-"eidos", "ekcem", "ekipa", "ekran", "ekron", "ekser", "ektim", "elisa", "elita", "eliti", "eluat", "email", 
-"emajl", "emati", "emski", "endem", "eneja", "engel", "engle", "enoli", "enoze", "enzim", "eocen", "eolni", 
-"eparh", "epika", "epoha", "eprom", "epski", "erbij", "erdelj", "eriti", "erker", "eshop", "esker", "esnaf", 
-"ester", "estet", "etapa", "etaža", "etida", "etika", "etion", "etnik", "etnos", "etski", "eugen", "eunuh", 
-"eurco", "eures", "europ", "evati", "evski", "fagot", "fajda", "fakat", "fakin", "fakir", "falda", "falta", 
-"falus", "fanov", "farad", "farba", "farma", "farsa", "farsi", "fatum", "fauan", "fauna", "fazan", "fazni", 
-"fazno", "fazon", "fazor", "fačuk", "febra", "febus", "feces", "feder", "felah", "feler", "felga", "fenig", 
-"fenil", "fenjer", "fenol", "feral", "ferda", "ferit", "fesov", "fetiv", "fetiš", "fetus", "fetva", "fever", 
-"fešta", "fešte", "fiber", "fibra", "fibre", "fijuk", "fikus", "filac", "filan", "filek", "filer", "filet", 
-"filir", "filit", "finiš", "finta", "firer", "firma", "fitilj", "fićuk", "fišek", "fjaka", "fjeld", "fjord", 
-"flama", "flaša", "fleka", "flert", "floem", "floks", "flora", "flore", "flota", "flour", "fluid", "fluks", 
-"fluor", "foaje", "fokin", "fokus", "folat", "folni", "fondi", "fonem", "fonet", "fonon", "forma", "forte", 
-"forum", "fosil", "foski", "foton", "franje", "frape", "fratr", "fraza", "fraze", "freon", "freud", "freza", 
-"frita", "frkan", "frkći", "front", "frtalj", "frula", "frčka", "funta", "furan", "furen", "furka", "fuski", 
-"futur", "fušer", "gabro", "gacan", "gadan", "gadno", "gajba", "gajda", "gajde", "gajen", "gajev", "gajić", 
-"gajka", "galat", "galeb", "galeš", "galge", "galij", "galon", "galop", "gamad", "ganga", "gango", "ganit", 
-"ganjak", "ganjan", "ganut", "garan", "garav", "garda", "garen", "garež", "garig", "garov", "gasiv", "gasni", 
-"gatan", "gatar", "gatač", "gater", "gatka", "gauda", "gaučo", "gavan", "gavez", "gavka", "gavun", "gazda", 
-"gazel", "gazni", "gaćan", "gačac", "gađan", "gašen", "gažen", "gegav", "gejša", "gekon", "geler", "gelni", 
-"genet", "genij", "genom", "genov", "geoid", "gepek", "geril", "gerla", "germa", "geslo", "gesta", "gešur", 
-"gibak", "giban", "gibanj", "giblji", "gibon", "gilda", "ginko", "gipki", "gipko", "giros", "girus", "gitar", 
-"gizda", "glans", "glava", "glađi", "glede", "gleđa", "glina", "gliom", "gljiva", "gljive", "globa", "glosa", 
-"gluhi", "gluin", "gluma", "gluon", "glupi", "glupo", "gluši", "gmiža", "gnajs", "gnjiao", "gnjida", "gnjili", 
-"gnjilo", "gnjiti", "gnoma", "gnuov", "godov", "gojan", "gojni", "golan", "golać", "golem", "golet", "goljak", 
-"golog", "golot", "golub", "gomil", "gomio", "gomolj", "gonan", "gonič", "gonjan", "gonjen", "gorak", "gorač", 
-"goren", "goriv", "gorje", "gorki", "gorko", "gornji", "goruć", "gorča", "gorči", "gospa", "gotik", "gotov", 
-"gould", "govni", "govno", "govor", "gozba", "gošen", "gošća", "gošći", "graba", "grace", "graft", "grahi", 
-"graja", "grajk", "grakn", "grana", "granje", "grapa", "graći", "građa", "građe", "građi", "grbalj", "grbav", 
-"grbač", "grbov", "grcaj", "grdan", "grdni", "grdnja", "grdno", "grdob", "greda", "grejp", "grešp", "grgeč", 
-"grgut", "grifo", "grilja", "grilje", "grinja", "grinje", "gripa", "gripe", "griva", "griža", "griži", "grkov", 
-"grlac", "grlat", "grlaš", "grlce", "grlen", "grlić", "grljak", "grljen", "grmak", "grmalj", "grmaš", "grmić", 
-"grmlje", "grmov", "grnac", "gromč", "gronja", "grota", "grote", "groza", "grozd", "groši", "grubi", "grubo", 
-"gruda", "grudi", "grudv", "grunt", "grupa", "grupi", "grčki", "guati", "guava", "gubac", "gubar", "gubav", 
-"guber", "gudač", "gugut", "gujav", "gujin", "gulag", "gulaš", "guljen", "guman", "gumar", "gumbe", "gumbi", 
-"gumen", "gumno", "gunjac", "gunjak", "gupac", "guran", "gurav", "gurač", "gurta", "gusak", "gusan", "gusar", 
-"gusav", "gusin", "gusji", "guska", "guski", "gusla", "gusle", "gusti", "gusto", "gutan", "gutač", "gušav", 
-"gušen", "gušeć", "gušći", "gušče", "gužva", "gužvo", "gvalja", "gverc", "gvozd", "gđica", "haban", "habit", 
-"haganj", "hahar", "haiku", "hajde", "hajka", "haker", "halfa", "halid", "halit", "haljin", "halma", "halva", 
-"hamas", "hamov", "hansa", "hanum", "haran", "harač", "harem", "harfa", "harsh", "hasij", "hauba", "havan", 
-"hašiš", "haški", "hekto", "helij", "heljda", "helot", "henin", "henri", "heroj", "hertz", "hidar", "hidra", 
-"hidro", "hidžra", "hihot", "hijat", "hijen", "hilus", "himba", "himen", "himer", "himna", "himni", "himus", 
-"hindi", "hindu", "hinjen", "hinka", "hiper", "hirov", "hitac", "hitan", "hitar", "hitin", "hitni", "hitnja", 
-"hitnji", "hitno", "hitov", "hitri", "hitro", "hlača", "hlače", "hoana", "hoane", "hodač", "hodni", "hodžin", 
-"hokej", "hokus", "homer", "homić", "horda", "horor", "hotel", "hoćim", "hrana", "hrast", "hrbat", "hrdan", 
-"hrgav", "hrida", "hrkao", "hrkač", "hrman", "hrnjav", "hromo", "hrpik", "hrtih", "hrtov", "hrušt", "hrvač", 
-"hrvoj", "hrčak", "hrčki", "hrđav", "hujan", "huljen", "humac", "humak", "human", "humka", "humlje", "humor", 
-"humov", "humus", "hunta", "husar", "husit", "huski", "hučan", "hvala", "hvoja", "ibrik", "ideal", "ideja", 
-"ident", "idila", "idilo", "idiom", "idiot", "iditi", "idući", "iftar", "igalo", "igati", "igdje", "iglun", 
-"igran", "igrač", "igriv", "ikada", "ikako", "ikati", "ikoji", "ikona", "ikone", "ikoni", "ikraš", "ikuda", 
-"ilica", "ilidi", "ilidža", "iliev", "ilipe", "ilirk", "ilova", "imago", "imalo", "imanje", "imanji", "imaoc", 
-"imati", "imbus", "imela", "imele", "imeni", "imidi", "imini", "imuni", "imutk", "inače", "indij", "indol", 
-"infra", "ingot", "inlej", "inoli", "inoča", "input", "inski", "inter", "intim", "intra", "inuti", "inzul", 
-"inćun", "inčni", "inčun", "irski", "irvas", "iscer", "iscrt", "ishod", "isjek", "iskan", "iskap", "iskaz", 
-"iskez", "iskon", "iskop", "iskra", "iskup", "islam", "ispad", "isper", "ispis", "ispit", "ispod", "ispot", 
-"ispuh", "ispun", "istam", "istar", "istek", "istih", "istin", "istok", "istom", "istrt", "istup", "isuti", 
-"itrij", "ivanje", "ivica", "ivina", "ivrit", "izaći", "izaža", "izbit", "izboj", "izbor", "izdah", "izdan", 
-"izgib", "izgon", "izići", "izjal", "izlaz", "izlet", "izljev", "izlog", "izlov", "izmak", "izmeo", "izmet", 
-"izmir", "iznad", "iznes", "iznos", "izran", "izraz", "izrez", "izrod", "izuta", "izuti", "izvan", "izvid", 
-"izvit", "izvod", "izvoj", "izvor", "izvoz", "ičati", "ičiji", "išler", "jadac", "jadan", "jadni", "jadno", 
-"jagma", "jagnje", "jahan", "jahač", "jahta", "jajac", "jajar", "jajce", "jajni", "jakna", "jalan", "jalov", 
-"jalša", "jamac", "jaman", "jamba", "janin", "janjac", "janjad", "jarac", "jarad", "jarak", "jaram", "jaran", 
-"jareb", "jarić", "jarki", "jarko", "jarma", "jaruh", "jasan", "jasen", "jaski", "jasle", "jasni", "jasno", 
-"jatak", "javni", "javno", "javor", "jazan", "jačan", "jašen", "jeans", "jebac", "jeban", "jebač", "jeben", 
-"jecaj", "jecam", "jecav", "jedak", "jedan", "jedar", "jedem", "jedić", "jedni", "jedno", "jedri", "jedro", 
-"jedva", "jelac", "jelek", "jelen", "jelin", "jelka", "jelov", "jenin", "jerba", "jerks", "jesen", "jesni", 
-"jesno", "jesti", "jetak", "jetan", "jetki", "jetko", "jetra", "jetro", "jezan", "jezda", "jezer", "jezga", 
-"jezik", "jeziv", "ječam", "ječni", "ješan", "ješka", "ježac", "ježak", "ježev", "ježić", "ježur", "jidiš", 
-"jobov", "jodat", "jodid", "jodni", "jodnu", "jodov", "jogin", "johin", "joint", "joker", "jolit", "josip", 
-"jošte", "judin", "judić", "juice", "julij", "juliu", "jumar", "junac", "junad", "junak", "junij", "juran", 
-"juren", "juriš", "jurta", "juten", "jutro", "jučer", "jušan", "jušni", "južan", "južni", "južno", "kabal", 
-"kabao", "kabel", "kablo", "kacig", "kadar", "kadet", "kadif", "kadra", "kadri", "kadro", "kadun", "kafar", 
-"kafić", "kagan", "kaire", "kajak", "kajda", "kajde", "kakanj", "kakao", "kakav", "kakov", "kalaj", "kalan", 
-"kalav", "kalem", "kalež", "kalfa", "kalif", "kalij", "kaljan", "kaljav", "kaljen", "kaljev", "kaljiv", "kalta", 
-"kalup", "kalus", "kamar", "kamej", "kamen", "kamin", "kampa", "kamut", "kanac", "kanal", "kanap", "kanat", 
-"kanda", "kandža", "kandže", "kanjac", "kanjon", "kanon", "kanta", "kapak", "kapan", "kapar", "kapav", "kapel", 
-"kapka", "kapla", "kaplja", "kapok", "kapuo", "kaput", "karan", "karar", "karas", "karat", "karde", "kargo", 
-"karik", "karin", "karma", "karta", "kasan", "kasar", "kasač", "kasko", "kasni", "kasno", "kasta", "katan", 
-"katar", "katni", "katun", "kauba", "kauda", "kavan", "kavez", "kavga", "kavik", "kavin", "kazan", "kazet", 
-"kazna", "kaćun", "kačak", "kačić", "kašalj", "kašev", "kašik", "kašin", "kebab", "keder", "kefal", "kefan", 
-"kefir", "kegla", "kelat", "keleš", "keljen", "kepec", "keper", "kerma", "kesik", "keson", "keton", "kečap", 
-"kečig", "kečki", "kibic", "kiblo", "kibuc", "kicoš", "kidan", "kifla", "kihan", "kijač", "kijev", "kikaš", 
-"kikot", "kikoć", "kilav", "kimao", "kimle", "kimli", "kinin", "kinjen", "kinoa", "kinon", "kiosk", "kipar", 
-"kiper", "kipić", "kipov", "kipuć", "kirnja", "kiseo", "kisik", "kisni", "kitov", "kivan", "kivni", "kivno", 
-"kićen", "kičen", "kičma", "kišan", "kišni", "klada", "klaka", "klana", "klani", "klanje", "klanji", "klapa", 
-"klapi", "klara", "klasa", "klast", "klati", "klaun", "kleka", "klela", "klema", "kleti", "kleto", "klica", 
-"klice", "klija", "klika", "klilo", "klima", "klinč", "klisa", "kliza", "kliše", "kljast", "kljova", "kljuka", 
-"kljuna", "kljuse", "kloak", "klopa", "klupa", "kneza", "knjiga", "koala", "koati", "kobac", "koban", "kobar", 
-"kobil", "kobno", "koboj", "kobra", "kocen", "kocka", "kocke", "kocoj", "kodek", "koder", "kodni", "kodon", 
-"kofer", "kogol", "koion", "kojić", "kojot", "koker", "koket", "kokin", "kokon", "kokos", "kokot", "kokoš", 
-"kolac", "kolan", "kolar", "kolač", "kolaž", "koledž", "kolet", "kolik", "kolin", "koljak", "koljan", "koljač", 
-"kolni", "kolon", "kolor", "kolos", "kolut", "komad", "kombi", "komen", "komet", "komin", "komis", "komor", 
-"komut", "konac", "konak", "konav", "konge", "konjak", "konjar", "konjic", "konjić", "konop", "konti", "konto", 
-"konus", "konva", "kopal", "kopan", "kopar", "kopač", "kopit", "koplje", "koplji", "kopno", "kopov", "kopra", 
-"kopun", "kopča", "korak", "koral", "koralj", "korda", "korej", "koren", "korik", "korov", "korpa", "korzo", 
-"kosac", "kosan", "kosat", "kosač", "kosin", "kosinj", "kosir", "kosov", "kosti", "kotac", "kotao", "kotar", 
-"kotač", "kotlo", "kotni", "kotor", "kotur", "kotva", "kovač", "kovin", "kovit", "kovki", "kovni", "kozac", 
-"kozak", "kozar", "kozer", "kozji", "kozle", "koćar", "kočanj", "kočar", "kočen", "kočni", "košen", "košer", 
-"košić", "košnja", "košta", "košte", "košut", "kožan", "kožar", "kožni", "kožuh", "kožun", "kožus", "kraft", 
-"kraju", "kralja", "kralji", "krama", "kramp", "kranje", "krast", "krati", "kraul", "kraus", "krava", "kraće", 
-"kraći", "krađa", "krađi", "krbav", "krcaj", "krcat", "kreda", "kredo", "kreja", "krema", "kreol", "kreći", 
-"krhak", "krhki", "krhko", "krica", "krika", "krilo", "krish", "kriti", "krivi", "krivo", "kriza", "križa", 
-"krmad", "krmak", "krmar", "krmelj", "krmen", "krmiv", "krmni", "krnjak", "kroki", "krona", "kroza", "krpan", 
-"krpar", "krpač", "krpelj", "krpen", "krpež", "krpom", "krsni", "krsno", "krsta", "krtin", "krtol", "krugi", 
-"krula", "kruna", "krupa", "kruti", "kruto", "krući", "krvar", "krvav", "krvit", "krvni", "krzam", "krzan", 
-"krzna", "krzno", "krčag", "krčen", "krčki", "krčma", "kršan", "kršen", "kršje", "krški", "kršni", "kuban", 
-"kubik", "kubni", "kubur", "kubus", "kucaj", "kucan", "kucni", "kudzu", "kufer", "kugla", "kuhan", "kuhar", 
-"kuhač", "kukac", "kukma", "kukolj", "kukov", "kukoč", "kukuc", "kulak", "kulen", "kulon", "kuluk", "kumen", 
-"kumin", "kumir", "kumov", "kumul", "kumče", "kunić", "kunjad", "kunjka", "kupac", "kupan", "kupać", "kupač", 
-"kupca", "kupelj", "kupik", "kupin", "kupit", "kupić", "kupka", "kupnja", "kupnji", "kupon", "kupov", "kupus", 
-"kurac", "kuran", "kurat", "kuraž", "kuren", "kuret", "kurij", "kurir", "kurji", "kurva", "kusat", "kusur", 
-"kutak", "kutan", "kutić", "kutni", "kutov", "kućan", "kućen", "kućni", "kučin", "kučji", "kučka", "kušan", 
-"kušač", "kušet", "kušnja", "kužan", "kužno", "kvaka", "kvant", "kvarc", "kvark", "kvart", "kvazi", "kvint", 
-"kviti", "kviza", "kvota", "kvrga", "kvrgo", "labav", "label", "labin", "labud", "lacij", "ladva", "lafet", 
-"lagan", "lagav", "lager", "lagod", "lagum", "lagun", "lahor", "lajav", "lakaj", "lakat", "lakej", "lakom", 
-"lakov", "lakše", "lakši", "laman", "lamin", "lampa", "lanac", "lanad", "lanen", "lanov", "lapis", "lapor", 
-"largo", "larma", "larva", "larve", "laser", "lasje", "laska", "laski", "lasta", "lauda", "laura", "lavat", 
-"lavež", "lavić", "lavlji", "lavor", "lavov", "lazar", "lazni", "lačan", "lađar", "lašce", "laški", "lažac", 
-"lažan", "lažni", "lažno", "lažov", "lebda", "lebdi", "lebić", "lecni", "ledac", "ledak", "leden", "ledin", 
-"leganj", "legat", "leglo", "leman", "lemeš", "lemio", "lemni", "lemur", "lenta", "lento", "leone", "lepet", 
-"lepir", "lepra", "lepuh", "letak", "letač", "letio", "letni", "letov", "letva", "levit", "lečva", "leđen", 
-"leđni", "leđno", "lešev", "leška", "ležaj", "liaza", "libar", "liber", "libor", "libra", "licej", "lider", 
-"liganj", "ligaš", "lignja", "lignje", "lihen", "lihva", "lijas", "lijeh", "lijek", "lijen", "lijep", "lijer", 
-"lijes", "lijev", "liker", "likov", "lilek", "limar", "limba", "limen", "limes", "limfa", "limit", "limov", 
-"limun", "lingo", "linij", "linjak", "linka", "linđo", "lipanj", "lipid", "lipin", "lipnji", "lipom", "lipov", 
-"lirik", "liroj", "lisac", "lisin", "lisje", "lisji", "liska", "liski", "lisni", "lista", "liste", "litij", 
-"litra", "litvo", "livac", "liven", "livon", "lizan", "lizni", "lizol", "ličan", "ličen", "lički", "lični", 
-"lišaj", "lišce", "lišen", "lišće", "lišći", "ljagim", "ljagoj", "ljanos", "ljekar", "ljepak", "ljepio", "ljepiv", 
-"ljepše", "ljepši", "ljeski", "ljesov", "ljetni", "ljetos", "ljevak", "ljevač", "ljeven", "ljevni", "lječiv", "ljigav", 
-"ljiljak", "ljiljan", "ljstvo", "ljubak", "ljubav", "ljuljan", "ljuljni", "ljupac", "ljupki", "ljupko", "ljuska", "ljuski", 
-"ljutik", "ljutin", "ljutit", "ljutić", "ljutič", "ljutnja", "ljutnji", "ljućen", "lobor", "loger", "logik", "login", 
-"logis", "logor", "lojan", "lojav", "lojen", "lojka", "lojni", "lokal", "lokan", "lokav", "lokna", "loknja", 
-"lokot", "lokus", "lokva", "lomac", "loman", "lomač", "lomiv", "lomni", "lomno", "lomot", "lonac", "lopov", 
-"lopoč", "lopta", "lopud", "lopuh", "losos", "lotan", "lotos", "lotus", "lovac", "lovaš", "lovin", "lovka", 
-"lovni", "lovno", "lovor", "lovov", "lozin", "lozni", "lozov", "ložač", "ložen", "loživ", "ložni", "lubin", 
-"lucanj", "ludaš", "ludin", "ludio", "ludom", "ludov", "lugar", "lugov", "lukav", "luknja", "lukov", "lular", 
-"lulav", "lulaš", "lumen", "lumin", "lunar", "lupan", "lupar", "lupač", "lupež", "lupus", "lutak", "lutka", 
-"lutnja", "lutnji", "luton", "lučac", "lučca", "lučen", "lučiv", "lučić", "lučki", "lučni", "luđak", "lužin", 
-"macan", "macho", "macin", "madam", "madar", "madež", "madžar", "magla", "magma", "mahan", "mahao", "maher", 
-"mahim", "majka", "major", "majur", "makac", "makar", "maklja", "makov", "makro", "maksa", "maksi", "malaj", 
-"malen", "maler", "malik", "malin", "maljav", "malka", "malko", "malne", "malta", "malus", "mamac", "mamba", 
-"mamik", "mamin", "mamut", "mamuz", "mango", "manić", "manjak", "manjić", "manka", "maona", "maran", "maren", 
-"marin", "marka", "marni", "marod", "marok", "marva", "marša", "marža", "masan", "masen", "maser", "masiv", 
-"maska", "maske", "maski", "maslo", "masni", "masno", "mason", "mater", "matik", "matka", "matni", "matur", 
-"mauna", "mazac", "mazan", "mazač", "mazga", "mazin", "maziv", "mazni", "mazoj", "mazut", "mačak", "mačić", 
-"mačji", "mačka", "mački", "mačor", "mašak", "maški", "mašna", "mašta", "mažen", "meati", "medan", "medar", 
-"meden", "medij", "medni", "megid", "mehun", "mejaš", "mekan", "mekač", "meket", "mekin", "mekot", "mekše", 
-"mekši", "melem", "melez", "melon", "melos", "memli", "menta", "menza", "mesar", "mesin", "mesni", "mesti", 
-"metak", "metal", "metan", "metar", "meten", "meter", "metež", "metil", "metilj", "metin", "metka", "metla", 
-"metro", "mezij", "mezon", "mečelj", "mečić", "međaš", "međni", "mican", "micin", "micro", "mider", "migni", 
-"mijau", "mijeh", "miljeu", "miloš", "miner", "minij", "minik", "minor", "minov", "minuo", "minus", "minut", 
-"miran", "miraz", "miraž", "miren", "mirha", "miris", "mirni", "mirno", "mirta", "misal", "misao", "misli", 
-"misni", "misno", "mitar", "mitom", "mitra", "mićen", "mišar", "mišev", "mišić", "mišja", "mišji", "miška", 
-"miški", "mjeda", "mjera", "mlada", "mladi", "mlado", "mlaka", "mlaki", "mlako", "mlača", "mlađa", "mlađi", 
-"mliko", "mlina", "mlivo", "mljenje", "mljeti", "mniti", "mnogi", "mnogo", "mnome", "množe", "moare", "mobil", 
-"modan", "modar", "model", "modem", "modni", "modov", "modri", "modro", "modul", "modur", "modus", "mogil", 
-"moguć", "moher", "mokar", "mokri", "mokro", "molba", "moljac", "moljen", "molni", "moloh", "molov", "momak", 
-"momče", "monah", "monom", "month", "moped", "moral", "moren", "morin", "morinj", "moronj", "mosni", "mosor", 
-"mosul", "mosur", "motan", "motar", "motel", "motet", "motik", "motiv", "motka", "motor", "mozak", "mozga", 
-"moćan", "moćni", "moćno", "močen", "močiv", "mošak", "mošnja", "mošnji", "mošta", "mošus", "možda", "mrdan", 
-"mrena", "mreža", "mrgud", "mriti", "mrkalj", "mrkan", "mrkač", "mrkli", "mrkva", "mrkve", "mrljav", "mrmor", 
-"mrmot", "mrska", "mrski", "mrsko", "mrsni", "mrtav", "mrzak", "mrzao", "mrzli", "mršav", "mržen", "mržnja", 
-"mucav", "mucin", "mudar", "mudri", "mudro", "mufić", "muhin", "mukao", "mukin", "mukli", "muklo", "mulac", 
-"mulat", "mulin", "mulit", "mulić", "muljav", "muljni", "multi", "mumps", "munar", "mungo", "munjen", "murva", 
-"musav", "musti", "mutan", "mutav", "mutež", "mutni", "mutno", "muzac", "muzar", "muzej", "muzni", "mućak", 
-"mučan", "mučen", "mučki", "mučni", "mučno", "muški", "mužar", "mužač", "mužev", "mužik", "mužić", "mužnja", 
-"nabit", "nabla", "naboj", "nabor", "nacrt", "nadam", "nadan", "nadir", "nadra", "nadri", "nadut", "nadžak", 
-"nafor", "nafta", "nagal", "nagao", "nagib", "nagli", "naglo", "nagon", "nahod", "nahvo", "naila", "naime", 
-"nairn", "naiva", "naići", "najaf", "najam", "najed", "nakan", "nakit", "nakon", "nakos", "nakot", "nakup", 
-"nalaz", "nalet", "nalik", "nalič", "naljep", "naljev", "naljut", "nalog", "namaz", "namet", "namot", "namsa", 
-"nandu", "nanes", "nanos", "naoko", "napad", "napet", "napis", "napit", "napoj", "napon", "napor", "narav", 
-"nares", "narez", "naris", "nariv", "narko", "narod", "naron", "nasad", "nasip", "nasol", "nasut", "natar", 
-"natrt", "nauka", "nauku", "nauži", "navar", "navez", "navit", "navod", "navoj", "navoz", "navrh", "navrt", 
-"nazad", "nazal", "nazeb", "naziv", "nazor", "nazut", "naćve", "načas", "načet", "način", "nađen", "naški", 
-"našto", "nažao", "ncage", "nebac", "neduh", "nefin", "negda", "negve", "nehaj", "nehat", "nejak", "nejač", 
-"nekad", "nekoć", "nekud", "neman", "nemar", "nemio", "nemir", "nemoć", "nemrs", "neošt", "nepar", "nepce", 
-"neper", "nepun", "nerad", "nered", "nerka", "nerom", "nesan", "nesen", "nesit", "nesti", "netko", "netom", 
-"neven", "nevin", "nećak", "nešto", "neživ", "nijek", "nijem", "nikad", "nikal", "nikud", "nimac", "nimfa", 
-"nisak", "nisam", "niska", "niski", "nisko", "nitko", "nitni", "nitra", "nivoi", "nizak", "nizan", "nišan", 
-"ništa", "njedra", "njegov", "njemac", "njemak", "njemka", "njemoć", "njezin", "nježan", "nježno", "njihaj", "njihan", 
-"njihov", "njisak", "njiska", "njiski", "njorak", "njorka", "njušan", "njuška", "njušni", "nogar", "nojev", "nokat", 
-"noksa", "nomad", "nonet", "nonij", "norma", "nosac", "nosan", "nosat", "nosač", "nosiv", "nosić", "nosni", 
-"notan", "notar", "notes", "notni", "novac", "novak", "novel", "novin", "noćac", "noćas", "noćca", "noćka", 
-"noćni", "noćno", "nošen", "nošnja", "nožar", "nožić", "nožni", "npkan", "nskan", "nugat", "nujan", "nujno", 
-"nukan", "nulti", "numer", "nutak", "nuđač", "nuđen", "nužan", "nužda", "nužde", "nužni", "nužno", "oasti", 
-"obala", "obaći", "obdan", "obija", "obikl", "obilje", "obiti", "obići", "objed", "oblak", "oblat", "oblik", 
-"oblić", "oblog", "obnoć", "oboje", "oboma", "obran", "obrat", "obraz", "obred", "obrež", "obris", "obrok", 
-"obron", "obrta", "obrub", "obruč", "obrva", "obrve", "obuka", "obuti", "obuća", "obući", "obzir", "obzor", 
-"ocean", "octen", "ocvao", "odaja", "odaje", "odalji", "odano", "odati", "odbit", "odboj", "odbor", "odeon", 
-"odeti", "odgoj", "odići", "odjaš", "odjek", "odjel", "odlan", "odlet", "odlik", "odlit", "odliv", "odljev", 
-"odljut", "odmah", "odmak", "odmet", "odmor", "odmoć", "odnos", "odoka", "odola", "odolje", "odora", "odran", 
-"odraz", "odred", "odrez", "odrod", "odron", "odsad", "odvez", "odveć", "odvit", "odvod", "odvoz", "odvrg", 
-"odziv", "odšit", "oglas", "oglav", "ogled", "ogluh", "ognjen", "ognjio", "ogreb", "oholi", "oholo", "oidie", 
-"okanje", "okati", "oklop", "okolje", "okolo", "okovi", "okrek", "okret", "okreč", "okrpa", "okrug", "oksid", 
-"oksim", "oktan", "oktav", "oktet", "okuka", "okvir", "olako", "olein", "oleum", "oliga", "olimp", "olinje", 
-"oliva", "olovn", "olovo", "ološa", "oltar", "oluja", "omama", "omanji", "omara", "omast", "omaći", "omega", 
-"omela", "omilja", "omiti", "omjer", "omlet", "omraz", "omski", "onako", "onamo", "ondje", "oniks", "onlej", 
-"onuda", "ončas", "opaki", "opako", "opati", "opatv", "opeka", "opera", "opeći", "ophod", "opica", "opija", 
-"opiti", "opito", "opkop", "oplet", "opori", "oporo", "opran", "opred", "oprez", "opseg", "optok", "opuga", 
-"oputa", "općen", "općin", "opšav", "opšit", "orada", "oranje", "orasi", "orati", "oraći", "orden", "orenje", 
-"oreol", "oreći", "orfej", "orfeo", "organ", "orgij", "orgulj", "oriks", "oriti", "orkan", "orlić", "orlov", 
-"ormar", "ornat", "ortak", "ortač", "oruđe", "osama", "osati", "oseka", "oseći", "osica", "osinji", "osion", 
-"osipa", "ositi", "osjet", "oslad", "oslić", "oslon", "oslov", "osmak", "osmij", "osnak", "osnov", "osoba", 
-"ostan", "ostve", "osuda", "osuti", "osvan", "osvit", "osvrt", "otada", "otati", "otava", "otela", "oteta", 
-"oteti", "oteći", "oteža", "other", "otići", "otkad", "otkap", "otkaz", "otkop", "otkos", "otkov", "otkud", 
-"otkup", "otmet", "otmeš", "otoma", "otpad", "otpis", "otpor", "otpuz", "otres", "otrov", "otrta", "otrti", 
-"otrći", "otuda", "otući", "otvor", "otčin", "ovako", "ovamo", "ovanje", "ovati", "ovdje", "oveći", "ovija", 
-"oviti", "ovjes", "ovnov", "ovrha", "ovski", "ovuda", "ovčar", "ovčas", "ovčji", "ozdol", "ozimi", "očale", 
-"očica", "očinji", "očiti", "očito", "očnjak", "očuha", "oštar", "oštri", "oštro", "ožeti", "ožeći", "pacer", 
-"packa", "pacov", "padan", "padež", "pagan", "pagar", "pajac", "pajet", "pajzl", "pakao", "paker", "paket", 
-"pakta", "palac", "palam", "palež", "palir", "paljba", "paljen", "palma", "paloš", "palto", "pamet", "pampa", 
-"pamuk", "panam", "panda", "pandža", "panel", "panoi", "panta", "panus", "papak", "papar", "papin", "papir", 
-"papka", "papke", "paraf", "paran", "parba", "pared", "paren", "parfe", "parip", "parić", "parka", "parni", 
-"paroh", "pasac", "pasat", "pasaž", "pasha", "pasiv", "pasje", "pasji", "paska", "paski", "pasmo", "pasoš", 
-"pasta", "pasti", "pasulj", "pasus", "patak", "pater", "patka", "patnja", "patos", "pause", "pauza", "pavit", 
-"pazar", "pazin", "pazuh", "pačad", "pačan", "pačić", "pačji", "pačunj", "pašin", "paški", "pašni", "pašta", 
-"pašče", "pažen", "pažnja", "pecan", "pecar", "pecek", "pedalj", "pedel", "peder", "pegla", "pehar", "pekan", 
-"pekar", "pekin", "pelat", "pelen", "pelet", "pelig", "pelin", "pelir", "peljar", "pelud", "penal", "penat", 
-"penem", "penis", "penjac", "penjač", "penjaš", "penon", "pepeo", "perad", "perač", "perce", "perda", "perec", 
-"perin", "periv", "periš", "perje", "perji", "perla", "peroj", "peron", "perut", "pesar", "pesti", "petak", 
-"petač", "petit", "petlja", "petni", "petor", "petre", "pećar", "pećen", "pečat", "pečen", "pešće", "photo", 
-"piano", "picek", "pidžin", "pijan", "pijuk", "pijun", "pikan", "piknja", "pikov", "pilac", "pilad", "pilan", 
-"pilar", "pilav", "pilet", "pilić", "piljak", "piljar", "piljen", "piljni", "pilon", "pilot", "pinca", "pinen", 
-"pinjol", "pinkl", "pinta", "pipac", "pipak", "pipan", "pipav", "pipun", "piran", "pirat", "pirej", "piren", 
-"pirid", "pirit", "pirni", "pirol", "pirot", "pirov", "pisac", "pisak", "pisan", "pisar", "pisač", "piska", 
-"piski", "pisma", "pismo", "pisni", "pista", "pitak", "pitan", "pitki", "pitko", "pitom", "piton", "pivar", 
-"pivot", "pizam", "pizda", "pizma", "pizza", "pička", "pište", "pjega", "pjena", "pjeti", "plaho", "plama", 
-"planje", "plast", "plata", "plati", "plato", "plavi", "plaća", "plašt", "plaža", "pleha", "pleme", "pleta", 
-"pleti", "pleća", "plima", "plise", "plići", "pljeva", "plješa", "pljuca", "ploha", "plova", "ploča", "pluto", 
-"pluća", "pluće", "pobac", "pobij", "pobil", "pobog", "pobol", "pobun", "podalj", "podan", "podao", "podav", 
-"podij", "podli", "podlo", "podne", "podni", "podno", "podug", "podžig", "poema", "poeta", "pogan", "pogon", 
-"pohan", "pohod", "pojac", "pojam", "pojas", "pojed", "pojen", "pojni", "pokal", "pokap", "pokaz", "poker", 
-"pokoj", "pokolj", "pokop", "pokos", "pokus", "polak", "polan", "polen", "polet", "polio", "polip", "polis", 
-"polit", "poljan", "poljar", "polka", "polni", "polog", "poloj", "polov", "poluk", "pomak", "pomam", "poman", 
-"pomet", "pomir", "pomnja", "pomno", "pomol", "pomor", "pomoć", "pompa", "pomut", "ponad", "ponir", "ponor", 
-"ponos", "ponoć", "pončo", "popaj", "popar", "popas", "popet", "popis", "popit", "popić", "popni", "popov", 
-"popra", "poput", "poran", "poraz", "pored", "poren", "porez", "poriv", "porni", "porno", "porod", "porok", 
-"porta", "porto", "porub", "posan", "posao", "posip", "posiv", "posni", "pospa", "posto", "posut", "posve", 
-"potaj", "potar", "potez", "potež", "potir", "potka", "potok", "potom", "potop", "potrk", "potrt", "pouci", 
-"pouka", "poven", "povez", "povik", "povit", "povod", "povoj", "povrh", "površ", "pozan", "pozer", "poziv", 
-"pozor", "počan", "poček", "počeš", "pošip", "pošta", "pošto", "požar", "požen", "požet", "požnja", "požnji", 
-"požun", "pragm", "pralja", "pranje", "prasa", "prase", "prati", "pravi", "pravo", "praća", "praće", "prdac", 
-"prdež", "preda", "preko", "prela", "prelja", "prelo", "prema", "preni", "preor", "presa", "prezl", "preći", 
-"preča", "preči", "pređa", "pređe", "preša", "prgav", "prhak", "prhan", "prhki", "prhut", "prija", "prije", 
-"prima", "princ", "prinč", "prion", "prior", "prisp", "prist", "priti", "prići", "priča", "priče", "prišt", 
-"prkos", "prlić", "prljan", "prljav", "prnjak", "prnjav", "proba", "proha", "proja", "prola", "prope", "proso", 
-"prost", "prota", "protu", "prova", "proxy", "proza", "proći", "prođa", "prsat", "prski", "prsni", "prsta", 
-"prten", "pruga", "pruće", "prvak", "prvaš", "prćen", "prčka", "pršak", "pršić", "pršti", "pršut", "pržen", 
-"pržun", "pseto", "pseći", "psiha", "psiho", "psina", "ptica", "ptiče", "ptoza", "pucan", "pucanj", "pucač", 
-"puder", "pudla", "pudli", "pufer", "puhan", "puhač", "puhor", "puhov", "pukao", "pulen", "pulpa", "pumpa", 
-"punac", "punan", "punjač", "punjen", "punjiv", "punkt", "punta", "punđa", "pupak", "pupav", "puran", "purin", 
-"purić", "pusta", "pusti", "putak", "putar", "putem", "puten", "putić", "putni", "putnja", "puzav", "pučki", 
-"pušač", "pušen", "puška", "pužan", "pužev", "pužić", "pužji", "pužni", "pužno", "pčela", "pčele", "pšeno", 
-"rabat", "rabin", "rabot", "radan", "radar", "raden", "radij", "radin", "radio", "radić", "radič", "radni", 
-"radnja", "radnje", "radon", "rafal", "ragbi", "rahao", "rahli", "raich", "rajna", "rajon", "rakar", "rakel", 
-"rakis", "raklja", "rakov", "rakun", "rampa", "ramus", "ranac", "ranar", "ranik", "ranjav", "ranjen", "ranjiv", 
-"ranka", "rapir", "rarog", "rasad", "rasan", "rasap", "rasip", "rasni", "rasno", "rasol", "raspe", "rasti", 
-"rastu", "rasut", "ratan", "ratar", "ratik", "ratni", "ravan", "ravni", "ravno", "razan", "razma", "razni", 
-"razor", "razum", "račan", "račić", "račji", "račun", "račva", "račve", "rađan", "rađen", "rašalj", "rašit", 
-"raški", "rašlja", "rašlje", "rašpa", "rašće", "ražanj", "ražar", "ražen", "ražnja", "rdbms", "rebar", "rebro", 
-"rebus", "recka", "recoj", "redak", "redan", "redar", "redem", "redni", "redno", "redom", "redov", "redut", 
-"reful", "regal", "regat", "regoč", "reket", "relej", "reljef", "remek", "remen", "remet", "remis", "renal", 
-"renca", "renij", "renin", "renta", "rento", "repak", "repat", "repaš", "reper", "repin", "repić", "repni", 
-"reran", "rerni", "reset", "resin", "reska", "reski", "resko", "resor", "retak", "retor", "retro", "reuma", 
-"revan", "rever", "revir", "revni", "revno", "rezak", "rezan", "rezač", "rezit", "rezni", "rezol", "rezon", 
-"rečen", "ređen", "rešen", "reška", "režanj", "režej", "režim", "režnja", "riban", "ribar", "ribež", "ribiz", 
-"ribić", "ribič", "riblji", "ricin", "ridji", "rigan", "rigol", "rigor", "rijas", "rijač", "riječ", "rikač", 
-"rikša", "rilaš", "rilce", "rioja", "risan", "risač", "risov", "ritam", "ritan", "riter", "rival", "riven", 
-"river", "rizik", "rizji", "rizma", "rizom", "riđan", "rižin", "rižot", "rjeđe", "rjeđi", "rkman", "roads", 
-"robin", "roblje", "robni", "robot", "robov", "rodan", "rodeo", "rodij", "rodin", "rodni", "rogalj", "rogat", 
-"rogač", "rogin", "roglje", "rogoz", "rohav", "rojen", "rojta", "roker", "rokći", "roler", "rolni", "roman", 
-"romea", "romon", "romor", "ronac", "rondo", "ropac", "rosan", "rotor", "rovac", "rovač", "rovaš", "rovka", 
-"rovni", "rozga", "ročan", "ročni", "ročno", "rođac", "rođak", "rođen", "rubac", "rubalj", "ruban", "rubač", 
-"rubin", "rublja", "rublje", "rublji", "rubni", "rucelj", "rudar", "rudač", "rudni", "ruglo", "ruina", "rujan", 
-"rujni", "rukav", "rulet", "rulni", "rumba", "rumen", "runda", "runjav", "rusin", "ruski", "rutav", "ruter", 
-"rutil", "rutni", "ručak", "ručin", "ručka", "ručni", "ručno", "rušen", "ružan", "ružen", "ružin", "ružni", 
-"ružno", "rvanje", "rvati", "rzanje", "rzati", "rđanje", "rđati", "ržući", "sabat", "sabit", "sablja", "sabor", 
-"sadni", "sadnja", "sadon", "sadra", "sadrt", "safin", "safir", "sahar", "sahel", "sajam", "sajga", "sajla", 
-"sakat", "saksa", "salaš", "saldo", "salij", "salon", "salpa", "salto", "salva", "samac", "samar", "samba", 
-"samelj", "samit", "samrt", "samur", "sanac", "sanak", "sandi", "sanen", "sanjan", "sanjar", "sanjiv", "sanjke", 
-"sanke", "santa", "saone", "sapet", "sapinj", "sapun", "saraj", "sarka", "sarma", "saska", "saski", "sasut", 
-"satar", "saten", "satir", "satić", "satni", "satno", "satrt", "sauna", "savez", "savit", "savor", "saziv", 
-"sačma", "sađen", "sašin", "sašit", "sažanj", "sažet", "sažnji", "scena", "sceno", "sched", "sebro", "sebum", 
-"sedam", "sedef", "sedlo", "sedmi", "sedra", "sedre", "seget", "seksi", "sekta", "sekte", "selac", "selam", 
-"selen", "seljak", "seljen", "semem", "semit", "semiš", "senat", "seoba", "seoce", "seoul", "sepia", "sepsa", 
-"septa", "serač", "serij", "serin", "serum", "servo", "seter", "sezam", "sezon", "sfera", "sfing", "shema", 
-"sheme", "shift", "shimp", "sidar", "sidon", "sidra", "sidro", "sifon", "sigma", "sijač", "sijed", "sijek", 
-"sijev", "silan", "silaz", "silić", "silno", "silom", "silos", "silur", "sinac", "sinak", "singl", "sinjac", 
-"sinka", "sinko", "sinod", "sinov", "sinoć", "sinus", "sipak", "sipan", "sipar", "sipin", "sipki", "sipnja", 
-"sirac", "sirak", "sirač", "sirem", "siren", "sirev", "sirij", "sirot", "sirov", "sirup", "sisal", "sisan", 
-"sisar", "sisat", "siski", "sitan", "sitar", "sitki", "sitno", "sitov", "sivac", "sićan", "sički", "sjati", 
-"sjeme", "sjena", "sjeta", "sjeći", "sječa", "sjeđi", "skala", "skalp", "skamp", "skaut", "skejt", "skela", 
-"skele", "skeps", "skica", "skice", "skija", "skije", "skiji", "sklad", "sklat", "sklać", "sklek", "skliz", 
-"sklon", "sklop", "skoba", "skori", "skoro", "skrab", "skraj", "skrat", "skrba", "skren", "skriv", "skrok", 
-"skroz", "skupa", "skupi", "skupo", "skuta", "skuča", "skuša", "skvrč", "slabi", "slabo", "slajd", "slama", 
-"slang", "slani", "slanje", "slanji", "slano", "slast", "slati", "slava", "slavk", "slađa", "slađe", "slađi", 
-"slejt", "sleng", "sleta", "sleći", "slika", "slina", "sliti", "slići", "sljeme", "sloga", "slovo", "sluga", 
-"smaći", "smesa", "smeće", "smeđi", "smilje", "smion", "smiti", "smjel", "smjer", "smola", "smoći", "smrad", 
-"smrzo", "smrći", "smrča", "snaga", "snaha", "snast", "snaći", "sneno", "sniti", "snovi", "snšan", "sobar", 
-"sobni", "sobom", "sodar", "sojin", "sokak", "sokna", "sokol", "solda", "solik", "soljen", "solni", "somić", 
-"somun", "sonar", "sonda", "sonet", "songa", "sopći", "sorta", "sorus", "soton", "sočan", "sočiv", "sočno", 
-"sošan", "sošni", "spanje", "spati", "spaza", "spelt", "speći", "spilja", "spina", "spjev", "splav", "splet", 
-"splin", "spljet", "spolja", "spona", "sponja", "spora", "spore", "spori", "sporo", "sport", "spram", "spran", 
-"sprat", "sprda", "spreg", "sprej", "sprot", "sprud", "spsti", "spust", "sranje", "srast", "srati", "srdit", 
-"srdnja", "srdžba", "sreća", "srhaj", "srkan", "srnjak", "srnče", "srpak", "srpanj", "srpnja", "srčan", "sržni", 
-"stado", "staja", "staje", "stanje", "stara", "stari", "start", "stati", "staza", "stega", "steka", "stela", 
-"stelja", "stenje", "stent", "steon", "stepa", "stere", "steći", "stick", "stina", "stiva", "stići", "stjeg", 
-"stjenj", "stoga", "stoik", "stoka", "stola", "stoma", "stopa", "stoti", "stožc", "strah", "stran", "strat", 
-"stres", "stret", "stric", "strik", "strip", "strka", "strmi", "strmo", "strog", "stroj", "strop", "strta", 
-"strti", "strug", "struk", "strum", "strći", "stuba", "stube", "stupa", "stući", "stvar", "stvor", "suada", 
-"sudac", "sudan", "sudar", "sudba", "sudnji", "suita", "suiti", "sukan", "suknja", "sukno", "sukob", "sukus", 
-"sukut", "sulud", "sumnja", "sumnje", "sumor", "sunca", "sunce", "sunet", "sunit", "supek", "super", "supin", 
-"supka", "surka", "surla", "surov", "sused", "suski", "suton", "sutra", "suvag", "suzan", "suzni", "sućut", 
-"sučev", "suđen", "sušac", "sušak", "sušan", "sušanj", "sušač", "sušen", "sušiv", "sušni", "sušnja", "sužanj", 
-"sužen", "sužnja", "sužnji", "svaki", "svast", "svati", "svači", "svađa", "sveti", "sveto", "sveza", "sviba", 
-"sviji", "svikl", "svila", "svima", "svime", "sving", "svinja", "svita", "sviti", "svići", "svjet", "svjež", 
-"svlak", "svota", "svrab", "svrha", "svrći", "svuda", "svući", "tabak", "taban", "tabla", "tablo", "tabor", 
-"tadić", "tajac", "tajan", "tajga", "tajna", "tajne", "tajni", "tajno", "takav", "takov", "taksa", "taksi", 
-"talac", "talas", "talij", "talir", "taljen", "taljiv", "talni", "talog", "talon", "talov", "talpa", "talus", 
-"tamal", "taman", "tamni", "tamno", "tanac", "tanad", "tanah", "tanak", "tanan", "tanga", "tango", "tanin", 
-"tanjen", "tanjug", "tanjur", "tanki", "tanko", "tapir", "tapit", "tarac", "tarni", "tarok", "tatar", "tatin", 
-"tatov", "tavan", "tavor", "tačan", "tačke", "tački", "tašta", "tašti", "tašto", "tažen", "tegalj", "tegla", 
-"teglo", "teist", "tekin", "tekom", "tekst", "tekut", "tekuć", "telac", "telad", "telal", "telco", "telić", 
-"telur", "temat", "temelj", "tempo", "tenar", "tenda", "tenis", "tenor", "tepav", "tepen", "tepet", "tepih", 
-"terac", "terca", "teren", "teret", "terme", "termo", "teror", "tesan", "tesar", "tesla", "teslo", "testi", 
-"tetak", "tetin", "tetka", "tetov", "tetra", "tezga", "tezge", "tečaj", "tečan", "tečni", "tečno", "teški", 
-"teško", "težak", "težnja", "težnje", "tican", "tifus", "tigar", "tigra", "tihan", "tihić", "tijek", "tikov", 
-"tikva", "tilda", "timar", "timin", "timol", "timom", "timor", "timus", "tinel", "tinjac", "tinjak", "tinol", 
-"tinta", "tioli", "tipka", "tipni", "tiran", "tirol", "tirom", "tisak", "tiski", "tisni", "tisov", "titan", 
-"titar", "title", "titov", "titra", "tivat", "tišam", "tjeme", "tkalja", "tkani", "tkanje", "tkati", "tkivo", 
-"tlaka", "tmast", "tmica", "tmina", "tobom", "tobož", "tokar", "token", "tolar", "tolik", "tomac", "tomić", 
-"toner", "tonik", "tonus", "topao", "topaz", "topiv", "topić", "topli", "toplo", "topol", "topot", "topta", 
-"topuz", "toranj", "torba", "torij", "torka", "torta", "torte", "torus", "torzo", "total", "totem", "tovan", 
-"tovar", "tovni", "točac", "točak", "točan", "točen", "točka", "točni", "točno", "trace", "trafo", "traka", 
-"trakt", "tranje", "trans", "trasa", "trata", "trati", "trava", "traže", "trbak", "trbuh", "trema", "trend", 
-"trenje", "trept", "treći", "trgan", "trias", "trica", "trice", "trija", "triko", "triol", "trion", "tripa", 
-"tripe", "trist", "trkač", "trkin", "trkom", "trljan", "trnac", "trnci", "trnjak", "trnjan", "trnov", "troje", 
-"troji", "trola", "tromb", "tromo", "tropa", "tropi", "trpak", "trpan", "trpez", "trpki", "trpni", "trsje", 
-"trska", "trski", "truba", "trula", "truli", "truna", "trunje", "trupa", "trust", "trven", "trzaj", "trzan", 
-"trzav", "trčak", "trčan", "trčka", "trčki", "tršlja", "tržan", "trživ", "tržni", "tuber", "tubul", "tubus", 
-"tucan", "tucet", "tukac", "tukan", "tulac", "tulij", "tuljac", "tuljak", "tuljan", "tulum", "tumač", "tumbe", 
-"tumor", "tumul", "tunel", "tunjić", "tupan", "tupav", "tupik", "turan", "turbo", "tuski", "tutanj", "tutnja", 
-"tutor", "tučak", "tučen", "tučnja", "tuđin", "tušanj", "tužan", "tužba", "tužen", "tužno", "tvoja", "tvoje", 
-"tvoji", "tvorč", "tvrdi", "tvrdo", "tvrđa", "tvrđe", "tvrđi", "tvtka", "ubavo", "ubica", "ubiti", "ubogi", 
-"ubola", "ubran", "ubrus", "ubrzo", "udaja", "udana", "udani", "udanje", "udata", "udati", "udbaš", "udbin", 
-"udica", "udiše", "udjel", "udost", "udova", "ufanje", "ufati", "ugaon", "uginja", "uglas", "uglat", "ugled", 
-"ugljan", "ugljen", "ugljik", "ugnut", "ugoda", "ugriz", "uhoda", "uhvat", "ujati", "ujeti", "ujina", "ujnin", 
-"uklet", "uklop", "ukoso", "ukras", "ukriž", "ukrug", "ulazi", "ulcer", "ulica", "ulija", "uliji", "ulika", 
-"uliti", "uljani", "uljara", "uljast", "uljati", "uljeni", "uljeti", "uljika", "uljiti", "ulkus", "uloga", "ulozi", 
-"uluda", "uludo", "umalo", "umaći", "umija", "umilja", "umina", "umiti", "umnik", "umnjak", "umovi", "umrla", 
-"umrli", "umski", "uncan", "ungar", "unija", "unići", "unjkav", "unmik", "unski", "unuka", "unuče", "unšan", 
-"uopće", "uočen", "upala", "upeti", "upeći", "upilja", "upiti", "upliv", "upola", "upora", "uprav", "upred", 
-"uprta", "uprte", "uprti", "upust", "uputa", "upute", "uranje", "urban", "urbar", "ureja", "ureje", "uresa", 
-"ureza", "ureći", "urica", "urina", "urlač", "urlik", "urota", "useći", "ushit", "usiti", "usjek", "usjev", 
-"uskok", "uskop", "uskrs", "usliš", "usmen", "usnat", "usnen", "usnik", "usnuo", "uspet", "uspinj", "uspio", 
-"uspon", "uspor", "usput", "usran", "usred", "ustan", "ustav", "ustaš", "ustuk", "ustup", "usula", "usuti", 
-"utaja", "utaći", "utega", "uteći", "utiha", "utija", "utina", "utkan", "utrem", "utrka", "utrti", "utura", 
-"utući", "uvala", "uvaža", "uvelo", "uveza", "uveče", "uvija", "uviti", "uvjet", "uvodi", "uvrći", "uvući", 
-"uzdah", "uzdan", "uzduh", "uzduž", "uzeti", "uzeće", "uzgoj", "uzgon", "uzica", "uzina", "uziti", "uzići", 
-"uzlat", "uzlaz", "uzlet", "uzlić", "uzlov", "uzmah", "uzmak", "uzmeš", "uznes", "uznik", "uzrad", "uzrok", 
-"uzvik", "uzvod", "uzvoj", "učati", "učeni", "učenje", "učenju", "učeno", "učeći", "učila", "učilo", "učini", 
-"učiti", "učmao", "učtiv", "ušara", "ušata", "ušati", "ušica", "ušiti", "ušljiv", "uštap", "uštrb", "ušulja", 
-"uženje", "užeći", "užgan", "užica", "užina", "užiti", "uživo", "vabac", "vafel", "vafla", "vafti", "vagar", 
-"vagir", "vagon", "vaida", "vajda", "vajni", "vakuf", "vakum", "valin", "valić", "valjak", "valjan", "valjač", 
-"valjda", "valjni", "valni", "valno", "valov", "vapaj", "vapno", "varan", "varav", "varen", "variv", "varka", 
-"varoš", "vatra", "vazal", "vazda", "vađen", "vašar", "važan", "važni", "važno", "veber", "vedar", "vedri", 
-"vedro", "vedut", "velan", "velar", "velik", "velim", "veljun", "venus", "venut", "veoma", "vepar", "vepra", 
-"veran", "verde", "vergl", "veron", "veseo", "veski", "vesla", "veslo", "vespa", "vesta", "vesti", "vezan", 
-"vezač", "vezen", "vezir", "vezni", "većma", "večer", "vežuć", "vidan", "vidar", "video", "videu", "vidij", 
-"vidik", "vidni", "vidno", "vidov", "vidra", "viganj", "vignja", "vignje", "vihor", "vijac", "vijak", "vijan", 
-"vijao", "vijek", "vijuk", "vikan", "vikar", "vikač", "vilin", "vinac", "vinar", "vinca", "vinil", "vinjak", 
-"vinov", "vinut", "viola", "viren", "virov", "virus", "visak", "viski", "visok", "visov", "vitak", "vitao", 
-"vitez", "vitik", "vitki", "vitko", "vitlo", "vitro", "vivac", "vivak", "vizir", "vizni", "vizor", "vičan", 
-"viđan", "viđen", "višak", "višanj", "viški", "višnja", "višnji", "vižlo", "vjera", "vjeđa", "vješt", "vlada", 
-"vlaga", "vlaka", "vlast", "vljanje", "vljati", "vodan", "voden", "vodik", "vodič", "vodka", "vodni", "voice", 
-"vojak", "vojan", "vojka", "vojna", "vojni", "vokal", "volak", "volan", "volar", "volej", "volić", "voljan", 
-"voljen", "voljić", "voljka", "voljni", "voljno", "volov", "vonjan", "vonjav", "vosak", "voska", "voski", "votka", 
-"vozan", "vozar", "vozač", "vozni", "vozov", "voćar", "voćka", "voćke", "voćni", "vođen", "vođin", "vožen", 
-"vožnja", "vožnji", "vraga", "vrana", "vranje", "vrapč", "vrata", "vrati", "vrbak", "vrbas", "vrbik", "vrbin", 
-"vrbov", "vrcan", "vreli", "vrelo", "vrenje", "vreti", "vreva", "vreća", "vrganj", "vrhnje", "vrija", "vriti", 
-"vrišt", "vrjed", "vrlet", "vrnut", "vrpac", "vrpca", "vrsni", "vrsta", "vrtaj", "vrtić", "vrtni", "vrtnja", 
-"vrtnje", "vrulja", "vruće", "vrući", "vrvca", "vrzin", "vrčić", "vrčki", "vršak", "vršan", "vršen", "vršik", 
-"vrška", "vrški", "vršni", "vršno", "vulva", "vunen", "vučak", "vučen", "vučić", "vučje", "vučji", "vučni", 
-"zabas", "zabat", "zabit", "zabić", "zadah", "zadak", "zadar", "zadav", "zader", "zadnje", "zadnji", "zadrt", 
-"zagat", "zagon", "zaguk", "zahir", "zahod", "zahor", "zahum", "zajam", "zajaš", "zakiv", "zakolj", "zakon", 
-"zakov", "zakuk", "zakun", "zakup", "zalaz", "zalet", "zalih", "zalit", "zaljev", "zalog", "zamah", "zamak", 
-"zambi", "zamet", "zamir", "zamka", "zamok", "zamor", "zamot", "zamro", "zanat", "zanes", "zanos", "zaova", 
-"zapad", "zapao", "zapar", "zapas", "zapek", "zapet", "zapinj", "zapis", "zapon", "zapor", "zapuh", "zarad", 
-"zarez", "zarež", "zarit", "zaron", "zarub", "zasad", "zasij", "zasip", "zasun", "zasut", "zasuz", "zataj", 
-"zateg", "zatik", "zatim", "zatir", "zaton", "zator", "zatra", "zatrt", "zaval", "zavar", "zavid", "zavir", 
-"zavit", "zavod", "zavoj", "zavor", "zaziv", "zazor", "zazuj", "začas", "začelj", "začet", "začin", "zašit", 
-"zašto", "zaživ", "zbija", "zbilja", "zbiti", "zbjeg", "zbrka", "zbrku", "zbroj", "zdanje", "zdrav", "zdrug", 
-"zebić", "zebnja", "zebra", "zefir", "zelen", "zeman", "zemlja", "zemni", "zemun", "zenit", "zesti", "zetov", 
-"zečar", "zečić", "zečje", "zečji", "zglob", "zgoda", "zgori", "zgrom", "zgura", "ziban", "zicer", "zidan", 
-"zidar", "zidić", "zidje", "zidni", "zijev", "zimus", "zipka", "zirak", "zjalo", "zjena", "zlato", "zloba", 
-"zlota", "zloća", "zmija", "znani", "znanje", "znati", "zoban", "zoben", "zoblje", "zobun", "zombi", "zorak", 
-"zoran", "zoril", "zorni", "zorno", "zovin", "zraka", "zreli", "zrelo", "zrenje", "zreti", "zrija", "zriti", 
-"zrnat", "zrnaš", "zrnce", "zubac", "zubar", "zubat", "zubić", "zublja", "zubni", "zujak", "zuluf", "zulum", 
-"zumer", "zupak", "zuril", "zvani", "zvanje", "zvati", "zveka", "zveći", "zveči", "zvono", "zvrac", "zvuča", 
-"zvuči", "ćaćin", "ćelav", "ćemer", "ćevap", "ćifta", "ćilim", "ćiril", "ćitab", "ćopav", "ćorak", "ćorav", 
-"ćosav", "ćošak", "ćoški", "ćufte", "ćuljen", "ćumez", "ćurak", "ćurka", "ćučji", "ćuška", "čabar", "čador", 
-"čagalj", "čajev", "čajni", "čaklja", "čakra", "čalma", "čamac", "čaman", "čamov", "čanak", "čaplja", "čapor", 
-"čaran", "čarka", "čarni", "časak", "časan", "časki", "časni", "časno", "časti", "čavao", "čavić", "čavka", 
-"čađav", "čaška", "čaški", "čedad", "čedan", "čedno", "čehan", "čekan", "čekač", "čekić", "čekom", "čekrk", 
-"čelan", "čelce", "čelik", "čeljad", "čelni", "čemer", "čemin", "čeoni", "čepin", "čepić", "čerga", "česal", 
-"česan", "česki", "česma", "česti", "često", "četka", "četni", "četri", "češalj", "češan", "češanj", "češer", 
-"češki", "češće", "češći", "čežnja", "čežnje", "čibuk", "čigra", "čihan", "čikov", "čikoš", "čilaš", "činjen", 
-"čioda", "čiopa", "čipka", "čirak", "čirav", "čiraš", "čirić", "čirka", "čislo", "čisti", "čisto", "čitak", 
-"čitan", "čitav", "čitač", "čitki", "čitko", "čizma", "čičak", "čišći", "čižak", "čoban", "čohan", "čokanj", 
-"čokot", "čolak", "čoper", "čopor", "čorba", "čotav", "čubar", "čubav", "čudak", "čudan", "čudno", "čujan", 
-"čujni", "čukalj", "čukin", "čulan", "čulav", "čuljat", "čuljav", "čulni", "čumav", "čunak", "čunjić", "čupan", 
-"čupav", "čuvan", "čuvar", "čuven", "čučanj", "čvorč", "čvrga", "čvrst", "đakon", "đavao", "đavlji", "đavol", 
-"đačić", "đački", "đeram", "đerma", "đikat", "đonov", "đoran", "đubre", "đurđa", "đuveč", "đuzel", "šabat", 
-"šahov", "šahta", "šajka", "šakal", "šakač", "šaljiv", "šalom", "šalti", "šalša", "šaman", "šamar", "šamot", 
-"šanac", "šansa", "šapat", "šapta", "šarac", "šaraf", "šarag", "šaran", "šaren", "šarka", "šarov", "šarun", 
-"šarža", "šatar", "šator", "šatra", "šavan", "šavni", "šačan", "šačni", "šašav", "šaški", "šeboj", "šedok", 
-"šefov", "šegrt", "šeika", "šelak", "šelna", "šence", "šenil", "šenut", "šepav", "šepir", "šerif", "šerpa", 
-"šesti", "šesto", "šetan", "šetač", "šetnja", "šetnje", "ševar", "šećer", "šešir", "šiban", "šiber", "šibik", 
-"šiblje", "šifon", "šifra", "šifru", "šijit", "šijun", "šikar", "šiljak", "šiljat", "šiljen", "šiljka", "šiljni", 
-"šilok", "šinjei", "šinjel", "šinjon", "šipak", "šipka", "šipke", "širem", "širen", "širit", "široj", "širok", 
-"širom", "šivan", "šivač", "šizma", "šićar", "šišak", "šišan", "šiška", "šiške", "šiški", "škalja", "škamp", 
-"škara", "škare", "škart", "škiji", "škljoc", "škola", "škole", "škota", "škoti", "škrba", "škrga", "škrge", 
-"škrip", "škrob", "škrti", "škrto", "škuda", "škulja", "škuna", "škura", "škver", "šlaga", "šlajm", "šlapa", 
-"šljaka", "šljiva", "šljuka", "šnala", "šnaps", "šnpan", "šofer", "šogor", "šojka", "špaga", "špajz", "špica", 
-"špigl", "špilja", "šport", "špula", "šrafa", "šrafe", "štaka", "štala", "štand", "štava", "šteka", "štene", 
-"šteta", "štiga", "štiva", "štivo", "štrik", "štrka", "štuka", "štula", "štura", "šubar", "šugav", "šulac", 
-"šuman", "šumar", "šumni", "šumor", "šunka", "šupak", "šupalj", "šuplji", "šurla", "šuter", "šutke", "šutnja", 
-"šušak", "šušanj", "šuška", "šušnja", "šušnji", "švalja", "švelja", "šverc", "švići", "žabac", "žabar", "žablji", 
-"žagor", "žaket", "žalac", "žalar", "žalba", "žalim", "žalit", "žaljen", "žamor", "žaoka", "žaran", "žarač", 
-"žaren", "žarki", "žarko", "žarni", "žarče", "žbica", "žbuka", "žbunje", "ždral", "žedan", "žegar", "žeguć", 
-"željan", "željen", "željko", "željni", "željno", "želva", "žemlja", "ženik", "ženin", "ženjen", "ženka", "žesti", 
-"žeton", "žetva", "žezlo", "žešće", "žešći", "žežen", "žganje", "žgati", "žgoljo", "žican", "židak", "židov", 
-"žilan", "žilav", "žilet", "žilni", "žitan", "žitar", "žitelj", "žitki", "žitni", "živac", "živad", "živalj", 
-"živca", "živež", "živin", "živio", "življi", "život", "žičan", "žičar", "žični", "žišak", "žižak", "žlica", 
-"žljebi", "žmara", "žnora", "žohar", "žrtva", "žrvanj", "žrvnja", "žubor", "žudan", "žudni", "žudnja", "žudno", 
-"žuhak", "žumor", "župan", "župni", "žuran", "žurba", "žurni", "žurno", "žućak", "žučan", "žučni", "žuđen", 
-"žvaka", "žvala", "žvale", "žvati"
+  "afekt", "afera", "afeza", "afiks", "agama", "agami", "agava", "agens", "agent", "agnat", "agona", "agora", "agrar"
+, "aguti", "ajvar", "akord", "akrap", "akril", "aksel", "akson", "akter", "aktin", "aktiv", "album", "aleja"
+, "alibi", "aljkav", "alkar", "ambar", "ambis", "ambon", "ambra", "ameba", "amidi", "amini", "amper", "anali"
+, "aneks", "anima", "anion", "anker", "anoda", "antik", "anđeo", "aorta", "apeks", "apoen", "april", "arbor"
+, "arbun", "areal", "arena", "arest", "argon", "arhiv", "arija", "arkus", "aroma", "arsen", "aršin", "asana"
+, "asket", "askus", "aspik", "astat", "astma", "ataše", "atelje", "atest", "atlas", "atlet", "atona", "atrij"
+, "augur", "autić", "autor", "avans", "avers", "avion", "avizo", "azidi", "azola", "ašram", "babac", "babak"
+, "babin", "babić", "bablji", "babun", "bacač", "bacil", "badalj", "badanj", "badem", "badić", "badnji", "bagav"
+, "bager", "bagra", "bahat", "bajam", "bajan", "bajat", "bajka", "bajta", "bakan", "bakar", "bakin", "baklja"
+, "balav", "balet", "balin", "balon", "balun", "banda", "banka", "banov", "barak", "baraž", "barba", "barel"
+, "barem", "barij", "barit", "barka", "barok", "baron", "barun", "barut", "barža", "baset", "basma", "basna"
+, "batak", "batat", "batik", "batić", "bazar", "bazen", "bazga", "bazni", "bački", "bačva", "baški", "bašča"
+, "bažul", "bedak", "bedem", "bedro", "begov", "behar", "belot", "benav", "bendžo", "berač", "berba", "beril"
+, "berma", "besan", "betel", "beton", "bezub", "bećar", "bečki", "biber", "bijeg", "bijel", "bijes", "bilin"
+, "biljar", "biljeg", "biljka", "biljni", "bingo", "binom", "biota", "biped", "biper", "biran", "birač", "birsa"
+, "biser", "biski", "bista", "bitak", "bitan", "biter", "bitka", "bitno", "bitva", "bivak", "bivol", "bivši"
+, "bizam", "bizon", "bičić", "bičji", "blago", "blanja", "blato", "blind", "blizu", "bljušt", "blues", "bluna"
+, "bluza", "bobac", "bobić", "bocun", "bodac", "bodar", "boden", "bodež", "bodlja", "bodul", "boema", "bofor"
+, "bogac", "bogalj", "bogat", "bogaz", "bogme", "bojna", "bojni", "bokal", "bokor", "bokun", "bolan", "bolid"
+, "boljar", "boljka", "bolno", "bolta", "bomba", "bongo", "bonus", "borac", "borak", "borba", "bordo", "borer"
+, "borik", "borić", "borje", "borni", "borov", "borša", "boršč", "bosti", "botun", "bozon", "boćar", "bočat"
+, "bočni", "bočno", "božji", "božur", "braco", "brada", "braga", "brana", "brand", "brati", "brava", "bravo"
+, "braća", "brbot", "breka", "breme", "brend", "brest", "breve", "breza", "breča", "breče", "brico", "briga"
+, "brioš", "brkat", "brklja", "brljav", "brlog", "bronh", "brtva", "bruka", "bruto", "brvak", "brvno", "brzac"
+, "brzak", "bubanj", "bucanj", "bucka", "budak", "budan", "budno", "budžak", "budžet", "bugar", "buhav", "buhač"
+, "bujad", "bujan", "bujol", "bujon", "bukač", "buket", "bukle", "bukov", "bukoč", "bukva", "bulin", "buljav"
+, "buljuk", "bunar", "bunda", "burag", "buran", "buraz", "burek", "burin", "burka", "burma", "burno", "burza"
+, "busen", "butan", "butik", "buvlji", "bućin", "bučan", "bučje", "bučno", "bušan", "bušač", "bušel", "bušik"
+, "bušin", "bušji", "bužir", "cache", "canjak", "capin", "carev", "carić", "cedar", "ceker", "cekin", "cekum"
+, "celer", "celom", "cener", "centa", "cepin", "cerij", "cerje", "cerov", "cesta", "cezij", "cibet", "cican"
+, "cifra", "cigan", "cigla", "cigli", "cijan", "cijel", "cijep", "cijev", "cijuk", "cikla", "cikot", "cilik"
+, "ciljan", "cimer", "cimet", "cinik", "cipal", "cirka", "cirus", "cista", "citat", "citra", "civil", "cobol"
+, "cotav", "crkva", "crnac", "crnjak", "crnjaš", "crnka", "crpac", "crpka", "crpni", "crtač", "crtež", "crtić"
+, "crtnja", "crvac", "crvak", "crvaš", "crven", "crvić", "cucak", "cucla", "cukar", "cukor", "curak", "curin"
+, "cuvik", "cveba", "cvike", "dabar", "dacit", "dagnja", "daidža", "daire", "dakle", "dalek", "daljaš", "daljnji"
+, "damin", "danak", "danas", "danik", "darak", "daska", "dativ", "datum", "davež", "davni", "davno", "dašak"
+, "dašto", "debeo", "debil", "deblo", "deist", "dekan", "dekla", "dekor", "delen", "delta", "demon", "demos"
+, "denar", "dendi", "denga", "denim", "denjak", "deran", "derač", "derbi", "derle", "derma", "desen", "deset"
+, "desni", "desno", "detalj", "detur", "devet", "devin", "devon", "dezen", "dečko", "dildo", "diler", "diljem"
+, "diljka", "dimni", "dinar", "dingo", "dioba", "dioda", "dioni", "diple", "dipol", "dirka", "disaj", "disko"
+, "divan", "divlje", "divlji", "divno", "dizač", "dizel", "dizna", "dičan", "dišni", "djeca", "djedo", "djelo"
+, "djeva", "dlaka", "dobar", "dobit", "dobni", "doboš", "dobro", "dodir", "dogma", "dogon", "dojam", "dojka"
+, "dokad", "dokaz", "doker", "dokle", "dokon", "doksa", "dokud", "dokup", "dolac", "dolap", "dolar", "dolet"
+, "doljan", "dolus", "domar", "domet", "donle", "donor", "donos", "dopis", "dorat", "dosad", "doseg", "dosje"
+, "dosta", "dotad", "dotle", "dotok", "dovde", "dovod", "dovoz", "doziv", "doček", "dočim", "došao", "draga"
+, "dragi", "drago", "drama", "drapa", "drati", "drača", "dredža", "dreka", "drift", "drito", "drmeš", "drmež"
+, "droca", "droga", "droid", "drolja", "dronjo", "drozd", "drsko", "druga", "drugi", "drugo", "druid", "drvar"
+, "drvce", "drven", "drvlje", "drvni", "drzak", "drška", "držak", "držač", "dubak", "dubok", "dudov", "duduk"
+, "dugin", "dugme", "duhan", "duhač", "dukat", "dulek", "dulum", "dundo", "dupin", "dupli", "duplja", "duplo"
+, "durum", "dućan", "dušak", "dušek", "dušik", "dušin", "dušni", "dužan", "dužni", "dveri", "dvica", "dvije"
+, "dvoje", "dvoji", "džanki", "dželat", "džepar", "džepić", "džepni", "džezva", "džihad", "džilit", "džingl", "džoger"
+, "džoint", "džokej", "džoker", "džomba", "džudaš", "džukac", "džunka", "ebola", "edikt", "efekt", "egida", "egzem"
+, "egzil", "eidos", "ekcem", "ekipa", "ekler", "ekran", "ekser", "elisa", "elita", "emajl", "endem", "enoli"
+, "enzim", "eocen", "eolni", "eparh", "epika", "epoha", "epski", "erbij", "erker", "esnaf", "estet", "etapa"
+, "etaža", "etida", "etika", "etnik", "etnos", "eunuh", "fagot", "fajda", "fakat", "faker", "fakin", "fakir"
+, "falda", "falta", "falus", "farad", "farba", "farma", "farsa", "farsi", "fatum", "fauna", "fazan", "fazni"
+, "fazno", "fazon", "fačuk", "fažol", "febra", "feces", "feder", "felah", "feler", "felga", "femur", "fenil"
+, "fenjer", "fenol", "feral", "ferit", "fetiš", "fetus", "fetva", "fešta", "fiber", "fibra", "fijuk", "fikus"
+, "filer", "filet", "filir", "filit", "finiš", "finta", "firer", "firma", "fitilj", "fićuk", "fišek", "fjaka"
+, "fjeld", "fjord", "flaks", "flaša", "fleka", "flert", "floem", "floks", "flora", "flota", "fluid", "fluks"
+, "fluor", "foaje", "fojba", "fokus", "folni", "fondi", "fonem", "fonon", "forma", "forte", "forum", "fosil"
+, "fosna", "fotka", "foton", "frape", "fraza", "freon", "freza", "frita", "front", "frtalj", "frula", "frčka"
+, "funta", "furan", "furda", "furka", "futer", "futon", "futur", "fušer", "gabor", "gabro", "gadan", "gadno"
+, "gajba", "gajde", "galeb", "galge", "galij", "galon", "galop", "gamad", "ganga", "ganjak", "ganut", "garan"
+, "garav", "garda", "garež", "garig", "garov", "gasni", "gater", "gatka", "gauda", "gaučo", "gavan", "gavez"
+, "gavka", "gavun", "gazda", "gaćan", "gačac", "gađač", "gašen", "gebis", "gegav", "gejša", "geler", "genij"
+, "genom", "geoda", "geoid", "gepek", "gerla", "germa", "geslo", "gesta", "gibak", "gibanj", "gibon", "gilda"
+, "ginko", "girus", "gizda", "glans", "glava", "glede", "glina", "gliom", "gljiva", "gljive", "globa", "glosa"
+, "gluho", "gluma", "glupo", "gnajs", "gnjida", "gnjila", "gnjilo", "gnjiti", "gnoma", "gojan", "golać", "golem"
+, "golet", "golub", "gomolj", "gonič", "gonjen", "gorak", "gordo", "goriv", "gorje", "gorko", "gornji", "gospa"
+, "gotov", "govno", "govor", "gozba", "gošća", "graba", "grace", "graja", "grana", "granje", "grapa", "građa"
+, "grbalj", "grbav", "grbač", "grcaj", "grdan", "grdnja", "grdno", "greda", "grejp", "grgeč", "grgut", "grifo"
+, "grilje", "grinja", "grinje", "gripa", "griva", "griža", "grlat", "grlce", "grlen", "grlić", "grljak", "grmak"
+, "grmalj", "grmić", "grmlje", "grnac", "grota", "groza", "grozd", "grubo", "gruda", "grudi", "grunt", "grupa"
+, "grupi", "grčki", "guava", "gubar", "gubav", "guber", "gudač", "gugut", "gujin", "gulag", "gulaš", "gumar"
+, "gumen", "gumno", "gunjac", "gurav", "gusak", "gusan", "gusar", "gusji", "guska", "gusle", "gusto", "gutač"
+, "guzat", "gušav", "gušče", "gužva", "gvalja", "gvirc", "gvozd", "gđica", "habit", "hahar", "haiku", "hajde"
+, "hajka", "haker", "halal", "halit", "halma", "halon", "halva", "hamam", "haran", "harač", "harem", "harfa"
+, "harfe", "hauba", "hašiš", "haški", "helij", "heljda", "helot", "henri", "heroj", "hertz", "hidra", "hidžra"
+, "hihot", "hijat", "hilus", "himba", "himen", "himna", "himus", "hindi", "hipik", "hitac", "hitan", "hitar"
+, "hitin", "hitna", "hitnja", "hitno", "hitro", "hlače", "hodač", "hodni", "hodnja", "hokej", "homić", "horda"
+, "horor", "hotel", "hrana", "hrast", "hrbat", "hrgav", "hrkač", "hrnjav", "hromo", "hrušt", "hrvač", "hrčak"
+, "hrđav", "humac", "humak", "human", "humka", "humlje", "humor", "humus", "hunta", "husar", "husit", "hučan"
+, "hvala", "hvoja", "ibrik", "ideal", "ideja", "idila", "idiom", "idiot", "idući", "iftar", "igalo", "igdje"
+, "iglar", "iglun", "igrač", "igriv", "ikako", "ikoji", "ikona", "ikuda", "ilova", "imago", "imalo", "imanje"
+, "imati", "imela", "imidi", "inače", "indij", "ingot", "inoča", "input", "inćun", "irski", "irvas", "ishod"
+, "iskaz", "iskon", "iskop", "iskra", "iskup", "islam", "ispad", "ispis", "ispit", "ispod", "ispuh", "istam"
+, "istek", "istok", "istom", "istup", "isuti", "itrij", "ivica", "ivrit", "izaći", "izboj", "izbor", "izdah"
+, "izdan", "izgon", "izići", "izlaz", "izlet", "izljev", "izlog", "izlov", "izmak", "izmet", "iznad", "iznos"
+, "izraz", "izrez", "izrod", "izuti", "izvan", "izvid", "izvod", "izvor", "izvoz", "ičiji", "jadac", "jadan"
+, "jadno", "jagma", "jagnje", "jahač", "jahta", "jajar", "jajce", "jajni", "jakna", "jalan", "jalov", "jalša"
+, "jamac", "janjac", "janjad", "jarac", "jarad", "jarak", "jaram", "jaran", "jarić", "jarki", "jarko", "jarma"
+, "jaruh", "jasan", "jasen", "jasle", "jasno", "jatak", "javni", "javno", "javor", "jazan", "jebac", "jebač"
+, "jeben", "jecaj", "jecav", "jedak", "jedan", "jedar", "jedić", "jedno", "jedro", "jedva", "jeger", "jelac"
+, "jelek", "jelen", "jelka", "jelov", "jesen", "jesti", "jetko", "jetra", "jezan", "jezda", "jezer", "jezik"
+, "jeziv", "ječam", "ješan", "ješka", "ježak", "ježev", "ježić", "ježur", "jidiš", "jodat", "jodid", "jodni"
+, "johin", "joint", "joker", "jošte", "judić", "juice", "junac", "junad", "junak", "juriš", "jurta", "juten"
+, "jutro", "jučer", "jušan", "južan", "južni", "južno", "kabao", "kabel", "kadar", "kadet", "kafić", "kagan"
+, "kajak", "kajda", "kakao", "kakav", "kalaj", "kalan", "kalav", "kalem", "kalež", "kalfa", "kalif", "kalij"
+, "kaljav", "kalup", "kalus", "kamen", "kamin", "kanal", "kanap", "kanat", "kanda", "kandža", "kanjac", "kanjon"
+, "kanon", "kanta", "kapak", "kapar", "kaplja", "kapok", "kaput", "karan", "karas", "karat", "kargo", "karma"
+, "karta", "kasan", "kasar", "kasač", "kasko", "kasno", "kasta", "katar", "katni", "katun", "kavez", "kavga"
+, "kazan", "kazna", "kaćun", "kašalj", "kažun", "kebab", "keder", "kefir", "kenjac", "kepec", "keper", "kerma"
+, "keson", "kečap", "kibic", "kibla", "kibuc", "kicoš", "kifla", "kijač", "kikaš", "kiklja", "kikot", "kilav"
+, "kinin", "kinon", "kiosk", "kipar", "kiper", "kipić", "kirnja", "kiseo", "kisik", "kitov", "kivan", "kivnja"
+, "kivno", "kićen", "kičma", "kišan", "kišni", "klada", "klaka", "klanje", "klapa", "klasa", "klati", "klaun"
+, "kleka", "klema", "kleti", "klica", "klija", "klika", "klima", "klinč", "kliše", "kljast", "kljova", "kljuka"
+, "kljuna", "kljuse", "klopa", "klupa", "knjiga", "koala", "kobac", "koban", "kobno", "kobra", "kocka", "kodek"
+, "koder", "kodni", "kodon", "kofer", "kojot", "koker", "kokon", "kokos", "kokot", "kokoš", "kolac", "kolan"
+, "kolar", "kolač", "kolaž", "koledž", "kolet", "kolin", "koljač", "kolni", "kolon", "kolor", "kolos", "kolut"
+, "komad", "kombi", "komet", "komin", "komis", "konac", "konak", "konjak", "konjar", "konjic", "konjić", "konop"
+, "konto", "konus", "kopal", "kopar", "kopač", "koplje", "kopno", "kopra", "kopun", "kopča", "korak", "koral"
+, "koralj", "korda", "korov", "korpa", "korzo", "kosac", "kosat", "kosir", "koska", "kosti", "kotac", "kotao"
+, "kotar", "kotur", "kotva", "kovač", "kozak", "kozar", "kozer", "kozji", "kozle", "kočanj", "kočar", "kočni"
+, "košer", "košnja", "košta", "kožar", "kožni", "kožuh", "kožun", "krama", "kramp", "kraul", "krava", "krađa"
+, "krcat", "kreda", "kredo", "krele", "krema", "krhak", "krhko", "krika", "krilo", "kripl", "kriti", "krivo"
+, "kriza", "križa", "krkan", "krmad", "krmak", "krmar", "krmelj", "krmni", "krnjak", "krnjav", "kroki", "kroše"
+, "krpan", "krpar", "krpač", "krpelj", "krpen", "krpež", "krplja", "krsni", "krsta", "kruna", "krupa", "kruto"
+, "krvav", "krvni", "krzno", "krčag", "krčki", "krčma", "kršan", "kubik", "kubni", "kubus", "kucaj", "kufer"
+, "kugla", "kuhan", "kuhar", "kukac", "kukma", "kukolj", "kulak", "kulaš", "kulen", "kulon", "kuluk", "kumek"
+, "kumin", "kumir", "kumče", "kunić", "kunjad", "kunjka", "kupac", "kupač", "kupelj", "kupka", "kupnja", "kupon"
+, "kupus", "kurac", "kuran", "kurat", "kurij", "kurir", "kurji", "kurva", "kusat", "kusav", "kusur", "kutak"
+, "kutić", "kutni", "kućni", "kučka", "kušač", "kušin", "kušnja", "kužan", "kvaka", "kvant", "kvarc", "kvark"
+, "kvart", "kvota", "kvrga", "labav", "labud", "lagan", "lahor", "lajav", "lakat", "lakej", "lakom", "lakše"
+, "lampa", "lanac", "lapor", "larva", "laser", "lasta", "lavež", "lavić", "lavor", "lazar", "lačan", "lažac"
+, "lažan", "lažno", "lažov", "lebić", "ledac", "leden", "leganj", "legat", "leglo", "lelek", "lemeš", "lemur"
+, "lenta", "lento", "lepet", "lepra", "lesar", "letak", "letač", "letva", "levit", "leđen", "leđni", "leđno"
+, "ležaj", "libar", "liber", "libor", "libra", "licej", "lidar", "lider", "ligaš", "lignja", "lihen", "lihva"
+, "lijas", "lijek", "lijen", "lijep", "lijer", "lijes", "lijev", "liker", "limar", "limen", "limes", "limfa"
+, "limit", "limun", "linjak", "linka", "linđo", "lipanj", "lipid", "lipom", "lipov", "lirik", "lisac", "liska"
+, "lisni", "lista", "litij", "litra", "lizač", "lizol", "ličan", "lički", "lišaj", "lišce", "lišen", "lišće"
+, "ljanos", "ljekar", "ljepak", "ljepši", "ljetni", "ljetos", "ljevak", "ljevač", "ljigav", "ljiljak", "ljiljan", "ljubak"
+, "ljubav", "ljubić", "ljupko", "ljuska", "ljutit", "ljutnja", "loger", "logor", "lojan", "lojka", "lojni", "lokal"
+, "lokna", "lokot", "lokus", "lokva", "loman", "lomot", "lonac", "lopov", "lopoč", "lopta", "lopuh", "losos"
+, "lotos", "lovac", "lovaš", "lovni", "lovor", "lozni", "lozov", "ložač", "loživ", "ložni", "lubin", "lucanj"
+, "ludaš", "ludov", "lugar", "lukav", "luknja", "lukno", "lular", "lulav", "lulaš", "lumen", "lumin", "lupar"
+, "lupač", "lupež", "lupus", "lutak", "lutka", "lutnja", "luzer", "lučac", "lučki", "lučni", "luđak", "macan"
+, "macho", "macin", "madam", "madež", "magla", "magma", "maher", "majka", "major", "majur", "makac", "makar"
+, "maklja", "makov", "makro", "maksi", "malen", "maler", "malik", "maljav", "malko", "malne", "malta", "malus"
+, "mamac", "mamba", "mamin", "mamut", "mango", "manjak", "manjić", "maona", "maran", "marin", "marka", "marod"
+, "maron", "marva", "marža", "masen", "maser", "masiv", "maska", "maslo", "masno", "mason", "mater", "matni"
+, "mauna", "mazan", "mazač", "mazga", "maziv", "mazno", "mazut", "mačak", "mačić", "mačji", "mačka", "mačor"
+, "mašak", "mašna", "mašta", "medan", "medar", "meden", "medij", "mejaš", "mekan", "mekač", "meket", "melem"
+, "melez", "melos", "menta", "menza", "mesar", "mesni", "mesti", "metak", "metal", "metan", "metar", "meter"
+, "metež", "metil", "metilj", "metla", "metro", "mezon", "mečić", "mečka", "međaš", "mider", "mijau", "mijeh"
+, "miner", "minij", "minor", "minus", "minđa", "miran", "miraz", "miraž", "mirha", "miris", "mirno", "mirta"
+, "misal", "misao", "misli", "misni", "mitar", "mitra", "mišar", "mišić", "mišji", "miška", "mjauk", "mjera"
+, "mlada", "mlado", "mlaka", "mlako", "mlađi", "mlivo", "mljeti", "mniti", "mnogi", "mnogo", "moare", "mobil"
+, "modar", "model", "modem", "modni", "modro", "modul", "modus", "mogul", "moguć", "moher", "mokar", "mokro"
+, "molba", "moljac", "momak", "momče", "monah", "monom", "moped", "moral", "mosni", "mosor", "mosur", "motel"
+, "motet", "motiv", "motka", "motor", "mozak", "moćan", "moćno", "mošnja", "mošus", "možda", "mrena", "mreža"
+, "mrgud", "mrkalj", "mrkan", "mrkač", "mrkli", "mrkva", "mrmor", "mrsko", "mrtav", "mrtva", "mrtvi", "mrtvo"
+, "mrzak", "mrzao", "mršav", "mržnja", "mucav", "mudar", "mudro", "mukao", "muklo", "mulac", "mulat", "muljav"
+, "mumps", "mungo", "munjen", "mural", "murva", "musav", "musti", "mutan", "mutav", "mutež", "mutno", "muzar"
+, "muzej", "mućak", "mućka", "mučan", "mučen", "mučki", "mučno", "muški", "muško", "mužar", "mužev", "mužik"
+, "mužić", "mužnja", "naboj", "nabor", "nacrt", "nadam", "nadir", "nadut", "nadžak", "nafta", "nagao", "nagib"
+, "naglo", "nagon", "nahod", "naime", "naiva", "naići", "najam", "nakan", "nakit", "nakon", "nakot", "nalaz"
+, "nalet", "nalik", "nalič", "naljep", "naljev", "naljut", "nalog", "namaz", "namet", "nandu", "nanos", "naoko"
+, "napad", "napet", "napis", "napoj", "napon", "napor", "narav", "narod", "nasad", "nasip", "nauka", "navar"
+, "navez", "navod", "navoj", "navoz", "navrh", "nazad", "nazal", "nazeb", "naziv", "nazor", "naćve", "načas"
+, "načet", "način", "nađen", "naški", "nažao", "negda", "negve", "nehaj", "nehat", "nejak", "nejač", "nekad"
+, "nekoć", "nekud", "neman", "nemar", "nemio", "nemir", "nemoć", "nemrs", "nepar", "nepce", "neper", "nepun"
+, "nerad", "nered", "nesit", "nesti", "netko", "netom", "neven", "nevin", "nećak", "nešto", "neživ", "nijem"
+, "nikad", "nikal", "nikud", "nimfa", "nindža", "nisam", "niska", "nisko", "nitko", "nizak", "nišan", "ništa"
+, "njedra", "njegov", "njemak", "njezin", "nježan", "nježno", "njihaj", "njihov", "njisak", "njiska", "njorka", "njuška"
+, "njušni", "nojev", "nokat", "noksa", "nomad", "nonet", "norma", "nosat", "nosač", "nosiv", "nosić", "nosni"
+, "notar", "notes", "notni", "novac", "noćas", "noćca", "noćni", "nošnja", "nožar", "nožić", "nožni", "nugat"
+, "nujan", "nulti", "nužan", "nužda", "nužno", "obala", "obaći", "obdan", "obilje", "obiti", "obići", "objed"
+, "oblak", "oblat", "oblik", "oblog", "obnoć", "oboje", "obrat", "obraz", "obred", "obris", "obrok", "obrub"
+, "obruč", "obrva", "obrve", "obuka", "obuti", "obuća", "obući", "obzir", "obzor", "ocean", "octen", "ocvao"
+, "odaja", "odaje", "odano", "odati", "odbor", "odeon", "odgoj", "odjek", "odjel", "odljev", "odmah", "odmak"
+, "odmet", "odmor", "odnos", "odoka", "odora", "odraz", "odred", "odrod", "odron", "odsad", "odveć", "odvod"
+, "odvoz", "odziv", "ofrlje", "oglas", "ogled", "ogreb", "oholo", "okapi", "oklop", "okolo", "okovi", "okret"
+, "okrug", "oksid", "oktan", "oktav", "oktet", "okuka", "okvir", "olako", "oleat", "olein", "oleum", "oliga"
+, "oliva", "olovo", "oltar", "oluja", "omama", "omanji", "omara", "omega", "omjer", "omlet", "onako", "onamo"
+, "ondje", "oniks", "onuda", "ončas", "opako", "opeka", "opera", "opeći", "ophod", "opica", "opiti", "opkop"
+, "oplet", "oporo", "opran", "oprez", "opseg", "optok", "oputa", "opšav", "orada", "oranje", "orati", "oraći"
+, "orden", "oreol", "organ", "orkan", "orlić", "orlov", "ormar", "ornat", "ortak", "oruđe", "osama", "oseka"
+, "osica", "osinji", "osion", "osjet", "oslad", "oslić", "osmak", "osmaš", "osmij", "osoba", "ostan", "osuda"
+, "osuti", "osvit", "osvrt", "otada", "otava", "oteti", "oteći", "otići", "otkad", "otkaz", "otkop", "otkos"
+, "otkud", "otkup", "otpad", "otpis", "otpor", "otrov", "otrti", "otuda", "otući", "otvor", "ovako", "ovamo"
+, "ovdje", "oveći", "oviti", "ovjes", "ovlaš", "ovrha", "ovuda", "ovčar", "ovčas", "ovčji", "ozimi", "očale"
+, "očica", "očinji", "očiti", "očito", "očnjak", "oštar", "oštro", "ožeći", "pacer", "packa", "padež", "pagan"
+, "pagar", "pajac", "pajzl", "pakao", "paker", "paket", "palac", "palež", "palir", "paljba", "palma", "paloš"
+, "palto", "pamet", "pampa", "pamuk", "panda", "pandža", "panel", "panta", "panus", "papak", "papar", "papir"
+, "paraf", "paran", "parba", "pareo", "parip", "parić", "parka", "parni", "paroh", "pasac", "pasaž", "pasha"
+, "pasiv", "pasji", "paska", "pasmo", "pasoš", "pasta", "pasti", "pasulj", "pasus", "patak", "pater", "patka"
+, "patnja", "patos", "pause", "pauza", "pazar", "pazuh", "pačad", "pačić", "pačji", "paški", "pašta", "pašče"
+, "pažen", "pažnja", "pecar", "pedalj", "pedel", "peder", "pegla", "pehar", "pekan", "pekar", "pelig", "pelin"
+, "pelir", "peljar", "pelud", "penal", "penis", "penjač", "pepeo", "perad", "perač", "perce", "perec", "periv"
+, "periš", "perje", "perla", "peron", "perut", "pesar", "petak", "petit", "petlja", "petni", "pećar", "pečat"
+, "pečen", "pešće", "piano", "pidžin", "pijan", "pijuk", "pijun", "piknja", "pilac", "pilad", "pilan", "pilar"
+, "pilav", "pilić", "piljak", "piljar", "pilon", "pilot", "pinca", "pinen", "pinjol", "pinka", "pinkl", "pinta"
+, "pipac", "pipak", "pipav", "pipun", "pirat", "piren", "pirit", "pirni", "pirol", "pisac", "pisak", "pisan"
+, "pisar", "pisač", "piska", "pismo", "pista", "pitak", "pitki", "pitko", "pitom", "piton", "pivar", "pivot"
+, "pizda", "pizma", "pizza", "pička", "pjega", "pjena", "plaho", "plast", "plata", "plato", "plavi", "plaća"
+, "plašt", "plaža", "pleme", "pleta", "pleća", "plima", "plise", "pljeva", "plješa", "pljuca", "pljuga", "ploha"
+, "plova", "ploča", "pluto", "pluća", "pluće", "pobol", "podao", "podij", "podli", "podlo", "podne", "podni"
+, "podno", "podug", "poema", "poeta", "pogan", "pogon", "pohan", "pohod", "pojac", "pojam", "pojas", "pokal"
+, "pokaz", "poker", "pokoj", "pokolj", "pokop", "pokus", "polen", "polet", "polio", "polip", "polis", "poljar"
+, "polka", "polog", "poloj", "pomak", "poman", "pomet", "pomnja", "pomno", "pomol", "pomor", "pomoć", "pompa"
+, "ponad", "ponor", "ponos", "ponoć", "pončo", "popis", "popić", "poput", "poraz", "pored", "porez", "poriv"
+, "porno", "porod", "porok", "porta", "porto", "porub", "posan", "posao", "posno", "posto", "posut", "posve"
+, "potez", "potka", "potok", "potom", "potop", "potrk", "pouka", "povez", "povik", "povod", "povoj", "povrh"
+, "površ", "pozan", "pozer", "poziv", "pozor", "poček", "pošip", "pošta", "pošto", "požar", "pralja", "pranje"
+, "prasa", "prase", "prati", "pravi", "pravo", "praća", "prdac", "prdež", "preko", "prelja", "prelo", "prema"
+, "presa", "preći", "preča", "preči", "pređa", "preša", "prgav", "prhak", "prhki", "prhut", "prija", "prije"
+, "prima", "princ", "prion", "prior", "prići", "priča", "prišt", "prkno", "prkos", "prljav", "prnjak", "prnjav"
+, "proba", "proha", "proja", "proso", "prost", "prota", "prova", "proza", "proći", "prođa", "prsat", "prsni"
+, "prsno", "prten", "pruga", "pruće", "prvak", "prvaš", "pršić", "pršut", "pržen", "pržun", "pseto", "pseći"
+, "psiha", "psiho", "psina", "ptica", "ptiče", "ptoza", "pucanj", "pucač", "puder", "pudla", "pufer", "puhač"
+, "pukao", "pulen", "pulpa", "pumpa", "punac", "punjač", "punjen", "punjiv", "punkt", "punta", "punđa", "pupak"
+, "puran", "pusta", "pusti", "putar", "putem", "puten", "putić", "putni", "puzav", "pučki", "pušač", "puška"
+, "pužev", "pužić", "pužji", "pužni", "pčela", "pšeno", "rabat", "rabin", "racio", "radar", "radij", "radin"
+, "radio", "radić", "radič", "radni", "radnja", "radno", "radon", "rafal", "ragbi", "rahao", "rahli", "rajon"
+, "rakov", "rakun", "rampa", "ranac", "ranjen", "ranjiv", "ranka", "rapir", "rarog", "rasad", "rasan", "rasap"
+, "rasni", "rasno", "rasol", "rasti", "rasut", "ratar", "ratni", "ravan", "ravni", "ravno", "razma", "razni"
+, "razno", "razor", "razum", "račić", "račji", "račun", "račva", "raški", "rašlja", "rašlje", "rašpa", "ražanj"
+, "rebro", "rebus", "recka", "redak", "redar", "redni", "redom", "redov", "reful", "regal", "reiki", "reket"
+, "relej", "reljef", "remen", "remis", "renij", "renta", "repak", "repat", "reper", "repić", "repni", "reset"
+, "resko", "resor", "restl", "retor", "reuma", "revan", "rever", "revir", "revni", "revno", "rezak", "rezač"
+, "rezon", "reška", "režanj", "režim", "ribar", "ribež", "ribiz", "ribič", "riblji", "rigol", "rigor", "rijas"
+, "riječ", "rikač", "rikša", "rilaš", "rilce", "risač", "ritam", "riter", "rival", "rizik", "rizla", "rizma"
+, "rizom", "ričet", "riđan", "rižin", "rižot", "roblje", "robni", "robot", "rodan", "rodeo", "rodij", "rodni"
+, "rogalj", "rogat", "rogač", "roglje", "rogoz", "rohav", "rojta", "roker", "roler", "roman", "romon", "ronac"
+, "rondo", "rosan", "rotor", "rovac", "rovaš", "rozga", "ročni", "rođak", "rođen", "rubac", "rubin", "rublja"
+, "rublje", "rubni", "rucelj", "rudar", "rudni", "ruglo", "ruina", "rujan", "rukav", "rulet", "rumba", "rumen"
+, "runda", "runjav", "ruski", "rutav", "rutil", "ručak", "ručka", "ručni", "ručno", "ružan", "ružin", "ružni"
+, "ružno", "rvanje", "rzati", "rđati", "sabat", "sablja", "sabor", "sadnja", "sadra", "safir", "sahel", "sajam"
+, "sajga", "sajla", "sakat", "salaš", "saldo", "salon", "salpa", "salsa", "salto", "salva", "samac", "samar"
+, "samba", "samit", "samrt", "samur", "sanac", "sanak", "sanen", "sanjar", "sanjiv", "sanjke", "santa", "saone"
+, "sapet", "sapun", "saraj", "sarin", "sarma", "saten", "satir", "satni", "sauna", "savez", "saziv", "sačma"
+, "sažet", "scena", "sedam", "sedef", "sedlo", "sedmi", "sedra", "seksi", "sekta", "selac", "selam", "selen"
+, "seljak", "semem", "semiš", "senat", "seoba", "seoce", "sepsa", "serin", "serum", "servo", "seter", "sezam"
+, "sfera", "shema", "shift", "sidro", "sifon", "sigma", "sijač", "sijed", "sijev", "silan", "silaz", "silno"
+, "silom", "silos", "silur", "sinak", "singl", "sinod", "sinov", "sinoć", "sinus", "sipak", "sipan", "sipar"
+, "sipin", "sipki", "sipnja", "sirac", "sirak", "sirar", "siren", "sirot", "sirov", "sirup", "sisat", "sitan"
+, "sitar", "sitno", "sivac", "sićan", "sjati", "sjeme", "sjena", "sjeta", "sjeći", "sječa", "skala", "skalp"
+, "skaut", "skejt", "skela", "skica", "skija", "skije", "sklad", "sklat", "sklek", "sklon", "sklop", "skoba"
+, "skori", "skoro", "skrab", "skroz", "skupa", "skupi", "skupo", "skuta", "skuša", "skvot", "skvoš", "slabi"
+, "slabo", "slajd", "slama", "slang", "slani", "slanje", "slast", "slati", "slava", "slađi", "sleng", "sleći"
+, "slika", "slina", "sliti", "sljeme", "sloga", "slovo", "sluga", "smeće", "smeđi", "smilje", "smion", "smjer"
+, "smola", "smoći", "smrad", "smrča", "snaga", "snaha", "snast", "snaći", "snaša", "sneno", "sniti", "snovi"
+, "sobar", "sobni", "sobom", "sodar", "sojin", "sokak", "sokna", "sokol", "solni", "somić", "somun", "sonar"
+, "sonda", "sonet", "sorta", "sočan", "sočno", "soška", "sošni", "spati", "speći", "spilja", "spina", "spjev"
+, "splav", "splet", "splin", "spolja", "spona", "sponja", "spora", "spore", "spori", "sporo", "sport", "spram"
+, "sprej", "sprud", "spust", "sranje", "srati", "srdit", "srdnja", "srdžba", "sreća", "srnjak", "srnče", "srpanj"
+, "srčan", "stado", "staja", "stanje", "stara", "stari", "start", "stati", "staza", "stega", "stela", "stelja"
+, "stent", "stepa", "steći", "stick", "stiva", "stići", "stoga", "stoik", "stoka", "stola", "stopa", "stoti"
+, "strah", "stran", "stres", "stric", "strip", "strka", "strmo", "strog", "stroj", "strop", "strti", "strug"
+, "struk", "stuba", "stupa", "stući", "stvar", "stvor", "sudac", "sudar", "sudba", "sudnji", "suita", "suknja"
+, "sukno", "sukob", "sukus", "sukut", "sulud", "sumnja", "sunce", "sunet", "sunit", "super", "supin", "supka"
+, "surka", "surla", "surov", "suton", "sutra", "suzan", "suzav", "suzni", "sućut", "suđen", "sušac", "sušan"
+, "sušanj", "sužanj", "sužen", "svaki", "svast", "svati", "svađa", "sveti", "sveza", "sviba", "svila", "sving"
+, "svinja", "svita", "sviti", "svića", "svjet", "svjež", "svlak", "svota", "svrab", "svrha", "svuda", "svući"
+, "tabak", "taban", "tabla", "tablo", "tabor", "tajac", "tajga", "tajna", "tajni", "tajno", "takav", "taksa"
+, "taksi", "talac", "talas", "talij", "talir", "taljen", "taljiv", "talog", "talon", "talpa", "talus", "taman"
+, "tamni", "tamno", "tanac", "tanad", "tanak", "tanan", "tanga", "tango", "tanjug", "tanjur", "tanka", "tanki"
+, "tanko", "tapir", "tarac", "tarok", "tarot", "tatin", "tavan", "tačke", "tašta", "tašto", "tegalj", "tegla"
+, "teglo", "teist", "tekst", "tekut", "telac", "telad", "telal", "telić", "telur", "temat", "temelj", "tempo"
+, "tenar", "tenda", "tenis", "tenor", "tepav", "tepih", "teran", "terca", "teren", "teret", "terme", "teror"
+, "tesar", "tesla", "tetak", "tetka", "tetra", "tezga", "tečaj", "tečan", "tečni", "tečno", "teško", "težak"
+, "težnja", "tifus", "tigar", "tijek", "tikov", "tikva", "tilda", "timar", "timin", "timol", "timom", "timor"
+, "timun", "timus", "tinel", "tinjac", "tinta", "tioli", "tipka", "tisak", "tiski", "titan", "titar", "tjeme"
+, "tkalja", "tkanje", "tkati", "tkivo", "tlaka", "tmast", "tmica", "tmina", "tobom", "tobož", "tokar", "toner"
+, "tonik", "tonus", "topao", "topaz", "topiv", "topić", "topli", "toplo", "topot", "topuz", "toranj", "torba"
+, "torij", "torta", "torus", "torzo", "total", "totem", "tovan", "tovar", "točak", "točan", "točka", "točno"
+, "traka", "trakt", "trans", "trasa", "trata", "trava", "trbuh", "treba", "trema", "trend", "trenje", "treći"
+, "trgač", "trica", "triko", "trilja", "tripa", "tripe", "trkač", "trklja", "trkom", "trnci", "trnjak", "trnov"
+, "troje", "trola", "tromb", "tromo", "tropa", "tropi", "trpak", "trpki", "trpko", "trpni", "trsje", "trska"
+, "truba", "truli", "trupa", "trust", "trzaj", "trzav", "trčak", "trčka", "tršlja", "tuber", "tubus", "tucet"
+, "tukac", "tukan", "tulij", "tuljac", "tuljak", "tuljan", "tulum", "tumač", "tumbe", "tumor", "tunel", "tunjav"
+, "tupan", "tupav", "turbo", "tutanj", "tutor", "tučak", "tučen", "tuđin", "tušanj", "tužan", "tužba", "tužno"
+, "tvrdi", "tvrdo", "tvrđa", "tvrđi", "ubavo", "ubiti", "uboga", "ubogi", "ubogo", "ubran", "ubrus", "ubrzo"
+, "udaja", "udata", "udati", "udbaš", "udica", "udjel", "udova", "ufanje", "uglas", "uglat", "ugled", "ugljen"
+, "ugljik", "ugoda", "ugriz", "uhoda", "uhonja", "uklet", "ukoso", "ukras", "ukriž", "ukrug", "ulica", "ulika"
+, "uliti", "uljani", "uljara", "uljast", "uljeni", "uljika", "ulkus", "uloga", "ulozi", "uludo", "umalo", "umaći"
+, "umiti", "umnik", "umnjak", "umrli", "unija", "unići", "unjkav", "unski", "unuka", "unuče", "uopće", "uočen"
+, "upala", "upeti", "upiti", "upliv", "upola", "uprav", "uprta", "uputa", "upute", "urban", "urbar", "ureći"
+, "urica", "urlik", "urota", "ushit", "usjek", "usjev", "uskok", "uskrs", "usmen", "usnat", "usnik", "usnuo"
+, "uspio", "uspon", "usput", "usran", "usred", "ustav", "ustuk", "ustup", "usuti", "utaja", "utaći", "utega"
+, "uteći", "utiha", "utkan", "utrka", "utrti", "utući", "uvala", "uvelo", "uveče", "uvija", "uviti", "uvjet"
+, "uvući", "uzdah", "uzduh", "uzduž", "uzeti", "uzeće", "uzgoj", "uzgon", "uzica", "uzina", "uziti", "uzići"
+, "uzlaz", "uzlet", "uzmah", "uzmak", "uznik", "uzrok", "uzvik", "uzvoj", "učeni", "učenje", "učeno", "učilo"
+, "učiti", "učmao", "učtiv", "ušara", "ušata", "ušica", "ušiti", "ušljiv", "uštap", "uštrb", "užeći", "užgan"
+, "užina", "užiti", "uživo", "vabac", "vagir", "vagon", "vajda", "vajni", "vakuf", "vakum", "valin", "valić"
+, "valjak", "valjan", "valjda", "valni", "valov", "vapaj", "vapno", "varan", "varav", "varen", "varka", "varoš"
+, "vatra", "vazal", "vazda", "vašar", "važan", "važni", "važno", "veber", "vedar", "vedri", "vedro", "velar"
+, "velik", "velim", "veljun", "velur", "veoma", "vepar", "vepra", "vergl", "veseo", "vesla", "veslo", "vespa"
+, "vesta", "vesti", "vezak", "vezan", "vezač", "vezir", "vezni", "većma", "večer", "vidan", "vidar", "video"
+, "vidik", "vidno", "vidra", "viganj", "vihor", "vijak", "vijek", "vikar", "vikač", "vilin", "vinar", "vinil"
+, "vinjak", "vinov", "viola", "virus", "visak", "viski", "visok", "vitak", "vitao", "vitez", "vitki", "vitlo"
+, "vivak", "vizir", "vičan", "viđen", "višak", "viški", "višnja", "višnji", "vjera", "vjeđa", "vješt", "vlada"
+, "vlaga", "vlaka", "vlast", "voden", "vodik", "vodič", "vodka", "vodni", "vojak", "vojka", "vojna", "vojni"
+, "vojno", "vokal", "volak", "volan", "volar", "volej", "volić", "voljan", "voljen", "voljno", "vosak", "votka"
+, "vozar", "vozač", "vozni", "voćar", "voćka", "voćni", "vožnja", "vrana", "vrata", "vrbik", "vrbov", "vreli"
+, "vrelo", "vrenje", "vreti", "vreva", "vreća", "vrganj", "vrhnje", "vrlet", "vrnut", "vrpca", "vrsni", "vrsta"
+, "vrtić", "vrtni", "vrtnja", "vrulja", "vruće", "vrući", "vrzin", "vrčić", "vršak", "vrška", "vrški", "vršni"
+, "vulva", "vunen", "vučak", "vučen", "vučić", "vučji", "vučni", "zabat", "zabit", "zadah", "zadak", "zadnji"
+, "zadrt", "zagat", "zahir", "zahod", "zajam", "zajeb", "zakon", "zakup", "zalaz", "zalet", "zaljev", "zalog"
+, "zamah", "zamak", "zamet", "zamka", "zamor", "zanat", "zanos", "zaova", "zapad", "zapet", "zapis", "zapor"
+, "zapuh", "zarad", "zarez", "zaron", "zarub", "zasad", "zasip", "zasun", "zatik", "zatim", "zaton", "zator"
+, "zavod", "zavoj", "zavor", "zaziv", "zazor", "začas", "začep", "začet", "začin", "zašto", "zbilja", "zbiti"
+, "zbjeg", "zbrka", "zbroj", "zdanje", "zdrav", "zdrug", "zebnja", "zebra", "zefir", "zekan", "zelen", "zeman"
+, "zemlja", "zemni", "zenit", "zečar", "zečić", "zečji", "zglob", "zgoda", "zgura", "zicer", "zidan", "zidar"
+, "zidić", "zidni", "zijev", "zimus", "zipka", "zirak", "zjaka", "zjena", "zlato", "zlica", "zloba", "zloća"
+, "zloćo", "zmija", "znani", "znanje", "znati", "zoben", "zobun", "zombi", "zoran", "zorni", "zorno", "zraka"
+, "zreli", "zrelo", "zrenje", "zreti", "zrnat", "zrnce", "zubac", "zubar", "zubat", "zubić", "zublja", "zubni"
+, "zuluf", "zulum", "zumba", "zvani", "zvanje", "zvati", "zveka", "zvono", "ćaćin", "ćelav", "ćemer", "ćevap"
+, "ćifta", "ćilim", "ćitab", "ćopav", "ćorak", "ćorav", "ćosav", "ćošak", "ćufte", "ćumez", "ćumur", "ćurak"
+, "ćurka", "ćučji", "ćuška", "čabar", "čador", "čagalj", "čajni", "čaklja", "čakra", "čalma", "čamac", "čaman"
+, "čamov", "čanak", "čaplja", "čapor", "čaran", "čarda", "čarka", "čarni", "časak", "časan", "časna", "časni"
+, "časno", "čavao", "čavka", "čađav", "čaška", "čedan", "čedno", "čekan", "čekač", "čekić", "čekrk", "čelce"
+, "čelik", "čelni", "čemer", "čemin", "čeoni", "čepić", "čerga", "česan", "česma", "često", "četka", "četni"
+, "češalj", "češanj", "češer", "češki", "češće", "češći", "čežnja", "čibuk", "čigra", "čikov", "čikoš", "čilaš"
+, "čioda", "čiopa", "čipka", "čirak", "čirav", "čiraš", "čirić", "čislo", "čisti", "čisto", "čitak", "čitan"
+, "čitav", "čitač", "čitki", "čitko", "čizma", "čičak", "čišći", "čižak", "čoban", "čohan", "čokanj", "čokot"
+, "čolak", "čoper", "čopor", "čorba", "črčka", "čubar", "čubav", "čudak", "čudan", "čudno", "čujan", "čujni"
+, "čujno", "čukalj", "čulan", "čulav", "čumav", "čunak", "čunjić", "čupav", "čuvan", "čuvar", "čuven", "čučanj"
+, "čvenk", "čvrga", "čvrst", "đakon", "đavao", "đavlji", "đačić", "đački", "đeram", "đerma", "đubre", "đuveč"
+, "đuzel", "šabat", "šahta", "šajba", "šajka", "šakal", "šakač", "šaljiv", "šalom", "šalša", "šaman", "šamar"
+, "šamot", "šanac", "šansa", "šapat", "šarac", "šaraf", "šaran", "šaren", "šarka", "šarov", "šarun", "šarža"
+, "šator", "šatra", "šačni", "šašav", "šaški", "šeboj", "šedok", "šeflja", "šegrt", "šelak", "šenut", "šepav"
+, "šerif", "šerpa", "šesti", "šesto", "šetač", "šetnja", "ševar", "šećer", "šešir", "šiber", "šiblje", "šifon"
+, "šifra", "šihta", "šijit", "šijun", "šiljak", "šiljka", "šilok", "šinjel", "šinjon", "šipak", "šipka", "širit"
+, "širok", "širom", "šivač", "šizma", "šićar", "šišak", "šišač", "šiška", "šiške", "škalja", "škamp", "škare"
+, "škart", "škljoc", "škola", "škota", "škrba", "škrge", "škrip", "škrob", "škrti", "škrto", "škuda", "škulja"
+, "škuna", "škura", "škuža", "škver", "šlajm", "šlapa", "šljaka", "šljiva", "šljuka", "šnala", "šnaps", "šoder"
+, "šofer", "šogor", "šojka", "špaga", "špajz", "špica", "špigl", "špilja", "špina", "šport", "špula", "šrafa"
+, "štaka", "štala", "štand", "šteka", "štela", "štene", "šteta", "štiga", "štiva", "štivo", "štras", "štrik"
+, "štuka", "štula", "šugav", "šuman", "šumar", "šumni", "šumor", "šunka", "šupak", "šupalj", "šuplje", "šuplji"
+, "šutke", "šutnja", "šušak", "šušanj", "šuška", "švalja", "švelja", "šverc", "žabac", "žabar", "žablji", "žagor"
+, "žaket", "žalac", "žalar", "žalba", "žamor", "žaoka", "žarač", "žaren", "žarki", "žarko", "žarni", "žbica"
+, "žbuka", "žbunje", "ždral", "žedan", "žedno", "željan", "željen", "željni", "željno", "želva", "želve", "žemlja"
+, "ženik", "ženin", "ženka", "žeton", "žetva", "žezlo", "žeđač", "žešći", "žežen", "žganje", "žgati", "žgoljo"
+, "žicar", "židak", "židov", "žilav", "žilet", "žitar", "žitelj", "žitki", "žitni", "živac", "živad", "živalj"
+, "živež", "živin", "živio", "življi", "život", "žičan", "žični", "žižak", "žlica", "žmara", "žnora", "žohar"
+, "žrtva", "žrvanj", "žubor", "žudnja", "žuhak", "žuljav", "župan", "župni", "žuran", "žurba", "žurni", "žurno"
+, "žučan", "žučni", "žučno", "žvaka", "žvala", "žvale"
 ];
 
 const word_list_eng = [
