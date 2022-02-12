@@ -11,7 +11,7 @@ function change_language() {
 	var to = (lng == 'cro' ? 'EN' : 'HR');
 	var el = document.getElementById('language');
 	el.innerHTML = el.innerHTML.replace(from, to);
-	random_word();
+	start_new_game();
 }
 
 function set_language(lng) {
