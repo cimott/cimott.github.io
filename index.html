@@ -81,18 +81,26 @@
 
 		<div style="clear: both" />
 
-		<div id="game_end" onclick="hide_game_end()">
-			<div id="game_end_content" onclick="eat_click();">
-				<h3 id="game_end_title">Game Over!</h3>
+		<div id="game_end" class="popup" onclick="hide_game_end()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 class="popup_title">Game Over!</h3>
 				<p id="game_end_result"></p>
-				<a id="send_challenge_btn" class="game_end_button" onclick="send_challenge()">Send Challenge</a>
-				<a id="copy_challenge_btn" class="game_end_button" onclick="copy_challenge()">Copy Challenge</a>
+				<a id="send_challenge_btn" class="popup_button" onclick="send_challenge()">Send Challenge</a>
+				<a id="copy_challenge_btn" class="popup_button" onclick="copy_challenge()">Copy Challenge</a>
 				<div id="manually_copy_challenge"/>
 					<h3>Challenge a Friend</h3>
 					<p id="challenge_link"></p>
 				</div>
-				<a id="compare_results_btn" class="game_end_button" onclick="compare_results()">Compare Results</a>
-				<a class="game_end_button" onclick="start_new_game()">Start New Game</a>
+				<a id="compare_results_btn" class="popup_button" onclick="compare_results()">Compare Results</a>
+				<a class="popup_button" onclick="start_new_game()">Start New Game</a>
+			</div>
+		</div>
+
+		<div id="choose_game" class="popup" onclick="hide_choose_game()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 class="popup_title">Choose New Game</h3>
+				<a class="popup_button" onclick="start_daily_challenge()">Daily Challenge</a>
+				<a class="popup_button" onclick="random_word()">Random Word</a>
 			</div>
 		</div>
 	</div>

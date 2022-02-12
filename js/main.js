@@ -71,7 +71,7 @@ var word_idx = 0;
 var word = "";
 var guess_cnt = 0;
 var guesses = [];
-var is_daily_challenge = false;
+var daily_challenge = 0;
 var game_ended = false;
 var letter_class = { };
 var selected_placeholder = null;
@@ -82,7 +82,7 @@ function clear_state() {
 	word = "";
 	guess_cnt = 0;
 	guesses = [];
-	is_daily_challenge = false;
+	daily_challenge = 0;
 	game_ended = false;
 	letter_class = { };
 	selected_placeholder = null;
@@ -90,6 +90,7 @@ function clear_state() {
 
 	topnav_guess.style.display = "block";
 	topnav_game_end.style.display = "none";
+	hide_choose_game();
 }
 
 const magic_idx = 5461;
@@ -166,7 +167,7 @@ window.onload = function() {
 	}
 
 	if (word_idx == 0)
-		load_game() || daily_challenge() || random_word();
+		load_game() || start_daily_challenge() || random_word();
 };
 
 function check_url_old() {
@@ -209,7 +210,7 @@ function check_url_new() {
 
 function start_challenge(game) {
 	clear_state();
-	is_daily_challenge = Boolean(game.daily_challenge);
+	daily_challenge = game.daily_challenge || 0;
 	challenge = game;
 	refresh_game_title();
 	set_language(game.lang);
@@ -472,9 +473,7 @@ function show_game_end() {
 	}
 	compare_results_btn.style.display = challenge && challenge.guesses ? "block" : "none";
 
-	if (is_daily_challenge)
-		set_cookie(daily_challenge_cookie_key(), 'solved', 2);
-
+	if (daily_challenge) daily_challenge_ck(daily_challenge, 'solved', true);
 	erase_cookie('current_game');
 	save_my_guesses();
 }
@@ -490,7 +489,22 @@ function eat_click(e) {
 
 function start_new_game() {
 	hide_game_end();
-	daily_challenge() || random_word();
+
+	var day = days_since_epoch();
+	if (!get_cookie(daily_challenge_cookie_key(day)))
+		start_daily_challenge();
+	else if (daily_challenge_ck(day, 'solved') || daily_challenge)
+		random_word();
+	else
+		show_choose_game();
+}
+
+function show_choose_game() {
+	choose_game.style.display = "block";	
+}
+
+function hide_choose_game() {
+	choose_game.style.display = "none";
 }
 
 function send_challenge() {
@@ -526,7 +540,7 @@ function show_guesses(gs) {
 }
 
 function save_game() {
-	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word_idx, guesses.join(','), Boolean(is_daily_challenge).toString() ].join('|'))));
+	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word_idx, guesses.join(','), daily_challenge ].join('|'))));
 }
 
 function load_game() {
@@ -541,7 +555,7 @@ function load_game() {
 	clear_state();
 	set_language(game[0]);
 	set_hidden_word(game[1]);
-	is_daily_challenge = (game[3] == 'true');
+	daily_challenge = (game[3] != 0);
 	refresh_game_title();
 	game[2].split(',').forEach(function(guess) {
 		guessword.value = guess;
@@ -550,11 +564,12 @@ function load_game() {
 	return true;
 }
 
-function daily_challenge() {
-	if (get_cookie(daily_challenge_cookie_key()))
+function start_daily_challenge() {
+	var day = days_since_epoch();
+	if (daily_challenge_ck(day, 'solved'))
 		return false;
 
-	var seed = days_since_epoch();
+	let seed = day;
 	let to_guess_yesterday = rand_idx(seed - 1);
 	let to_guess_today = rand_idx(seed);
 	
@@ -567,18 +582,26 @@ function daily_challenge() {
 	while (guess1_today == to_guess_today)
 		guess1_today = rand_idx(seed + (++retry));
 
+	daily_challenge_ck(day, 'started', true);
 	start_challenge({
 		lang: lang(),
 		idx: to_guess_today,
 		guess1: get_word(guess1_today),
-		daily_challenge: true,
+		daily_challenge: day,
 	});
 	return true;
 }
 
+function daily_challenge_ck(day, what, set) {
+	if (set)
+		set_cookie(daily_challenge_cookie_key(day), what, 2);
+	else
+		return get_cookie(daily_challenge_cookie_key(day)) == what;
+}
+
 function refresh_game_title() {
 	let title = '';
-	if (is_daily_challenge)
+	if (daily_challenge)
 		title = "DAILY CHALLENGE";
 	else if (challenge)
 		title = challenge.results_shown ? "CHALLENGER'S GUESSES" : "CHALLENGE";
@@ -596,8 +619,8 @@ function days_since_epoch() {
 	return Math.floor(now / 8.64e7);
 }
 
-function daily_challenge_cookie_key() {
-	return [ 'daily_challenge', days_since_epoch(), lang() ].join('_');
+function daily_challenge_cookie_key(day) {
+	return [ 'daily_challenge', day, lang() ].join('_');
 }
 
 function game_cookie_key() {

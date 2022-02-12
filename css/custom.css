@@ -144,7 +144,7 @@ table#guesses tr.wrong-answer td:nth-child(n+2):nth-child(-n+6) {
 	font-weight: bold;
 }
 
-#game_end {
+.popup {
 	position: fixed; /* Sit on top of the page content */
 	display: none; /* Hidden by default */
 	width: 100%; /* Full width (cover the whole page) */
@@ -157,7 +157,7 @@ table#guesses tr.wrong-answer td:nth-child(n+2):nth-child(-n+6) {
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
 
-#game_end_content {
+.popup_content {
 	position: absolute;
 	max-width: 80vw;
 	top: 50%;
@@ -172,7 +172,7 @@ table#guesses tr.wrong-answer td:nth-child(n+2):nth-child(-n+6) {
 	text-align: center;
 }
 
-.game_end_button {
+.popup_button {
 	color: #3e8ed0;
 	padding: 0.5em 1.5em;
 	border: 1px solid #3e8ed0;
@@ -185,7 +185,7 @@ table#guesses tr.wrong-answer td:nth-child(n+2):nth-child(-n+6) {
 	min-width: 14ch;
 }
 
-.game_end_button:hover {
+.popup_button:hover {
 	background-color: #3e8ed0;
 	color: white;
 }
