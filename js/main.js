@@ -484,9 +484,9 @@ function eat_click(e) {
 	e.stopPropagation();
 }
 
-function restart_game() {
+function start_new_game() {
 	hide_game_end();
-	random_word();
+	daily_challenge() || random_word();
 }
 
 function send_challenge() {
@@ -551,11 +551,15 @@ function daily_challenge() {
 		return false;
 
 	var seed = days_since_epoch();
-	var iter = 99;
 	var word_idx = rand_idx(seed, 49);
-	var guess_idx = rand_idx(seed, iter);
-	while (word_idx == guess_idx)
-		guess_idx = rand_idx(seed, ++iter);
+	var guess_idx = rand_idx(seed, 99);
+	var retry = 0;
+	while (word_idx == guess_idx && retry < 100)
+		guess_idx = rand_idx(seed + (++retry), 99);
+
+	if (retry == 100)
+		return false; // jbg, danas nema challenga :)
+
 
 	start_challenge({
 		lang: lang(),
