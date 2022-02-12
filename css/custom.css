@@ -179,7 +179,7 @@ table#guesses tr.wrong-answer td:nth-child(n+2):nth-child(-n+6) {
 	text-align: center;
 	text-decoration: none;
 	display: block;
-	margin: 0.25em;
+	margin: 0.75em 0.25em;
 	cursor: pointer;
 	border-radius: 0.5em;
 	min-width: 14ch;

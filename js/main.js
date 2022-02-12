@@ -93,19 +93,6 @@ function clear_state() {
 	hide_choose_game();
 }
 
-const magic_idx = 5461;
-
-function encode_idx(idx) {
-	let swapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
-	return swapped_idx ^ magic_idx;
-}
-
-function decode_idx(idx) {
-	idx = idx ^ magic_idx;
-	let unswapped_idx = ((idx & 0x7f) << 7) | (idx >> 7);
-	return unswapped_idx;
-}
-
 function set_hidden_word(idx) {
 	word_idx = idx;
 	word = get_word(idx).toUpperCase();
@@ -158,7 +145,7 @@ function create_letter(ch) {
 }
 
 window.onload = function() {
-	if (check_url_old() || check_url_new()) {
+	if (check_url()) {
 		if (game_already_played() && challenge.guesses) {
 			restore_my_guesses();
 			show_guesses(challenge.guesses)
@@ -170,36 +157,27 @@ window.onload = function() {
 		load_game() || start_daily_challenge() || random_word();
 };
 
-function check_url_old() {
-	let idx = document.URL.indexOf('?');
-	if (idx == -1)
-		return false;
-
-	let pairs = decodeURIComponent(document.URL.substring(idx+1, document.URL.length)).split('&');
-	let map = { };
-	pairs.forEach(function(pair) {
-		var kv = pair.split("=");
-		map[kv[0]] = kv[1];
-	})
-	if (!map["idx"] || !map["guess1"] || !map["lang"])
-		return false;
-
-	start_challenge(map);
-	return true;
-}
-
-function check_url_new() {
-	let idx = document.URL.indexOf('?');
-	if (idx == -1)
+function check_url() {
+	let q_idx = document.URL.indexOf('?');
+	if (q_idx == -1)
 		return false;
 
 	try {
-		let game = decodeURIComponent(atob(document.URL.substring(idx + 1))).split('|');
-		if (game.length < 3)
+		let game = decodeURIComponent(atob(document.URL.substring(q_idx + 1))).split('|');
+		if (game.length != 4 || game[0] != 'v1') // v1|{language}|{hidden_word}|{guess_1,guess_2,...,guess_n}
 			return false;
 
-		let guesses = game[4] ? game[4].split(',') : null;
-		start_challenge({ lang: game[0], idx: game[1], guess1: game[2], guess_cnt: game[3], guesses: guesses });
+		let lang = game[1];
+		let hidden_word = game[2];
+		let guesses = game[3].split(',');
+
+		let idx = get_word_idx(hidden_word);
+		if (idx == -1)
+			return false;
+
+		let guess_cnt = guesses[guesses.length - 1] == hidden_word ? guesses.length : null;
+
+		start_challenge({ lang: lang, idx: idx, guess1: guesses[0], guess_cnt: guess_cnt, guesses: guesses });
 		return true;
 	}
 	catch(e) {
@@ -308,27 +286,27 @@ function chk_word(w) {
 	if (word_len(w) != 5)
 		return false;
 
-	if (is_in_dict(w))
+	if (get_word_idx(w) != -1)
 		return true;
 
 	return false;
 }
 
-function is_in_dict(w) {
+function get_word_idx(w) {
 	w = w.toLowerCase();
 	var lb = 0, ub = word_cnt() - 1;
 	do {
 		var mid = parseInt((lb + ub) / 2);
 		var s = get_word(mid);
 		if (s == w)
-			return true;
+			return mid;
 		if (w < s)
 			ub = mid - 1;
 		else
 			lb = mid + 1;
 	}
 	while (lb <= ub);
-	return false;
+	return -1;
 }
 
 function match_word(w) {
@@ -413,9 +391,9 @@ function check_game_ended(m, guess_cnt) {
 	if (!(game_ended = (m[0] == 5 || guess_cnt == 9)))
 		return;
 
-	if (m[0])
+	if (m[0] == 5)
 		document.getElementById("g" + guess_cnt).classList.add('correct-answer');
-	else if (guess_cnt == 9)
+	else
 		document.getElementById("g9").classList.add('wrong-answer');
 
 	toggle_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
@@ -432,15 +410,14 @@ function guess_word_on_key_up() {
 	var guess_color = 'black';
 	var s = guessword.value.trim();
 	var len = word_len(s);
-	if (len > 5 || len == 5 && !is_in_dict(s))
+	if (len > 5 || len == 5 && get_word_idx(s) == -1)
 		guess_color = 'red';
 
 	guessword.style.color = guess_color;
 }
 
 function get_game_link() {
-	let win = guess_cnt < 10;
-	let game = btoa(encodeURIComponent([ lang(), word_idx, guesses[0], win ? guess_cnt : '', guesses.join(',') ].join('|')));
+	let game = btoa(encodeURIComponent([ 'v1', lang(), word, guesses.join(',') ].join('|')));
 	return "https://cimott.github.io?" + game;
 }
 
@@ -540,7 +517,7 @@ function show_guesses(gs) {
 }
 
 function save_game() {
-	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word_idx, guesses.join(','), daily_challenge ].join('|'))));
+	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word, guesses.join(','), daily_challenge ].join('|'))));
 }
 
 function load_game() {
@@ -552,10 +529,14 @@ function load_game() {
 	if (game.length < 4)
 		return false;
 
+	let idx = get_word_idx(game[1]);
+	if (idx == -1)
+		return false;
+
 	clear_state();
 	set_language(game[0]);
-	set_hidden_word(game[1]);
-	daily_challenge = (game[3] != 0);
+	set_hidden_word(idx);
+	daily_challenge = parseInt(game[3]);
 	refresh_game_title();
 	game[2].split(',').forEach(function(guess) {
 		guessword.value = guess;
