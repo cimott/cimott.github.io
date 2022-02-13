@@ -70,7 +70,7 @@ const alphabet_eng = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
 const alphabet_cro = "A,B,C,Č,Ć,D,DŽ,Đ,E,F,G,H,I,J,K,L,LJ,M,N,NJ,O,P,R,S,Š,T,U,V,Z,Ž";
 
 var challenge = null;
-var word = "";
+var hidden_word = "";
 var guess_cnt = 0;
 var guesses = [];
 var daily_challenge = 0;
@@ -80,7 +80,7 @@ var selected_placeholder = null;
 
 function clear_state() {
 	challenge = null;
-	word = "";
+	hidden_word = "";
 	guess_cnt = 0;
 	guesses = [];
 	daily_challenge = 0;
@@ -95,8 +95,8 @@ function clear_state() {
 }
 
 function set_hidden_word(w, user_action) {
-	word = w.toUpperCase();
-	// console.log(word);
+	hidden_word = w.toUpperCase();
+	// console.log(hidden_word);
 	guess_cnt = 1;
 	clear_tables();
 }
@@ -157,7 +157,7 @@ window.onload = function() {
 		return;
 	}
 
-	if (!word)
+	if (!hidden_word)
 		load_game() || start_daily_challenge() || random_word();
 };
 
@@ -338,7 +338,7 @@ function is_in_dict(w, lng) {
 
 function match_word(w) {
 	let wl = to_char_list(w);
-	let wordl = to_char_list(word);
+	let wordl = to_char_list(hidden_word);
 	const sk = [], sw = [];
 	var sz = 0, g = 0;
 	for (let i = 0; i < wl.length; ++i) {
@@ -446,7 +446,7 @@ function guess_word_on_key_up() {
 }
 
 function get_game_link() {
-	let game = btoa(encodeURIComponent([ 'v1', lang(), word, guesses.join(',') ].join('|')));
+	let game = btoa(encodeURIComponent([ 'v1', lang(), hidden_word, guesses.join(',') ].join('|')));
 	return "https://cimott.github.io?" + game;
 }
 
@@ -457,7 +457,7 @@ function show_game_end() {
 	let win = guess_cnt < 10;
 	game_end_result.innerHTML = win
 		? "You win in " + guess_cnt + " tries."
-		: "You lose! Correct word is <b>" + word + "</b>.";
+		: "You lose! Correct word is <b>" + hidden_word + "</b>.";
 
 	if (navigator.share) {
 		send_challenge_btn.style.display = "block";
@@ -595,7 +595,7 @@ function show_guesses(gs) {
 }
 
 function save_game() {
-	set_cookie('current_game_' + lang(), btoa(encodeURIComponent([ lang(), word, guesses.join(','), daily_challenge ].join('|'))));
+	set_cookie('current_game_' + lang(), btoa(encodeURIComponent([ lang(), hidden_word, guesses.join(','), daily_challenge ].join('|'))));
 	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
 	if (daily_challenge) daily_challenge_ck(daily_challenge, 'guesses', guesses.join(','));
 }
@@ -697,7 +697,7 @@ function daily_challenge_cookie_key(day, what) {
 }
 
 function game_cookie_key() {
-	return [ 'game', lang(), word, encodeURIComponent(guesses[0]) ].join('_')
+	return [ 'game', lang(), hidden_word, encodeURIComponent(guesses[0]) ].join('_')
 }
 
 function game_already_played() {
