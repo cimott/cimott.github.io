@@ -182,7 +182,6 @@ function check_url() {
 		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
 
 		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
-		save_game();
 		return true;
 	}
 	catch(e) {
@@ -202,6 +201,7 @@ function start_challenge(game) {
 	set_hidden_word(game.hidden_word);
 	guessword.value = game.guess1;
 	guess_word();
+	save_game();
 }
 
 function on_placeholder_clicked(el) {
@@ -380,7 +380,7 @@ function guess_word(user_action) {
 		return;
 
 	guesses.push(s);
-	if (user_action) save_game();
+	if (user_action) save_my_guesses();
 
 	var m = match_word(s);
 	var letters = to_char_list(s);
@@ -596,6 +596,10 @@ function show_guesses(gs) {
 
 function save_game() {
 	set_cookie('current_game_' + lang(), btoa(encodeURIComponent([ lang(), hidden_word, guesses.join(','), daily_challenge ].join('|'))));
+}
+
+function save_my_guesses() {
+	save_game();
 	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
 	if (daily_challenge) daily_challenge_ck(daily_challenge, 'guesses', guesses.join(','));
 }
@@ -657,7 +661,6 @@ function start_daily_challenge() {
 		});	
 
 	daily_challenge_ck(day, 'guesses', guesses.join(','));
-	save_game();
 	return true;
 }
 
