@@ -701,7 +701,13 @@ function game_cookie_key() {
 }
 
 function game_already_played() {
-	return Boolean(get_cookie(game_cookie_key()));
+	let my_guesses = get_my_guesses();
+	if (!my_guesses)
+		return false;
+
+	let last_guess = my_guesses[my_guesses.length - 1];
+	let game_ended = (last_guess.toLowerCase() == hidden_word.toLowerCase() || my_guesses.length == 9);
+	return game_ended;
 }
 
 function update_stats() {
