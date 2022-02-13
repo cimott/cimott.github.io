@@ -5,8 +5,10 @@ function lang() {
 }
 
 function change_language(lng) {
+	if (lang() == lng)
+		return;
 	set_language(lng);
-	show_menu();
+	start_new_game();
 }
 
 function set_language(lng) {
