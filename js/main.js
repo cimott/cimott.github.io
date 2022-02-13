@@ -23,20 +23,20 @@ var placeholder = {
 	cro: "RIJEČ...",
 }
 
-function word_list() {
-	return lang() == "cro" ? word_list_cro : word_list_eng;
+function word_list(lng) {
+	return (lng || lang()) == "cro" ? word_list_cro : word_list_eng;
 }
 
 function alphabet() {
 	return (lang() == "cro" ? alphabet_cro : alphabet_eng).split(",");
 }
 
-function get_word(idx) {
-	return word_list()[idx];
+function get_word(idx, lng) {
+	return word_list(lng)[idx];
 }
 
-function word_cnt() {
-	return word_list().length;
+function word_cnt(lng) {
+	return word_list(lng).length;
 }
 
 function word_len(w) {
@@ -171,17 +171,17 @@ function check_url() {
 		if (game.length != 4 || game[0] != 'v1') // v1|{language}|{hidden_word}|{guess_1,guess_2,...,guess_n}
 			return false;
 
-		let lang = game[1];
+		let lng = game[1];
 		let hidden_word = game[2];
 		let guesses = game[3].split(',');
 
-		if (!is_in_dict(hidden_word))
+		if (!is_in_dict(hidden_word, lng))
 			return false;
 
 		let last_guess = guesses[guesses.length - 1];
 		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
 
-		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
+		start_challenge({ lng,  hidden_word, guess_cnt, guesses });
 		save_game();
 		return true;
 	}
@@ -319,12 +319,12 @@ function chk_word(w) {
 	return false;
 }
 
-function is_in_dict(w) {
+function is_in_dict(w, lng) {
 	w = w.toLowerCase();
-	var lb = 0, ub = word_cnt() - 1;
+	var lb = 0, ub = word_cnt(lng) - 1;
 	do {
 		var mid = parseInt((lb + ub) / 2);
-		var s = get_word(mid);
+		var s = get_word(mid, lng);
 		if (s == w)
 			return true;
 		if (w < s)
@@ -609,7 +609,7 @@ function load_game() {
 	if (game.length < 4)
 		return false;
 
-	if (!is_in_dict(game[1]))
+	if (!is_in_dict(game[1], game[0]))
 		return false;
 
 	clear_state();
