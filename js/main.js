@@ -171,7 +171,8 @@ function check_url() {
 		if (!is_in_dict(hidden_word))
 			return false;
 
-		let guess_cnt = guesses[guesses.length - 1] == hidden_word ? guesses.length : null;
+		let last_guess = guesses[guesses.length - 1];
+		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
 
 		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
 		return true;
