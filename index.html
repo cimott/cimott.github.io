@@ -18,7 +18,7 @@
 				<input type="text" id="guessword" autofocus
 					onkeydown="guess_word_on_key_down(event.keyCode);"
 					onkeyup="guess_word_on_key_up();"
-					placeholder="WORD...">
+					placeholder="RIJEČ...">
 				<button type="submit" id="guess_btn" onclick="guess_word();"><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
 			</div>
@@ -27,8 +27,7 @@
 				<button id="toggle_results_btn" type="submit" onclick="toggle_results();"><i class="fa-solid fa-code-compare"></i></button>
 			</div>
 			<div id="topnav_config">
-				<button type="submit" id="new_game_btn" onclick="start_new_game()"><i class="fa-solid fa-file-lines"></i></button>
-				<button type="submit" id="language" onclick="change_language()"><b>HR</b></button>
+				<button type="submit" id="show_btn" onclick="show_menu()"><i class="fa-solid fa-bars"></i></button>
 			</div>
 		</div>
 
@@ -81,7 +80,7 @@
 
 		<div style="clear: both" />
 
-		<div id="game_end" class="popup" onclick="hide_game_end()">
+		<div id="game_end" class="popup" onclick="hide_popups()">
 			<div class="popup_content" onclick="eat_click();">
 				<h3 class="popup_title">Game Over!</h3>
 				<p id="game_end_result"></p>
@@ -92,15 +91,74 @@
 					<p id="challenge_link"></p>
 				</div>
 				<a id="compare_results_btn" class="popup_button" onclick="compare_results()">Compare Results</a>
-				<a class="popup_button" onclick="start_new_game()">Start New Game</a>
+				<a class="popup_button" onclick="start_new_game()">New Game</a>
+				<a class="popup_button" onclick="show_stats_menu()">Stats</a>
 			</div>
 		</div>
 
-		<div id="choose_game" class="popup" onclick="hide_choose_game()">
+		<div id="menu" class="popup" onclick="hide_popups()">
 			<div class="popup_content" onclick="eat_click();">
-				<h3 class="popup_title">Choose New Game</h3>
+				<h3 class="popup_title">Menu</h3>
+				<a class="popup_button" onclick="start_new_game()">New Game</a>
+				<a class="popup_button" onclick="show_language()">Language</a>
+				<a class="popup_button" onclick="show_stats_menu()">Stats</a>
+			</div>
+		</div>
+
+		<div id="choose_game" class="popup" onclick="hide_popups()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 class="popup_title">Game Type</h3>
 				<a class="popup_button" onclick="start_daily_challenge()">Daily Challenge</a>
 				<a class="popup_button" onclick="random_word()">Random Word</a>
+			</div>
+		</div>
+
+		<div id="language" class="popup" onclick="hide_popups()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 class="popup_title">Language</h3>
+				<a id="lang_eng" class="popup_button" onclick="change_language('eng')">English</a>
+				<a id="lang_cro" class="popup_button" onclick="change_language('cro')">Croatian</a>
+			</div>
+		</div>
+
+		<div id="stats_menu" class="popup" onclick="hide_popups()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 class="popup_title">Stats</h3>
+				<a class="popup_button" onclick="show_stats('all')">All Games</a>
+				<a class="popup_button" onclick="show_stats('daily')">Daily Challenges</a>
+			</div>
+		</div>
+
+		<div id="stats" class="popup" onclick="hide_popups()">
+			<div class="popup_content" onclick="eat_click();">
+				<h3 id="stats_title" class="popup_title"></h3>
+
+				<table class="popup_table">
+					<tbody>
+						<tr>
+							<td>Played</td>
+							<td id="stats_played"></td>
+						</tr>
+						<tr>
+							<td>Win %</td>
+							<td id="stats_win_rate"></td>
+						</tr>
+						<tr>
+							<td>Avg Guesses</td>
+							<td id="stats_avg_guesses"></td>
+						</tr>
+						<tr>
+							<td>Streak</td>
+							<td id="stats_streak"></td>
+						</tr>
+						<tr>
+							<td>Max Streak</td>
+							<td id="stats_max_streak"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<a class="popup_button" onclick="start_new_game()">New Game</a>
 			</div>
 		</div>
 	</div>

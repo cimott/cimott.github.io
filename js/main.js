@@ -1,23 +1,22 @@
 // 'use strict';
 
 function lang() {
-	var el = document.getElementById('language');
-	return el.innerHTML.indexOf('HR') != -1 ? 'cro' : 'eng';
+	return get_cookie('language') || 'cro';
 }
 
-function change_language() {
-	var lng = lang();
-	var from = (lng == 'cro' ? 'HR' : 'EN');
-	var to = (lng == 'cro' ? 'EN' : 'HR');
-	var el = document.getElementById('language');
-	el.innerHTML = el.innerHTML.replace(from, to);
-	start_new_game();
+function change_language(lng) {
+	set_language(lng);
+	show_menu();
 }
 
 function set_language(lng) {
-	var to = (lng == 'cro' ? 'HR' : 'EN');
-	var el = document.getElementById('language');
-	el.innerHTML = el.innerHTML.replace(/HR|EN/, to);
+	set_cookie('language', lng);
+	guessword.placeholder = placeholder[lng];
+}
+
+var placeholder = {
+	eng: "WORD...",
+	cro: "RIJEČ...",
 }
 
 function word_list() {
@@ -88,12 +87,12 @@ function clear_state() {
 
 	topnav_guess.style.display = "block";
 	topnav_game_end.style.display = "none";
-	hide_choose_game();
+	hide_popups();
 }
 
-	// console.log(word);
 function set_hidden_word(w) {
 	word = w.toUpperCase();
+	// console.log(word);
 	guess_cnt = 1;
 	clear_tables();
 	save_game();
@@ -421,7 +420,9 @@ function get_game_link() {
 }
 
 function show_game_end() {
+	hide_popups();
 	game_end.style.display = "block";
+	
 	let win = guess_cnt < 10;
 	game_end_result.innerHTML = win
 		? "You win in " + guess_cnt + " tries."
@@ -449,13 +450,15 @@ function show_game_end() {
 	}
 	compare_results_btn.style.display = challenge && challenge.guesses ? "block" : "none";
 
-	if (daily_challenge) daily_challenge_ck(daily_challenge, 'solved', true);
+	if (daily_challenge) daily_challenge_ck(daily_challenge, 'finished', true);
 	erase_cookie('current_game');
 	save_my_guesses();
 }
 
-function hide_game_end() {
-	game_end.style.display = "none";
+function hide_popups() {
+	var popups = document.getElementsByClassName ("popup");
+	for (var i = 0; i < popups.length; ++i)
+		popups[i].style.display = "none";
 }
 
 function eat_click(e) {
@@ -464,23 +467,71 @@ function eat_click(e) {
 }
 
 function start_new_game() {
-	hide_game_end();
+	hide_popups();
 
 	var day = days_since_epoch();
 	if (!get_cookie(daily_challenge_cookie_key(day)))
 		start_daily_challenge();
-	else if (daily_challenge_ck(day, 'solved') || daily_challenge)
+	else if (daily_challenge_ck(day, 'finished') || daily_challenge)
 		random_word();
 	else
 		show_choose_game();
 }
 
 function show_choose_game() {
+	hide_popups();
 	choose_game.style.display = "block";	
 }
 
-function hide_choose_game() {
-	choose_game.style.display = "none";
+function show_menu() {
+	hide_popups();
+	menu.style.display = "block";	
+}
+
+function show_language() {
+	hide_popups();
+	language.style.display = "block";
+	let lng = lang();
+	lang_cro.classList[lng == 'cro' ? 'add' : 'remove']('selected');
+	lang_eng.classList[lng == 'eng' ? 'add' : 'remove']('selected');
+}
+
+function show_stats_menu() {
+	hide_popups();
+	stats_menu.style.display = "block";
+}
+
+function show_all_stats() {
+	hide_popups();
+	stats.style.display = "block";
+}
+
+function show_stats(which) {
+	hide_popups();
+	stats.style.display = "block";
+
+	var round = function(x) {
+		return ((x * 10) | 0) / 10;
+	};
+
+	var total = get_int_cookie(which + '_cnt');
+	var wins = 0;
+	var wins_total_guesses = 0;
+	var wins_in = { };
+	for (let i = 1; i < 10; ++i) {
+		wins_in[i] = get_int_cookie(which + '_solved_in_' + i);
+		wins += wins_in[i];
+		wins_total_guesses += i * wins_in[i];
+	}
+	var win_rate = round(total > 0 ? 100 * wins / total : 0);
+	var wins_avg_guesses = round(wins > 0 ? wins_total_guesses / wins : 0);
+
+	stats_title.innerHTML = which == 'daily' ? 'Daily Challenges' : 'All Games';
+	stats_played.innerHTML = total;
+	stats_win_rate.innerHTML = win_rate;
+	stats_avg_guesses.innerHTML = wins_avg_guesses;
+	stats_streak.innerHTML = get_int_cookie(which + '_streak');
+	stats_max_streak.innerHTML = get_int_cookie(which + '_max_streak');
 }
 
 function send_challenge() {
@@ -545,7 +596,7 @@ function load_game() {
 
 function start_daily_challenge() {
 	var day = days_since_epoch();
-	if (daily_challenge_ck(day, 'solved'))
+	if (daily_challenge_ck(day, 'finished'))
 		return false;
 
 	let seed = day;
@@ -615,7 +666,29 @@ function game_already_played() {
 }
 
 function save_my_guesses() {
-	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')), 30);
+	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
+
+	inc_cookie('all_cnt');
+	if (daily_challenge) inc_cookie('daily_cnt');
+
+	let win = guess_cnt < 10;
+	if (!win) {
+		set_cookie('all_streak', 0);
+		if (daily_challenge) set_cookie('daily_streak', 0);
+	}
+	else {
+		inc_cookie('all_solved_in_' + guess_cnt);
+		inc_cookie('all_streak');
+		if (get_int_cookie('all_streak') > get_int_cookie('all_max_streak'))
+			inc_cookie('all_max_streak');
+
+		if (daily_challenge) {
+			inc_cookie('daily_solved_in_' + guess_cnt);
+			inc_cookie('daily_streak');
+			if (get_int_cookie('daily_streak') > get_int_cookie('daily_max_streak'))
+				inc_cookie('daily_max_streak');
+		}
+	}
 }
 
 function restore_my_guesses() {
@@ -641,6 +714,14 @@ function get_cookie(name) {
 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 	}
 	return null;
+}
+
+function inc_cookie(name) {
+	set_cookie(name, get_int_cookie(name) + 1);
+}
+
+function get_int_cookie(name) {
+	return parseInt(get_cookie(name)) || 0;
 }
 
 function erase_cookie(name) {
