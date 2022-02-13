@@ -510,7 +510,7 @@ function show_all_stats() {
 }
 
 function show_stats(which) {
-	var ck_prefix = which += "_" + lang() + "_";
+	var ck_prefix = which + "_" + lang() + "_";
 	hide_popups();
 	stats.style.display = "block";
 
