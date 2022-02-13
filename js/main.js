@@ -648,13 +648,14 @@ function start_daily_challenge() {
 		daily_challenge: day,
 	});
 
-	var guesses = daily_challenge_ck(day, 'guesses');
-	if (guesses)
-		guesses.split(',').slice(1).forEach(function(g) {
+	var gs = daily_challenge_ck(day, 'guesses');
+	if (gs)
+		gs.split(',').slice(1).forEach(function(g) {
 			guessword.value = g;
 			guess_word();
 		});	
 
+	daily_challenge_ck(day, 'guesses', guesses.join(','));
 	return true;
 }
 
