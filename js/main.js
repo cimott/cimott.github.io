@@ -549,7 +549,7 @@ function copy_challenge() {
 }
 
 function compare_results() {
-	hide_game_end();
+	hide_popups();
 	show_guesses(challenge.guesses);
 }
 
