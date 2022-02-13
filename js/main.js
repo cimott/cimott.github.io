@@ -5,10 +5,12 @@ function lang() {
 }
 
 function change_language(lng) {
-	if (lang() == lng)
+	if (lang() == lng) {
+		show_menu();
 		return;
+	}
 	set_language(lng);
-	start_new_game();
+	start_daily_challenge() || load_game() || random_word();
 }
 
 function set_language(lng) {
@@ -92,12 +94,12 @@ function clear_state() {
 	hide_popups();
 }
 
-function set_hidden_word(w) {
+function set_hidden_word(w, user_action) {
 	word = w.toUpperCase();
 	// console.log(word);
 	guess_cnt = 1;
 	clear_tables();
-	save_game();
+	if (user_action) save_game();
 }
 
 function clear_tables() {
@@ -279,7 +281,7 @@ function update_keyboard() {
 function random_word() {
 	clear_state();
 	refresh_game_title();
-	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()));
+	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()), true);
 	guessword.focus();
 }
 
@@ -348,13 +350,13 @@ function clear_assumptions() {
 	update_keyboard();
 }
 
-function guess_word() {
+function guess_word(user_action) {
 	var s = guessword.value.trim();
 	if (!chk_word(s))
 		return;
 
 	guesses.push(s);
-	save_game();
+	if (user_action) save_game();
 
 	var m = match_word(s);
 	var letters = to_char_list(s);
@@ -406,7 +408,7 @@ function check_game_ended(m, guess_cnt) {
 }
 
 function guess_word_on_key_down(keyCode) {
-	if (keyCode == 13) guess_word();
+	if (keyCode == 13) guess_word(true);
 }
 
 function guess_word_on_key_up() {
@@ -471,9 +473,9 @@ function start_new_game() {
 	hide_popups();
 
 	var day = days_since_epoch();
-	if (!get_cookie(daily_challenge_cookie_key(day)))
+	if (!get_cookie(daily_challenge_cookie_key(day, 'guesses')))
 		start_daily_challenge();
-	else if (daily_challenge_ck(day, 'finished') || daily_challenge)
+	else if (daily_challenge_ck(day, 'finished') == '1' || daily_challenge)
 		random_word();
 	else
 		show_choose_game();
@@ -508,6 +510,7 @@ function show_all_stats() {
 }
 
 function show_stats(which) {
+	var ck_prefix = which += "_" + lang() + "_";
 	hide_popups();
 	stats.style.display = "block";
 
@@ -515,12 +518,12 @@ function show_stats(which) {
 		return ((x * 10) | 0) / 10;
 	};
 
-	var total = get_int_cookie(which + '_cnt');
+	var total = get_int_cookie(ck_prefix + 'cnt');
 	var wins = 0;
 	var wins_total_guesses = 0;
 	var wins_in = { };
 	for (let i = 1; i < 10; ++i) {
-		wins_in[i] = get_int_cookie(which + '_solved_in_' + i);
+		wins_in[i] = get_int_cookie(ck_prefix + 'solved_in_' + i);
 		wins += wins_in[i];
 		wins_total_guesses += i * wins_in[i];
 	}
@@ -531,8 +534,8 @@ function show_stats(which) {
 	stats_played.innerHTML = total;
 	stats_win_rate.innerHTML = win_rate;
 	stats_avg_guesses.innerHTML = wins_avg_guesses;
-	stats_streak.innerHTML = get_int_cookie(which + '_streak');
-	stats_max_streak.innerHTML = get_int_cookie(which + '_max_streak');
+	stats_streak.innerHTML = get_int_cookie(ck_prefix + 'streak');
+	stats_max_streak.innerHTML = get_int_cookie(ck_prefix + 'max_streak');
 }
 
 function send_challenge() {
@@ -568,11 +571,12 @@ function show_guesses(gs) {
 }
 
 function save_game() {
-	set_cookie('current_game', btoa(encodeURIComponent([ lang(), word, guesses.join(','), daily_challenge ].join('|'))));
+	set_cookie('current_game_' + lang(), btoa(encodeURIComponent([ lang(), word, guesses.join(','), daily_challenge ].join('|'))));
+	if (daily_challenge) daily_challenge_ck(daily_challenge, 'guesses', guesses.join(','));
 }
 
 function load_game() {
-	var game = get_cookie('current_game');
+	var game = get_cookie('current_game_' + lang());
 	if (!game)
 		return false;
 
@@ -597,7 +601,7 @@ function load_game() {
 
 function start_daily_challenge() {
 	var day = days_since_epoch();
-	if (daily_challenge_ck(day, 'finished'))
+	if (daily_challenge_ck(day, 'finished') == '1')
 		return false;
 
 	let seed = day;
@@ -613,21 +617,28 @@ function start_daily_challenge() {
 	while (guess1_today == to_guess_today)
 		guess1_today = rand_idx(seed + (++retry));
 
-	daily_challenge_ck(day, 'started', true);
 	start_challenge({
 		lang: lang(),
 		hidden_word: get_word(to_guess_today),
 		guess1: get_word(guess1_today),
 		daily_challenge: day,
 	});
+
+	var guesses = daily_challenge_ck(day, 'guesses');
+	if (guesses)
+		guesses.split(',').slice(1).forEach(function(g) {
+			guessword.value = g;
+			guess_word();
+		});	
+
 	return true;
 }
 
-function daily_challenge_ck(day, what, set) {
-	if (set)
-		set_cookie(daily_challenge_cookie_key(day), what, 2);
+function daily_challenge_ck(day, what, val) {
+	if (val)
+		set_cookie(daily_challenge_cookie_key(day, what), btoa(encodeURIComponent(val)), 2);
 	else
-		return get_cookie(daily_challenge_cookie_key(day)) == what;
+		return decodeURIComponent(atob(get_cookie(daily_challenge_cookie_key(day, what))));
 }
 
 function refresh_game_title() {
@@ -654,8 +665,8 @@ function days_since_epoch() {
 	return Math.floor(now / 8.64e7);
 }
 
-function daily_challenge_cookie_key(day) {
-	return [ 'daily_challenge', day, lang() ].join('_');
+function daily_challenge_cookie_key(day, what) {
+	return [ 'daily_challenge', day, lang(), what ].join('_');
 }
 
 function game_cookie_key() {
@@ -667,35 +678,41 @@ function game_already_played() {
 }
 
 function update_stats() {
-	erase_cookie('current_game');
-	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
-	if (daily_challenge) daily_challenge_ck(daily_challenge, 'finished', true);
+	erase_cookie('current_game_' + lang());
+	if (daily_challenge) daily_challenge_ck(daily_challenge, 'finished', '1');
 
-	inc_cookie('all_cnt');
-	if (daily_challenge) inc_cookie('daily_cnt');
+	var all_prefix = 'all_' + lang() + '_';
+	var daily_prefix = 'daily_' + lang() + '_';
+
+	inc_cookie(all_prefix + 'cnt');
+	if (daily_challenge) inc_cookie(daily_prefix + 'cnt');
 
 	let win = guess_cnt < 10;
 	if (!win) {
-		set_cookie('all_streak', 0);
-		if (daily_challenge) set_cookie('daily_streak', 0);
+		set_cookie(all_prefix + 'streak', 0);
+		if (daily_challenge) set_cookie(daily_prefix + 'streak', 0);
 	}
 	else {
-		inc_cookie('all_solved_in_' + guess_cnt);
-		inc_cookie('all_streak');
-		if (get_int_cookie('all_streak') > get_int_cookie('all_max_streak'))
-			inc_cookie('all_max_streak');
+		inc_cookie(all_prefix + 'solved_in_' + guess_cnt);
+		inc_cookie(all_prefix + 'streak');
+		if (get_int_cookie(all_prefix + 'streak') > get_int_cookie(all_prefix + 'max_streak'))
+			inc_cookie(all_prefix + 'max_streak');
 
 		if (daily_challenge) {
-			inc_cookie('daily_solved_in_' + guess_cnt);
-			inc_cookie('daily_streak');
-			if (get_int_cookie('daily_streak') > get_int_cookie('daily_max_streak'))
-				inc_cookie('daily_max_streak');
+			inc_cookie(daily_prefix + 'solved_in_' + guess_cnt);
+			inc_cookie(daily_prefix + 'streak');
+			if (get_int_cookie(daily_prefix + 'streak') > get_int_cookie(daily_prefix + 'max_streak'))
+				inc_cookie(daily_prefix + 'max_streak');
 		}
 	}
 }
 
+function get_my_guesses() {
+	return decodeURIComponent(get_cookie(game_cookie_key())).split(',');
+}
+
 function restore_my_guesses() {
-	guesses = decodeURIComponent(get_cookie(game_cookie_key())).split(',');	
+	guesses = get_my_guesses();	
 	guess_cnt = guesses.length;
 }
 
