@@ -96,7 +96,7 @@ table#alphabet {
 	margin: 1vh -0.5vh;
 }
 
-table#alphabet td:not(.impossible), table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
+table#alphabet td:not(.impossible):not(.unprobable), table#guesses td:nth-child(n+2):nth-child(-n+6):not(.impossible) {
 	cursor: pointer;
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none; /* Safari */
@@ -115,8 +115,13 @@ td.impossible {
 	border-color: #ccc !important;
 }
 
-td.unprobable {
-	color: #ddd;
+table#alphabet td.unprobable {
+	color: #ccc;
+	border-color: white !important;
+}
+
+td.unprobable, td.unwanted {
+	color: #ccc;
 	border-color: #ccc !important;
 }
 

@@ -134,7 +134,7 @@ function clear_tables() {
 		}
 		var cells = alph10
 			.filter(function(x) { return Boolean(x); })
-			.map(create_letter)
+			.map(create_key)
 			.join("")
 		document.getElementById(abck).innerHTML = cells;
 	}
@@ -142,6 +142,10 @@ function clear_tables() {
 
 function create_letter(ch) {
 	return "<td class='letter_" + ch + "' onclick='on_letter_clicked(this);'>" + ch + "</td>";
+}
+
+function create_key(ch) {
+	return "<td class='letter_" + ch + "' onclick='on_key_clicked(this);'>" + ch + "</td>";
 }
 
 window.onload = function() {
@@ -220,18 +224,9 @@ function on_placeholder_clicked(el) {
 }
 
 function on_letter_clicked(el) {
-	if (game_ended)
-		return;
-
 	var ltr = el.innerHTML;
-	if (letter_class[ltr] == 'impossible')
+	if (!can_update_letter_class(ltr))
 		return;
-
-	if (selected_placeholder) {
-		selected_placeholder.innerHTML = ltr;
-		on_placeholder_clicked(null);
-		return;
-	}
 
 	if (letter_class[ltr] == 'probable')
 		letter_class[ltr] = '';
@@ -239,6 +234,35 @@ function on_letter_clicked(el) {
 		letter_class[ltr] = 'probable';
 
 	sync_letter_classes();
+}
+
+function on_key_clicked(el) {
+	var ltr = el.innerHTML;
+	if (!can_update_letter_class(ltr))
+		return;
+
+	if (letter_class[ltr] == 'probable' || letter_class[ltr] == 'unwanted')
+		letter_class[ltr] = '';
+	else
+		letter_class[ltr] = 'unwanted';
+
+	sync_letter_classes();
+}
+
+function can_update_letter_class(ltr) {
+	if (game_ended)
+		return false;
+
+	if (letter_class[ltr] == 'impossible')
+		return false;
+
+	if (selected_placeholder) {
+		selected_placeholder.innerHTML = ltr;
+		on_placeholder_clicked(null);
+		return false;
+	}
+
+	return true;
 }
 
 function reset_unprobables() {
@@ -261,7 +285,7 @@ function sync_letter_classes() {
 		for (var ltr of sel) { if (cl.includes(ltr)) ++sel_cnt; }
 		if (sel_cnt >= cnt) {
 			for (ltr of cl) {
-				if (letter_class[ltr] != 'impossible' && !sel.includes(ltr))
+				if (letter_class[ltr] != 'impossible' && letter_class[ltr] != 'unwanted' && !sel.includes(ltr))
 					letter_class[ltr] = 'unprobable';
 			}
 		}
