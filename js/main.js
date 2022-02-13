@@ -171,17 +171,17 @@ function check_url() {
 		if (game.length != 4 || game[0] != 'v1') // v1|{language}|{hidden_word}|{guess_1,guess_2,...,guess_n}
 			return false;
 
-		let lng = game[1];
+		let lang = game[1];
 		let hidden_word = game[2];
 		let guesses = game[3].split(',');
 
-		if (!is_in_dict(hidden_word, lng))
+		if (!is_in_dict(hidden_word, lang))
 			return false;
 
 		let last_guess = guesses[guesses.length - 1];
 		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
 
-		start_challenge({ lng,  hidden_word, guess_cnt, guesses });
+		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
 		save_game();
 		return true;
 	}
