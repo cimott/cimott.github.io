@@ -357,8 +357,10 @@ function guess_word() {
 	var letters = to_char_list(s);
 	fill_guesses_table(s, guess_cnt, m, letters);
 
-	if (m[0] == 5 || (++guess_cnt) == 10)
+	if (m[0] == 5 || (++guess_cnt) == 10) {
+		update_stats();
 		show_game_end();
+	}
 
 	if (m[0] == 0 && m[1] == 0) {
 		letters.forEach(function(ltr) {
@@ -449,10 +451,6 @@ function show_game_end() {
 		challenge_link.innerHTML = get_game_link();
 	}
 	compare_results_btn.style.display = challenge && challenge.guesses ? "block" : "none";
-
-	if (daily_challenge) daily_challenge_ck(daily_challenge, 'finished', true);
-	erase_cookie('current_game');
-	save_my_guesses();
 }
 
 function hide_popups() {
@@ -665,8 +663,10 @@ function game_already_played() {
 	return Boolean(get_cookie(game_cookie_key()));
 }
 
-function save_my_guesses() {
+function update_stats() {
+	erase_cookie('current_game');
 	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
+	if (daily_challenge) daily_challenge_ck(daily_challenge, 'finished', true);
 
 	inc_cookie('all_cnt');
 	if (daily_challenge) inc_cookie('daily_cnt');
@@ -698,13 +698,13 @@ function restore_my_guesses() {
 
 function set_cookie(name, value, days) {
 	var expires = "";
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-		expires = "; expires=" + date.toUTCString();
-	}
+	if (!days) days = 365 * 10;
+	var date = new Date();
+	date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	expires = "; expires=" + date.toUTCString();
 	document.cookie = name + "=" + (value || "")  + expires + "; path=/; Secure";
 }
+
 function get_cookie(name) {
 	var nameEQ = name + "=";
 	var ca = document.cookie.split(';');
