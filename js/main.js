@@ -99,7 +99,6 @@ function set_hidden_word(w, user_action) {
 	// console.log(word);
 	guess_cnt = 1;
 	clear_tables();
-	if (user_action) save_game();
 }
 
 function clear_tables() {
@@ -183,6 +182,7 @@ function check_url() {
 		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
 
 		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
+		save_game();
 		return true;
 	}
 	catch(e) {
@@ -305,7 +305,7 @@ function update_keyboard() {
 function random_word() {
 	clear_state();
 	refresh_game_title();
-	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()), true);
+	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()));
 	guessword.focus();
 }
 
@@ -596,6 +596,7 @@ function show_guesses(gs) {
 
 function save_game() {
 	set_cookie('current_game_' + lang(), btoa(encodeURIComponent([ lang(), word, guesses.join(','), daily_challenge ].join('|'))));
+	set_cookie(game_cookie_key(), encodeURIComponent(guesses.join(',')));
 	if (daily_challenge) daily_challenge_ck(daily_challenge, 'guesses', guesses.join(','));
 }
 
@@ -656,6 +657,7 @@ function start_daily_challenge() {
 		});	
 
 	daily_challenge_ck(day, 'guesses', guesses.join(','));
+	save_game();
 	return true;
 }
 
