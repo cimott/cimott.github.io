@@ -179,9 +179,14 @@ function check_url() {
 			return false;
 
 		let last_guess = guesses[guesses.length - 1];
-		let guess_cnt = last_guess.toLowerCase() == hidden_word.toLowerCase() ? guesses.length : null;
+		let guess_cnt = is_same_word(last_guess, hidden_word) ? guesses.length : null;
+		let daily_challenge = 0;
 
-		start_challenge({ lang,  hidden_word, guess_cnt, guesses });
+		let dc = get_daily_challenge();
+		if (is_same_word(dc.hidden_word, hidden_word) && is_same_word(dc.guess1, guesses[0]))
+			daily_challenge = dc.day;
+
+		start_challenge({ lang,  hidden_word, guess_cnt, guesses, daily_challenge });
 		return true;
 	}
 	catch(e) {
@@ -318,6 +323,10 @@ function chk_word(w) {
 		return true;
 
 	return false;
+}
+
+function is_same_word(w1, w2) {
+	return w1.toLowerCase() == w2.toLowerCase();
 }
 
 function is_in_dict(w, lng) {
@@ -629,11 +638,8 @@ function load_game() {
 	return true;
 }
 
-function start_daily_challenge() {
-	var day = days_since_epoch();
-	if (daily_challenge_ck(day, 'finished') == '1')
-		return false;
-
+function get_daily_challenge(day) {
+	day = day || days_since_epoch();
 	let seed = day;
 	let to_guess_yesterday = rand_idx(seed - 1);
 	let to_guess_today = rand_idx(seed);
@@ -647,10 +653,19 @@ function start_daily_challenge() {
 	while (guess1_today == to_guess_today)
 		guess1_today = rand_idx(seed + (++retry));
 
+	return { day: day, hidden_word: get_word(to_guess_today), guess1: get_word(guess1_today) };
+}
+
+function start_daily_challenge() {
+	var day = days_since_epoch();
+	if (daily_challenge_ck(day, 'finished') == '1')
+		return false;
+
+	var dc = get_daily_challenge(day);
 	start_challenge({
 		lang: lang(),
-		hidden_word: get_word(to_guess_today),
-		guess1: get_word(guess1_today),
+		hidden_word: dc.hidden_word,
+		guess1: dc.guess1,
 		daily_challenge: day,
 	});
 
@@ -710,7 +725,7 @@ function game_already_played() {
 		return false;
 
 	let last_guess = my_guesses[my_guesses.length - 1];
-	let game_ended = (last_guess.toLowerCase() == hidden_word.toLowerCase() || my_guesses.length == 9);
+	let game_ended = is_same_word(last_guess, hidden_word) || my_guesses.length == 9;
 	return game_ended;
 }
 
