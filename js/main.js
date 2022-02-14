@@ -708,6 +708,7 @@ function rand_idx(x){
 
 function days_since_epoch() {
 	var now = new Date();
+	now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // to make new daily challenge available at midnight local time
 	return Math.floor(now / 8.64e7);
 }
 
