@@ -307,6 +307,7 @@ function random_word() {
 	refresh_game_title();
 	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()));
 	guessword.focus();
+	save_game();
 }
 
 function chk_word(w) {
