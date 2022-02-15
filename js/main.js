@@ -222,9 +222,12 @@ function on_placeholder_clicked(el) {
 	else if (el && el.innerHTML.length > 0) {
 		el.innerHTML = ''; // clear guess
 	}
-	else {
+	else if (el.parentElement.id == 'g' + guess_cnt) {
 		selected_placeholder = el; // set selection
 		if (el) selected_placeholder.className = 'selected';
+	}
+	else {
+		guessword.focus();
 	}
 }
 
