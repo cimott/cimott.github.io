@@ -222,12 +222,12 @@ function on_placeholder_clicked(el) {
 	else if (el && el.innerHTML.length > 0) {
 		el.innerHTML = ''; // clear guess
 	}
-	else if (el.parentElement.id == 'g' + guess_cnt) {
-		selected_placeholder = el; // set selection
-		if (el) selected_placeholder.className = 'selected';
+	else if (el && el.parentElement.id != 'g' + guess_cnt) {
+		guessword.focus(); // focus input
 	}
 	else {
-		guessword.focus();
+		selected_placeholder = el; // set selection
+		if (el) selected_placeholder.className = 'selected';
 	}
 }
 
@@ -388,7 +388,7 @@ function clear_assumptions() {
 }
 
 function guess_word(user_action) {
-	var s = guessword.value.trim();
+	var s = guessword.value.trim().toUpperCase();
 	if (!chk_word(s))
 		return;
 
@@ -424,7 +424,7 @@ function fill_guesses_table(s, guess_cnt, m, letters) {
 		.map(function(ch, i) { return i >= 1 && i <= 6 ? create_letter(ch) : '<td>' + ch + '</td>'} )
 		.join('');
 	document.getElementById(gk).innerHTML = cells;
-	
+
 	check_game_ended(m, guess_cnt);
 	return m;
 }
@@ -466,7 +466,7 @@ function get_game_link() {
 function show_game_end() {
 	hide_popups();
 	game_end.style.display = "block";
-	
+
 	let win = guess_cnt < 10;
 	game_end_result.innerHTML = win
 		? "You win in " + guess_cnt + " tries."
@@ -520,12 +520,12 @@ function start_new_game() {
 
 function show_choose_game() {
 	hide_popups();
-	choose_game.style.display = "block";	
+	choose_game.style.display = "block";
 }
 
 function show_menu() {
 	hide_popups();
-	menu.style.display = "block";	
+	menu.style.display = "block";
 }
 
 function show_language() {
@@ -646,7 +646,7 @@ function get_daily_challenge(day) {
 	let seed = day;
 	let to_guess_yesterday = rand_idx(seed - 1);
 	let to_guess_today = rand_idx(seed);
-	
+
 	let retry = 0;
 	while (to_guess_today == to_guess_yesterday)
 		to_guess_today = rand_idx(seed + (++retry))
@@ -677,7 +677,7 @@ function start_daily_challenge() {
 		gs.split(',').slice(1).forEach(function(g) {
 			guessword.value = g;
 			guess_word();
-		});	
+		});
 
 	daily_challenge_ck(day, 'guesses', guesses.join(','));
 	return true;
@@ -720,7 +720,7 @@ function daily_challenge_cookie_key(day, what) {
 }
 
 function game_cookie_key() {
-	return [ 'game', lang(), hidden_word, encodeURIComponent(guesses[0]) ].join('_')
+	return [ 'game', lang(), encodeURIComponent(hidden_word), encodeURIComponent(guesses[0]) ].join('_')
 }
 
 function game_already_played() {
@@ -768,7 +768,7 @@ function get_my_guesses() {
 }
 
 function restore_my_guesses() {
-	guesses = get_my_guesses();	
+	guesses = get_my_guesses();
 	guess_cnt = guesses.length;
 }
 
