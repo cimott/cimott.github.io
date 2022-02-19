@@ -12,25 +12,39 @@
 	<script src="https://kit.fontawesome.com/971e0aea25.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div id="container">
-		 <div id="topnav">
-		 	<div id="topnav_guess">
-				<input type="text" id="guessword" autofocus
-					onkeydown="guess_word_on_key_down(event.keyCode);"
-					onkeyup="guess_word_on_key_up();"
-					placeholder="RIJEČ...">
-				<button type="submit" id="guess_btn" onclick="guess_word(true);"><i class="fa-solid fa-magnifying-glass"></i></button>
-				<button type="submit" onclick="clear_assumptions();"><i class="fa fa-eraser"></i></button>
+	<div id="topnav-container">
+		<div id="topnav">
+			<div id="topnav_guess">
+				<a onclick="clear_assumptions();"><i class="fa fa-eraser"></i></a>
+				<div id="input-wrapper">
+					<a id="guess_btn" onclick="guess_word(true);"><i class="fa-solid fa-magnifying-glass"></i></a><!--
+				--><input type="text" id="guessword" autofocus
+						onkeydown="guess_word_on_key_down(event.keyCode);"
+						onkeyup="guess_word_on_key_up();"
+						placeholder="RIJEČ...">
+				</div>
 			</div>
-		 	<div id="topnav_game_end">
-				<button type="submit" onclick="show_game_end();"><i class="fa-solid fa-medal"></i></button>
-				<button id="toggle_results_btn" type="submit" onclick="toggle_results();"><i class="fa-solid fa-code-compare"></i></button>
+			<div id="topnav_game_end">
+				<a onclick="show_game_end();"><i class="fa-solid fa-share-from-square"></i></a>
+				<a id="toggle_results_btn" onclick="toggle_results();"><i class="fa-solid fa-code-compare"></i></a>
 			</div>
 			<div id="topnav_config">
-				<button type="submit" id="show_btn" onclick="show_menu()"><i class="fa-solid fa-bars"></i></button>
+				<a id="show_btn" onclick="show_menu()"><i class="fa-solid fa-bars"></i></a>
 			</div>
-		</div>
+			<div style="clear: both;"></div>
+	</div>
+	</div>
 
+	<div id="game-title-background">
+		<div id="game-title-content">
+			<a id="prev_daily_btn" onclick="show_previous_daily()" style="float: left"><i class="fa-solid fa-angle-left"></i></a>
+			<a id="next_daily_btn" onclick="show_next_daily()" style="float: right"><i class="fa-solid fa-angle-right"></i></a>
+			<p id="game_title"></p>
+			<div style="clear: both;" ></div>
+		</div>
+	</div>
+
+	<div id="container">
 		<table id="alphabet">
 			<colgroup>
 				<col style="width:10%">
@@ -38,7 +52,7 @@
 				<col style="width:10%">
 				<col style="width:10%">
 				<col style="width:10%">
-				
+
 				<col style="width:10%">
 				<col style="width:10%">
 				<col style="width:10%">
@@ -49,9 +63,6 @@
 			<tr id="abc1"></tr>
 			<tr id="abc2"></tr>
 		</table>
-
-		<p id="game_title"></p>
-
 		<table id="guesses">
 			<colgroup>
 				<col style="width:6.5%">
@@ -78,7 +89,7 @@
 			</tbody>
 		</table>
 
-		<div style="clear: both" />
+		<div style="clear: both"></div>
 
 		<div id="game_end" class="popup" onclick="hide_popups()">
 			<div class="popup_content" onclick="eat_click();">
@@ -86,7 +97,7 @@
 				<p id="game_end_result"></p>
 				<a id="send_challenge_btn" class="popup_button" onclick="send_challenge()">Send Challenge</a>
 				<a id="copy_challenge_btn" class="popup_button" onclick="copy_challenge()">Copy Challenge</a>
-				<div id="manually_copy_challenge"/>
+				<div id="manually_copy_challenge">
 					<h3>Challenge a Friend</h3>
 					<p id="challenge_link"></p>
 				</div>
@@ -99,7 +110,8 @@
 		<div id="menu" class="popup" onclick="hide_popups()">
 			<div class="popup_content" onclick="eat_click();">
 				<h3 class="popup_title">Menu</h3>
-				<a class="popup_button" onclick="start_new_game()">New Game</a>
+				<a class="popup_button" onclick="start_daily_challenge(true)">Daily Challenge</a>
+				<a class="popup_button" onclick="random_word()">Random Word</a>
 				<a class="popup_button" onclick="show_language()">Language</a>
 				<a class="popup_button" onclick="show_stats_menu()">Stats</a>
 			</div>

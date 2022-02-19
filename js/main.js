@@ -76,7 +76,6 @@ var guesses = [];
 var daily_challenge = 0;
 var game_ended = false;
 var letter_class = { };
-var selected_placeholder = null;
 
 function clear_state() {
 	challenge = null;
@@ -86,7 +85,6 @@ function clear_state() {
 	daily_challenge = 0;
 	game_ended = false;
 	letter_class = { };
-	selected_placeholder = null;
 	guessword.value = '';
 
 	topnav_guess.style.display = "block";
@@ -109,7 +107,7 @@ function clear_tables() {
 			.concat(i, "       ".split(""))
 			.map(function(ch, i) {
 				if (i >= 1 && i <= 5)
-					return "<td onclick='on_placeholder_clicked(this);'></td>";
+					return "<td onclick='show_keyboard();'></td>";
 				return "<td>" + ch + "</td>";
 			})
 			.join("");
@@ -135,6 +133,7 @@ function clear_tables() {
 			.filter(function(x) { return Boolean(x); })
 			.map(create_key)
 			.join("")
+
 		document.getElementById(abck).innerHTML = cells;
 	}
 }
@@ -209,28 +208,6 @@ function start_challenge(game) {
 	save_game();
 }
 
-function on_placeholder_clicked(el) {
-	if (el && game_ended)
-		return;
-
-	if (selected_placeholder)
-		selected_placeholder.className = '';
-
-	if (selected_placeholder == el) {
-		selected_placeholder = null; // clear selection
-	}
-	else if (el && el.innerHTML.length > 0) {
-		el.innerHTML = ''; // clear guess
-	}
-	else if (el && el.parentElement.id != 'g' + guess_cnt) {
-		guessword.focus(); // focus input
-	}
-	else {
-		selected_placeholder = el; // set selection
-		if (el) selected_placeholder.className = 'selected';
-	}
-}
-
 function on_letter_clicked(el) {
 	var ltr = el.innerHTML;
 	if (!can_update_letter_class(ltr))
@@ -263,12 +240,6 @@ function can_update_letter_class(ltr) {
 
 	if (letter_class[ltr] == 'impossible')
 		return false;
-
-	if (selected_placeholder) {
-		selected_placeholder.innerHTML = ltr;
-		on_placeholder_clicked(null);
-		return false;
-	}
 
 	return true;
 }
@@ -315,7 +286,6 @@ function random_word() {
 	refresh_game_title();
 	set_hidden_word(get_word(parseInt(Date.now()) % word_cnt()));
 	guessword.focus();
-	save_game();
 }
 
 function chk_word(w) {
@@ -382,15 +352,16 @@ function clear_assumptions() {
 		if (letter_class[ltr] != 'impossible')
 			delete letter_class[ltr];
 	}
-	on_placeholder_clicked(null);
 	reset_unprobables();
 	update_keyboard();
 }
 
 function guess_word(user_action) {
 	var s = guessword.value.trim().toUpperCase();
-	if (!chk_word(s))
+	if (!chk_word(s)) {
+		guessword.focus();
 		return;
+	}
 
 	guesses.push(s);
 	if (user_action) save_my_guesses();
@@ -441,7 +412,7 @@ function check_game_ended(m, guess_cnt) {
 	toggle_results_btn.style.display = challenge && challenge.guesses ? "inline-block" : "none";
 	topnav_guess.style.display = "none";
 	topnav_game_end.style.display = "block";
-	on_placeholder_clicked(null);
+	hide_keyboard();
 }
 
 function guess_word_on_key_down(keyCode) {
@@ -659,9 +630,10 @@ function get_daily_challenge(day) {
 	return { day: day, hidden_word: get_word(to_guess_today), guess1: get_word(guess1_today) };
 }
 
-function start_daily_challenge() {
-	var day = days_since_epoch();
-	if (daily_challenge_ck(day, 'finished') == '1')
+function start_daily_challenge(forced, day) {
+	day = day || days_since_epoch();
+	var finished = daily_challenge_ck(day, 'finished') == '1';
+	if (finished && !forced)
 		return false;
 
 	var dc = get_daily_challenge(day);
@@ -673,14 +645,37 @@ function start_daily_challenge() {
 	});
 
 	var gs = daily_challenge_ck(day, 'guesses');
-	if (gs)
-		gs.split(',').slice(1).forEach(function(g) {
-			guessword.value = g;
-			guess_word();
+	if (gs) gs = gs.split(',');
+	if (!finished) {
+		if (gs)
+			gs.slice(1).forEach(function(g) {
+				guessword.value = g;
+				guess_word();
+			});
+			daily_challenge_ck(day, 'guesses', guesses.join(','));
+	}
+	else {
+		gs.forEach(function(g, idx) {
+			fill_guesses_table(g, idx + 1);
 		});
-
-	daily_challenge_ck(day, 'guesses', guesses.join(','));
+		erase_cookie('current_game_' + lang());
+	}
 	return true;
+}
+
+function show_previous_daily() {
+	if (!daily_challenge)
+		return;
+
+	start_daily_challenge(true, daily_challenge - 1);
+}
+
+
+function show_next_daily() {
+	if (!daily_challenge || daily_challenge == days_since_epoch())
+		return;
+
+	start_daily_challenge(true, daily_challenge + 1);
 }
 
 function daily_challenge_ck(day, what, val) {
@@ -691,14 +686,23 @@ function daily_challenge_ck(day, what, val) {
 }
 
 function refresh_game_title() {
+	prev_daily_btn.style.opacity = 0;
+	next_daily_btn.style.opacity = 0;
 	let title = '';
-	if (daily_challenge)
-		title = "DAILY CHALLENGE";
+
+	if (daily_challenge) {
+		title = "CHALLENGE • " + daily_challenge_to_date();
+		prev_daily_btn.style.opacity = 255;
+		if (daily_challenge < days_since_epoch()) next_daily_btn.style.opacity = 255;
+	}
 	else if (challenge) {
 		if (challenge.already_played)
 			title = challenge.results_shown ? "FRIEND'S GUESSES" : "MY GUESSES";
 		else
 			title = challenge.results_shown ? "CHALLENGER'S GUESSES" : "CHALLENGE";
+	}
+	else {
+		title = "GAME #" + 	(get_int_cookie("all_" + lang() + "_cnt") + 1);
 	}
 	game_title.innerHTML = title;
 }
@@ -713,6 +717,13 @@ function days_since_epoch() {
 	var now = new Date();
 	now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // to make new daily challenge available at midnight local time
 	return Math.floor(now / 8.64e7);
+}
+
+const month_names = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" ];
+
+function daily_challenge_to_date() {
+	var date = new Date(daily_challenge * 8.64e7)
+	return month_names[date.getMonth()] + ' /  ' + date.getDate();
 }
 
 function daily_challenge_cookie_key(day, what) {
@@ -803,3 +814,13 @@ function get_int_cookie(name) {
 function erase_cookie(name) {
 	document.cookie = name +'=; Path=/; Secure; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+function show_keyboard() {
+	if (!game_ended) guessword.focus();
+}
+
+function hide_keyboard() {
+	if (document.activeElement) document.activeElement.blur();
+}
+
+document.addEventListener('scroll', hide_keyboard);
