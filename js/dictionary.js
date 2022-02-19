@@ -675,7 +675,7 @@ const word_list_eng = [
 "klong", "kloof", "kluge", "klutz", "knack", "knaps", "knars", "knaur", "knave", "knead", "kneed", "kneel", 
 "knees", "knell", "knelt", "knife", "knish", "knits", "knobs", "knock", "knoll", "knops", "knosp", "knots", 
 "knout", "known", "knows", "knurl", "knurs", "koala", "koans", "koels", "kohls", "koine", "kolas", "kolos", 
-"konks", "kooks", "kooky", "kopek", "kophs", "kopje", "koppa", "korai", "korat", "korun", "kotos", "kotow", 
+"konks", "kooks", "kooky", "kopek", "kophs", "kopje", "koppa", "korai", "korat", "korun", "kotač", "kotos", "kotow", 
 "kraal", "kraft", "krait", "kraut", "kreep", "krill", "krona", "krone", "kroon", "krubi", "kudos", "kudus", 
 "kudzu", "kugel", "kukri", "kulak", "kumys", "kurta", "kurus", "kusso", "kvass", "kyack", "kyaks", "kyars", 
 "kyats", "kylix", "kyrie", "kytes", "kythe", "laari", "label", "labia", "labor", "labra", "laced", "lacer", 
